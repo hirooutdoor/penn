@@ -588,12 +588,15 @@ video {
 .bg-gradient-to-r {
 	background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
-.from-green-400 {
-	--tw-gradient-from: #34d399;
-	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(52, 211, 153, 0));
+.from-green-200 {
+	--tw-gradient-from: #a7f3d0;
+	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(167, 243, 208, 0));
 }
-.to-blue-500 {
-	--tw-gradient-to: #3b82f6;
+.via-blue-500 {
+	--tw-gradient-stops: var(--tw-gradient-from), #3b82f6, var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.to-purple-500 {
+	--tw-gradient-to: #8b5cf6;
 }
 .bg-clip-text {
 	-webkit-background-clip: text;
@@ -611,6 +614,24 @@ video {
 .text-2xl {
 	font-size: 1.5rem;
 	line-height: 2rem;
+}
+.text-\[80px\] {
+	font-size: 80px;
+}
+.text-\[px\] {
+	font-size: px;
+}
+.text-\[90px\] {
+	font-size: 90px;
+}
+.text-\[100px\] {
+	font-size: 100px;
+}
+.text-\[120px\] {
+	font-size: 120px;
+}
+.text-\[0px\] {
+	font-size: 0px;
 }
 .font-extrabold {
 	font-weight: 800;
