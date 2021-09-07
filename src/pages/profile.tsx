@@ -4,10 +4,12 @@ interface Props {
   
 }
 
-export const profile = (props: Props) => {
+const profile = (props: Props) => {
   return (
     <div>
-      <p>profile</p>
+      
     </div>
   )
 }
+
+export default profile

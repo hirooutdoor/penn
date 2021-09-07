@@ -4,10 +4,12 @@ interface Props {
   
 }
 
-export const userAuth = (props: Props) => {
+const userAuth = (props: Props) => {
   return (
     <div>
-      <p>userAuth</p>
+      
     </div>
   )
 }
+
+export default userAuth
