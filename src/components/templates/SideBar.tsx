@@ -7,7 +7,7 @@ interface Props {
 export const SideBar = (props: Props) => {
   return (
     <div>
-      
+      <p>Sidebar</p>
     </div>
   )
 }

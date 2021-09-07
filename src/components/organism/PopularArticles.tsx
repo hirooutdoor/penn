@@ -7,7 +7,7 @@ interface Props {
 export const PopularArticles = (props: Props) => {
   return (
     <div>
-      
+      <p>popularArticle</p>
     </div>
   )
 }
