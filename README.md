@@ -32,3 +32,16 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## ディレクトリ構成
+
+- src
+  - components (ページの構成部品)
+    - atoms (これ以上分割できない最小の単位)
+    - molecles (atomsのまとまり)
+    - organism (moleclesのまとまり)
+    - templates (organismのまとまり)
+  - pages (表示するページ単位)
+  - hooks (カスタムフック)
+  - store (グローバルステート管理)
+  - styles (Tailwind CSS必須ファイル)
