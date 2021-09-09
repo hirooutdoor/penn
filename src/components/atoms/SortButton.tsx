@@ -7,7 +7,7 @@ interface Props {
 const SortButton = (props: Props) => {
   return (
     <div>
-      <p>sortbutton</p>
+      <button>sortbutton</button>
     </div>
   )
 }
