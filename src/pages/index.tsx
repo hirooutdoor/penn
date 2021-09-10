@@ -9,6 +9,9 @@ import { Header } from 'src/components/templates/Header';
 import { SideWidget } from 'src/components/templates/SideWidget';
 
 const Home: NextPage = () => {
+
+  
+
   return (
     <>  
       <Head>
@@ -19,7 +22,7 @@ const Home: NextPage = () => {
 
       <Header />
       <div className='container font-Poppins text-penn-dark'>
-        <main className='flex '>
+        <main className='flex justify-around'>
           <div className='flex flex-col'>
             <ArticleFilter />
             <Feed />
