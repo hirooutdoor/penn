@@ -1,13 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 interface Props {
-  
+  children: React.ReactNode;
 }
 
-export const Tag = (props: Props) => {
+export const Tag = ({children}: Props) => {
   return (
-    <div>
-      <p>tag</p>
-    </div>
-  )
-}
+      <div className='text-xs inline-flex leading-sm px-3 py-1 bg-gray-200 text-penn-dark rounded-full'>{children}</div>
+  );
+};

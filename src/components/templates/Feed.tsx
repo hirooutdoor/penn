@@ -2,9 +2,10 @@ import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { articleState } from 'src/store/articleGlobalState'
 import SortButton from '../atoms/SortButton'
-import FilterItem from '../molecles/FilterItem'
+import FilterItem from '../organism/FilterItem'
+import { PostItem } from '../organism/PostItem'
 import { Filter } from '../organism/Filter'
-import { Posts } from '../organism/Posts'
+import { Post } from '../organism/Post'
 
 
 export const Feed = () => {
@@ -13,7 +14,7 @@ export const Feed = () => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex justify-center gap-x-12'>
+      <div className='flex justify-center '>
         <SortButton />
         <Filter>
           <FilterItem isActive>フォロー</FilterItem>
@@ -21,7 +22,15 @@ export const Feed = () => {
           <FilterItem isActive={false}>TOP</FilterItem>
         </Filter>
       </div>
-      <Posts />
+      <Post>
+        {articles.map((article) => (
+          <>
+          <PostItem key={article.id} />
+          <PostItem key={article.id} />
+          <PostItem key={article.id} />
+          </>
+        ))}
+      </Post>
     </div>
   )
 }

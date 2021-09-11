@@ -8,10 +8,16 @@ interface Props {
 export const UserInfo = (props: Props) => {
   return (
     <>
-      <Avatar/>
-      <p>User Name</p>
-      <p>Post time</p>
-      <p>TIme to read</p>
+      <div className='flex gap-4'>
+        <Avatar/>
+        <div className='flex flex-col'>
+          <p className='text-sm'>Hiro Arminayuef</p>
+          <div className='flex gap-2'>
+            <p className='text-xs text-penn-gray'>2021.09.11</p>
+          <p className='text-xs text-penn-gray'>5min</p>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
