@@ -1,18 +1,21 @@
-import React from 'react'
+import React from 'react';
+import { Tag } from '../atoms/Tag';
 
-interface Props {
-  
-}
+interface Props {}
 
 export const TagBox = (props: Props) => {
   return (
     <>
-    <p>おすすめのトピック</p>
-      <div className='flex flex-row gap-2 border rounded-lg p-4 my-4'>
-        <p>tag</p>
-        <p>tag</p>
-        <p>tag</p>
+      <p>おすすめのトピック</p>
+      <div className='flex flex-wrap gap-2 border rounded-lg p-4 my-4 justify-items-start'>
+        <Tag>キャリア</Tag>
+        <Tag>人生</Tag>
+        <Tag>生産性</Tag>
+        <Tag>マインドセット</Tag>
+        <Tag>学習法</Tag>
+        <Tag>JavaScript</Tag>
+        <Tag>呼吸法</Tag>
       </div>
     </>
-  )
-}
+  );
+};
