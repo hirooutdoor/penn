@@ -12,7 +12,7 @@ const FilterItem = (props: Props) => {
   return (
     <li>
       <p
-        className={`block px-4 py-2  ${isActive ? ' border-t-2 border-penn-green text-penn-green' : ''}`}
+        className={`block px-4 py-2 cursor-pointer  ${isActive ? ' border-t-2 border-penn-green text-penn-green' : ''}`}
       >
         {children}
       </p>
