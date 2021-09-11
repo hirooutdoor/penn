@@ -14,7 +14,7 @@ export const Feed = () => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex justify-center '>
+      <div className='flex justify-start '>
         <SortButton />
         <Filter>
           <FilterItem isActive>フォロー</FilterItem>

@@ -9,7 +9,7 @@ interface Props {
 
 export const SideWidget = (props: Props) => {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col gap-2 mt-14'>
       <TagBox/>
       <PopularArticles/>
       <PopularUsers/>

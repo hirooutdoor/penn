@@ -660,6 +660,14 @@ video {
 	margin-left: 1rem;
 	margin-right: 1rem;
 }
+.mx-6 {
+	margin-left: 1.5rem;
+	margin-right: 1.5rem;
+}
+.my-3 {
+	margin-top: 0.75rem;
+	margin-bottom: 0.75rem;
+}
 .ml-4 {
 	margin-left: 1rem;
 }
@@ -671,6 +679,18 @@ video {
 }
 .mt-2 {
 	margin-top: 0.5rem;
+}
+.mt-6 {
+	margin-top: 1.5rem;
+}
+.mt-10 {
+	margin-top: 2.5rem;
+}
+.mt-1 {
+	margin-top: 0.25rem;
+}
+.mt-14 {
+	margin-top: 3.5rem;
 }
 .block {
 	display: block;
@@ -723,6 +743,9 @@ video {
 .w-5 {
 	width: 1.25rem;
 }
+.min-w-full {
+	min-width: 100%;
+}
 .max-w-md {
 	max-width: 28rem;
 }
@@ -760,11 +783,17 @@ video {
 .flex-col {
 	flex-direction: column;
 }
+.flex-wrap {
+	flex-wrap: wrap;
+}
 .items-start {
 	align-items: flex-start;
 }
 .items-center {
 	align-items: center;
+}
+.justify-start {
+	justify-content: flex-start;
 }
 .justify-end {
 	justify-content: flex-end;
@@ -777,6 +806,9 @@ video {
 }
 .justify-around {
 	justify-content: space-around;
+}
+.justify-items-start {
+	justify-items: start;
 }
 .gap-10 {
 	gap: 2.5rem;
@@ -802,6 +834,10 @@ video {
 }
 .gap-y-4 {
 	row-gap: 1rem;
+}
+.gap-x-12 {
+	-moz-column-gap: 3rem;
+	     column-gap: 3rem;
 }
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
 	--tw-space-x-reverse: 0;
