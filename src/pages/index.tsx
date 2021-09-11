@@ -2,9 +2,7 @@
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import { Feed } from 'src/components/templates/Feed';
-import { ArticleFilter } from 'src/components/templates/ArticleFilter'
 import { Header } from 'src/components/templates/Header';
 import { SideWidget } from 'src/components/templates/SideWidget';
 
@@ -22,14 +20,9 @@ const Home: NextPage = () => {
 
       <Header />
       <div className='container font-Poppins text-penn-dark'>
-        <main className='flex justify-around'>
-          <div className='flex flex-col'>
-            <ArticleFilter />
-            <Feed />
-          </div>
-          <div className='mx-6'>
-            <SideWidget />
-          </div>
+        <main className='flex justify-around gap-10'>
+          <Feed />
+          <SideWidget />
         </main>
       </div>
     </>
