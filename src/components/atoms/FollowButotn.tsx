@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-interface Props {
-  
-}
+interface Props {}
 
 export const FollowButotn = (props: Props) => {
   return (
     <div>
-      <p>followbutton</p>
+      <div className='text-xs inline-flex leading-sm px-3 py-1 bg-green-50 text-penn-green rounded-full'>
+        <button type='button'>Follow</button>
+      </div>
     </div>
-  )
-}
+  );
+};

@@ -14,12 +14,14 @@ export const Feed = () => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex justify-start '>
+      <div className='flex justify-start gap-4'>
         <SortButton />
         <Filter>
-          <FilterItem isActive>フォロー</FilterItem>
-          <FilterItem isActive={false}>おすすめ</FilterItem>
-          <FilterItem isActive={false}>TOP</FilterItem>
+          <div className='flex gap-10'>
+            <FilterItem isActive>フォロー</FilterItem>
+            <FilterItem isActive={false}>おすすめ</FilterItem>
+            <FilterItem isActive={false}>TOP</FilterItem>
+          </div>
         </Filter>
       </div>
       <Post>

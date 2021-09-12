@@ -1,5 +1,5 @@
 import React from 'react'
-import { PopularArticles } from '../organism/PopularArticles'
+import { PopularPosts } from '../organism/PopularPosts'
 import { PopularUsers } from '../organism/PopularUsers'
 import { TagBox } from '../organism/TagBox'
 
@@ -11,7 +11,7 @@ export const SideWidget = (props: Props) => {
   return (
     <div className='flex flex-col gap-2 mt-14'>
       <TagBox/>
-      <PopularArticles/>
+      <PopularPosts/>
       <PopularUsers/>
     </div>
   )
