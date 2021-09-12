@@ -13,7 +13,7 @@ export const PopularUsers = (props: Props) => {
     <div className='my-4'>
       <p>おすすめのユーザー</p>
     </div>
-    <div className='flex flex-col border rounded-lg p-4 gap-2 divide-y'>
+    <div className='flex flex-col border dark:border-penn-gray rounded-lg p-4 gap-2 divide-y dark:divide-gray-500'>
       <div className='flex gap-4'>
       <AvatarWithName/>
       <FollowButotn/>

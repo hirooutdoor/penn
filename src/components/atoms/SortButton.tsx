@@ -20,8 +20,8 @@ const SortButton = (props: Props) => {
             </label>
           </div>
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
-            <div className="track w-12 h-4 bg-gray-200 rounded-full " />
-            <div className="thumb transition-all duration-300 ease-in-out absolute top-0 left-4 w-4 h-4  bg-white rounded-full">
+            <div className="track w-12 h-4 bg-gray-200 rounded-full dark:bg-penn-gray" />
+            <div className="thumb transition-all duration-300 ease-in-out absolute top-0 left-4 w-4 h-4  bg-white rounded-full dark:bg-gray-200">
             </div>
           </div>
         </div>

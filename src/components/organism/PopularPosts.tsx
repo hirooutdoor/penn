@@ -9,7 +9,7 @@ export const PopularPosts = (props: Props) => {
   return (
     <>
       <p className='mt-4'>おすすめの記事</p>
-      <div className='border rounded-lg p-2 text-left divide-y'>
+      <div className='border dark:border-penn-gray rounded-lg p-2 text-left divide-y dark:divide-gray-500'>
         <div className='flex text-xs w-[300px]'>
           <Filter>
             <FilterItem isActive>1週間</FilterItem>

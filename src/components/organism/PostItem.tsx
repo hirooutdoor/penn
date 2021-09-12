@@ -16,7 +16,7 @@ export const PostItem = (props: Props) => {
 
   return (
     <>
-      <div className=' border rounded-lg p-4 text-left'>
+      <div className=' border dark:border-penn-gray rounded-lg p-4 text-left'>
         <div className='mx-4 my-3'>
           <div className='flex gap-4'>
             <div className='flex gap-4'>
