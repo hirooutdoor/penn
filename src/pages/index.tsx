@@ -17,7 +17,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Header />
-      <div className='container font-Poppins text-penn-dark'>
+      <div className='container font-Poppins text-penn-dark dark:text-penn-light'>
         <main className='flex justify-around gap-10'>
           <Feed />
           <SideWidget />

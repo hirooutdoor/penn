@@ -7,7 +7,8 @@ module.exports = {
       colors: {
         "penn-green": "#00B6B9",
         "penn-gray": "#788292",
-        "penn-dark": "#203758"
+        "penn-dark": "#203758",
+        "penn-light": '#9EA7B6'
       },
     },
     fontFamily: {

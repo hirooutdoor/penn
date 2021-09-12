@@ -1,7 +1,6 @@
 import React from 'react'
 import { FollowButotn } from '../atoms/FollowButotn'
 import { AvatarWithName } from '../molecles/AvatarWithName'
-import { UserInfo } from '../molecles/UserInfo'
 
 interface Props {
   
