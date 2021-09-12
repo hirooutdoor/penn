@@ -1,13 +1,14 @@
 module.exports = {
   mode: 'jit',
   purge: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
         "penn-green": "#00B6B9",
         "penn-gray": "#788292",
-        "penn-dark": "#203758"
+        "penn-dark": "#203758",
+        "penn-light": '#9EA7B6'
       },
     },
     fontFamily: {

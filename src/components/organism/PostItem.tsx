@@ -16,13 +16,13 @@ export const PostItem = (props: Props) => {
 
   return (
     <>
-      <div className=' border rounded-lg p-4 text-left'>
+      <div className=' border dark:border-penn-gray rounded-lg p-4 text-left'>
         <div className='mx-4 my-3'>
           <div className='flex gap-4'>
             <div className='flex gap-4'>
               <div className='flex flex-col gap-1 my-2 flex-grow'>
                 <UserInfo />
-                <h2 className='text-left text-lg font-semibold'>魅力的なエンジニアの要素とは？</h2>
+                <h2 className='text-left text-lg '>魅力的なエンジニアの要素とは？</h2>
                 <p className='text-sm text-left overflow-ellipsis ...'>
                   魅力的なエンジニアの要素とは、いまでも、このような役割分担が主流ではないかと思います。しかし、魅力的なエンジニアの要素とは、いまでも、このような役割分担が主流ではないかと思います。しかし、...
                 </p>
