@@ -6,8 +6,8 @@ interface Props {}
 export const TagBox = (props: Props) => {
   return (
     <>
-      <p>おすすめのトピック</p>
-      <div className='flex flex-wrap gap-2 border rounded-lg p-4 my-4 justify-items-start'>
+      <p className='mt-3'>おすすめのトピック</p>
+      <div className='flex flex-wrap gap-2 border rounded-lg p-4 my-1 justify-items-start'>
         <Tag>キャリア</Tag>
         <Tag>人生</Tag>
         <Tag>生産性</Tag>

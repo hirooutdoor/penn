@@ -9,7 +9,7 @@ export const Filter = (props: Props) => {
 
   return (
     <nav className='p-4 mx-4'>
-      <ul className='flex space-x-2'>{children}</ul>
+      <ul className='flex space-x-4'>{children}</ul>
     </nav>
   );
 };

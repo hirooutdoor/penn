@@ -32,7 +32,8 @@ export const PostItem = (props: Props) => {
                 src='https://images.unsplash.com/photo-1517148815978-75f6acaaf32c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDV8fHByb2dyYW1taW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'
                 alt='Avatar Image'
                 width={500}
-                height={100}
+                height={150}
+                layout="fixed"
               />
             </div>
           </div>
