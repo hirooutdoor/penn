@@ -7,7 +7,7 @@ export const TagBox = (props: Props) => {
   return (
     <>
       <p className='mt-3'>おすすめのトピック</p>
-      <div className='flex flex-wrap gap-2 border dark:border-penn-gray rounded-lg p-4 my-1 justify-items-start'>
+      <div className='flex flex-wrap gap-2 border dark:border-penn-gray dark:bg-penn-darkGray rounded-lg p-4 my-1 justify-items-start'>
         <Tag>キャリア</Tag>
         <Tag>人生</Tag>
         <Tag>生産性</Tag>

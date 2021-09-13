@@ -8,7 +8,7 @@ export const Header = (props: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
-    <div className='container border-b dark:border-b-penn-gray flex justify-between gap-8 py-4 '>
+    <div className='container border-b dark:border-b-penn-gray flex justify-between gap-8 py-6 mb-6'>
       <div className='flex'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
