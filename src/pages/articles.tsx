@@ -4,6 +4,7 @@ import type { NextPage } from 'next';
 import { UserInfo } from 'src/components/molecles/UserInfo';
 import { FollowButotn } from 'src/components/atoms/FollowButotn';
 import PostContents from 'src/components/templates/PostContents';
+import DarkModeSwitch from 'src/components/molecles/DarkModeSwitch';
 
 const Articles: NextPage = () => {
   return (
@@ -21,6 +22,7 @@ const Articles: NextPage = () => {
         <div className='flex justify-start gap-20'>
           <UserInfo/>
           <FollowButotn/>
+          <DarkModeSwitch />
         </div>
         <PostContents/>
       </div>
