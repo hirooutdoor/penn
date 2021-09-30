@@ -1,7 +1,7 @@
 // penn.jp/
-
 import type { NextPage } from 'next';
 import Head from 'next/head';
+
 import { Feed } from 'src/components/templates/Feed';
 import { Header } from 'src/components/templates/Header';
 import { SideWidget } from 'src/components/templates/SideWidget';

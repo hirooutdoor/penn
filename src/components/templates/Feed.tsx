@@ -13,7 +13,7 @@ export const Feed = () => {
   const articles = useRecoilValue(articleState)
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col ml-48 '>
       <div className='flex justify-start gap-4'>
         <SortButton />
         <Filter>

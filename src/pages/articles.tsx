@@ -1,6 +1,7 @@
 // penn.jp/articles/[articleId]
-import Image from 'next/image';
 import type { NextPage } from 'next';
+import Image from 'next/image';
+
 import { UserInfo } from 'src/components/molecles/UserInfo';
 import { FollowButotn } from 'src/components/atoms/FollowButotn';
 import PostContents from 'src/components/templates/PostContents';

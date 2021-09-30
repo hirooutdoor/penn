@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { EditButton } from '../atoms/EditButton';
 import { UserInfo } from '../molecles/UserInfo';
 import { articleState } from 'src/store/articleGlobalState';
 import { useRecoilValue } from 'recoil';
