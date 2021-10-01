@@ -2,7 +2,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import { Feed } from 'src/components/templates/Feed';
+import PublicFeed from 'src/components/templates/PublicFeed';
 import { Header } from 'src/components/templates/Header';
 import { SideWidget } from 'src/components/templates/SideWidget';
 
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
           <div className='container font-Poppins text-penn-dark dark:text-penn-light'>
             {/* justify-between で要素の幅が固定されている */}
             <main className='flex justify-between gap-10'>
-              <Feed />
+              <PublicFeed />
               <SideWidget />
             </main>
           </div>

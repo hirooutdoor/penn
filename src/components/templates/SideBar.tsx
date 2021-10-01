@@ -13,7 +13,7 @@ interface Props {}
 const SideBar = (props: Props) => {
   return (
     <>
-      <div className='fixed mx-6 flex flex-col my-10 gap-6'>
+      <div className='fixed mx-6 flex flex-col mt-10 gap-6'>
         <Logo />
         <WriteButton />
         {/* eslint-disable-next-line @next/next/link-passhref */}
