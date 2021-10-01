@@ -5,11 +5,18 @@ import { useRecoilValue } from 'recoil';
 import { Like } from '../atoms/Like';
 import { Comment } from '../atoms/Comment';
 import MenuIcon from '../atoms/MenuIcon';
+import MyCodeBlock from 'src/components/molecles/CodeBlock'
 
 interface Props {}
 
 export const PostItem = (props: Props) => {
   const articles = useRecoilValue(articleState);
+  
+  const inputCode = {
+    code: "const articles = useRecoilValue(articleState);\nconst inputCode = console.log(\"hello world\") ",
+    language: "tsx",
+    showLineNumbers: true
+  }
 
   return (
     <>
@@ -33,6 +40,7 @@ export const PostItem = (props: Props) => {
                 <p className='text-sm text-left overflow-ellipsis ...'>
                   魅力的なエンジニアの要素とは、いまでも、このような役割分担が主流ではないかと思います。しかし、魅力的なエンジニアの要素とは、いまでも、このような役割分担が主流ではないかと思います。しかし、...
                 </p>
+                <MyCodeBlock inputCode={inputCode}/>
               </div>
             </div>
           </div>
