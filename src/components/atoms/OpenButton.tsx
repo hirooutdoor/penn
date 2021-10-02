@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useRecoilValue } from 'recoil';
+import { buttonState } from 'src/store/buttonGlobalState';
 
 interface Props {}
 
 const OpenButton = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useRecoilValue(buttonState);
 
   return (
     <>

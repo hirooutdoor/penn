@@ -52,6 +52,7 @@ const PublicFeed = () => {
         ))}
       </Post>
       <EditorArea/>
+      
     </div>
   );
 };
