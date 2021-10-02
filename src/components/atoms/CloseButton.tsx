@@ -30,7 +30,7 @@ const CloseButton = (props: Props) => {
         </button>
       </div>
       ) : (
-        <div className='text-xs inline-flex leading-sm px-3 py-1 border  border-penn-green text-penn-green rounded-full w-18'>
+        <div className='text-xs inline-flex leading-sm px-3 py-1 border  border-penn-green text-penn-green dark:bg-penn-green dark:bg-opacity-10 dark:text-penn-lightGreen rounded-full w-18'>
           <button type='button'>ReOpen</button>
         </div>
       )}

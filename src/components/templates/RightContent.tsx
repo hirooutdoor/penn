@@ -8,7 +8,7 @@ interface Props {}
 
 const RightContent = (props: Props) => {
   return (
-    <div className=' mx-6 flex flex-col mt-48 gap-6 border rounded-lg w-[280px] h-[100%] p-8'>
+    <div className=' mx-6 flex flex-col mt-48 gap-6 border dark:border-none rounded-lg w-[280px] h-[100%] p-8'>
       <AvatarWithName />
       <p className='text-penn-gray'>コメントを許可</p>
       <ToggleSwitcher />
