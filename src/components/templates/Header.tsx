@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import DarkModeSwitch from '../molecles/DarkModeSwitch';
-import Logo from '../molecles/Logo';
+import Logo from 'src/components/molecles/Logo';
 
 interface Props {}
 

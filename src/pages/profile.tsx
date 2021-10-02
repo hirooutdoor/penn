@@ -6,7 +6,7 @@ interface Props {
 
 const profile = (props: Props) => {
   return (
-    <div>
+    <div className=''>
       
     </div>
   )
