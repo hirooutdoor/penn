@@ -1111,6 +1111,66 @@ video {
 	--tw-text-opacity: 1;
 	color: rgba(209, 213, 219, var(--tw-text-opacity));
 }
+.placeholder-gray-500::-moz-placeholder {
+	--tw-placeholder-opacity: 1;
+	color: rgba(107, 114, 128, var(--tw-placeholder-opacity));
+}
+.placeholder-gray-500:-ms-input-placeholder {
+	--tw-placeholder-opacity: 1;
+	color: rgba(107, 114, 128, var(--tw-placeholder-opacity));
+}
+.placeholder-gray-500::placeholder {
+	--tw-placeholder-opacity: 1;
+	color: rgba(107, 114, 128, var(--tw-placeholder-opacity));
+}
+.placeholder-penn-gray::-moz-placeholder {
+	--tw-placeholder-opacity: 1;
+	color: rgba(120, 130, 146, var(--tw-placeholder-opacity));
+}
+.placeholder-penn-gray:-ms-input-placeholder {
+	--tw-placeholder-opacity: 1;
+	color: rgba(120, 130, 146, var(--tw-placeholder-opacity));
+}
+.placeholder-penn-gray::placeholder {
+	--tw-placeholder-opacity: 1;
+	color: rgba(120, 130, 146, var(--tw-placeholder-opacity));
+}
+.placeholder-opacity-50::-moz-placeholder {
+	--tw-placeholder-opacity: 0.5;
+}
+.placeholder-opacity-50:-ms-input-placeholder {
+	--tw-placeholder-opacity: 0.5;
+}
+.placeholder-opacity-50::placeholder {
+	--tw-placeholder-opacity: 0.5;
+}
+.placeholder-opacity-70::-moz-placeholder {
+	--tw-placeholder-opacity: 0.7;
+}
+.placeholder-opacity-70:-ms-input-placeholder {
+	--tw-placeholder-opacity: 0.7;
+}
+.placeholder-opacity-70::placeholder {
+	--tw-placeholder-opacity: 0.7;
+}
+.placeholder-opacity-0::-moz-placeholder {
+	--tw-placeholder-opacity: 0;
+}
+.placeholder-opacity-0:-ms-input-placeholder {
+	--tw-placeholder-opacity: 0;
+}
+.placeholder-opacity-0::placeholder {
+	--tw-placeholder-opacity: 0;
+}
+.placeholder-opacity-60::-moz-placeholder {
+	--tw-placeholder-opacity: 0.6;
+}
+.placeholder-opacity-60:-ms-input-placeholder {
+	--tw-placeholder-opacity: 0.6;
+}
+.placeholder-opacity-60::placeholder {
+	--tw-placeholder-opacity: 0.6;
+}
 .opacity-0 {
 	opacity: 0;
 }

@@ -25,7 +25,10 @@ const EditorArea = (props: Props) => {
               Guide
             </li>
           </ul>
-          <textarea className='w-[100%] h-60 border-none outline-none dark:border-penn-gray dark:bg-black rounded-lg p-8 text-left mb-10 ' />
+          <textarea
+            className='w-[100%] h-60 border-none outline-none dark:border-penn-gray dark:bg-black rounded-lg p-8 text-left mb-10 placeholder-penn-gray placeholder-opacity-50 '
+            placeholder='Write your thoughts.'
+          />
         </div>
         <div className='flex justify-end gap-4 mr-10 mb-4'>
           <CloseButton />
