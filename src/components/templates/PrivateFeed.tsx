@@ -13,9 +13,9 @@ const PublicFeed = () => {
   const articles = useRecoilValue(articleState);
 
   return (
-    <div className='flex flex-col ml-60 gap-4'>
+    <div className='flex flex-col ml-48 w-[690px] gap-4'>
       <div className='text-lg font-bold mt-10'>
-        <div className='flex gap-2'>
+        <div className='flex gap-2 '>
           <h1>React Hooksのお勉強</h1>
           <MenuIcon>
             <path
@@ -29,7 +29,7 @@ const PublicFeed = () => {
         </div>
       </div>
       <OpenButton />
-      <div className='flex gap-4'>
+      <div className='flex gap-4 '>
         <Tag>React</Tag>
         <Tag>JavaScript</Tag>
         <MenuIcon>
@@ -48,11 +48,14 @@ const PublicFeed = () => {
             <PostItem key={article.id} />
             <PostItem key={article.id} />
             <PostItem key={article.id} />
+            <PostItem key={article.id} />
+            <PostItem key={article.id} />
+            <PostItem key={article.id} />
           </>
         ))}
       </Post>
       <EditorArea/>
-      
+
     </div>
   );
 };

@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       colors: {
         "penn-green": "#00B6B9",
+        "penn-lightGreen": "#00B6B9",
         "penn-gray": "#788292",
         "penn-dark": "#203758",
         "penn-light": '#9EA7B6',
