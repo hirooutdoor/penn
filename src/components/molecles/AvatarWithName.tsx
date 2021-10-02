@@ -11,7 +11,7 @@ export const AvatarWithName = (props: Props) => {
       <div className='flex gap-4'>
         <Avatar/>
         <div className='flex flex-col'>
-          <p className='text-sm'>Hiro Arminayuef</p>
+          <p className='text-sm'>Hiro-Chan</p>
           </div>
         </div>
     </>

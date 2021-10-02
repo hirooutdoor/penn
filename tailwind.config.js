@@ -17,6 +17,7 @@ module.exports = {
       Ubuntu: ["Ubuntu, sans-serif"],
     },
     container: {
+      height: '100%',
       center: true,
       padding: '8rem',
       screens: {

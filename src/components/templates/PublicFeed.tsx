@@ -8,7 +8,7 @@ import { Filter } from '../organism/Filter'
 import { Post } from '../organism/Post'
 
 
-export const Feed = () => {
+const PublicFeed = () => {
 
   const articles = useRecoilValue(articleState)
 
@@ -36,3 +36,5 @@ export const Feed = () => {
     </div>
   )
 }
+
+export default PublicFeed;
