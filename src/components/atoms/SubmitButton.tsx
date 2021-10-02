@@ -8,7 +8,7 @@ const SubmitButton = (props: Props) => {
   return (
     <>
       {isFilled ? (
-        <div className='text-xs inline-flex leading-sm px-3 py-1 border  border-penn-green text-penn-green rounded-full w-18'>
+        <div className='text-xs inline-flex leading-sm px-3 py-1 border  border-penn-green dark:bg-penn-green dark:bg-opacity-10 dark:text-penn-lightGreen text-penn-green rounded-full w-18'>
           <button type='button'>投稿する</button>
         </div>
       ) : (

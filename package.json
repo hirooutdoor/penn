@@ -14,6 +14,7 @@
     "css:build": "postcss ./src/styles/tailwind.css -o ./src/styles/globals.css"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.1",
     "next": "11.1.0",
     "next-themes": "^0.0.15",
     "react": "17.0.2",
