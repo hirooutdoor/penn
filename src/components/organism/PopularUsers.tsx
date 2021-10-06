@@ -1,5 +1,5 @@
 import React from 'react'
-import { FollowButotn } from '../atoms/FollowButotn'
+import { FollowButotn } from '../atoms/FollowButton'
 import { AvatarWithName } from '../molecles/AvatarWithName'
 
 interface Props {
