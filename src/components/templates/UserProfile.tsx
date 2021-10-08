@@ -3,12 +3,20 @@ import Image from 'next/image';
 
 import { FaGithub, FaTwitter, FaGlobe } from 'react-icons/fa';
 
-import MenuIcon from '../atoms/MenuIcon';
 import FollowButton from '../atoms/FollowButton';
+import Heatmap from '../organism/Heatmap';
+import { Filter } from '../organism/Filter';
+import FilterItem from '../organism/FilterItem';
+import MemoListItem from '../organism/MemoListItem';
+import MemoList from '../organism/MemoList';
+import { useRecoilValue } from 'recoil';
+import { memoState } from 'src/store/articleGlobalState';
+import MenuIcon from '../atoms/MenuIcon';
 
 interface Props {}
 
 const UserProfile = (props: Props) => {
+  const memos = useRecoilValue(memoState);
   return (
     <div className='flex flex-col ml-60'>
       <div className='ml mt-8 w-[690px] flex gap-8'>
@@ -40,9 +48,58 @@ const UserProfile = (props: Props) => {
           好きな食べ物はプリンです。
         </p>
       </div>
-      <div className='ml-32 mt-6'>
-        <p className='text-sm text-penn-gray'>120 memos in 2021</p>
-        
+      <div className='ml-24 mt-6 flex flex-col gap-10'>
+        {/* TODO Heatmapの実装 */}
+        {/* <p className='text-sm text-penn-gray'>120 memos in 2021</p>
+        <div className='flex gap-4'>
+          <Heatmap />
+          <div className='flex flex-col text-xs mt-2 gap-1 cursor-pointer'>
+            <p className='rounded-md font-semibold'>2021</p>
+            <p>2020</p>
+            <p>2019</p>
+          </div>
+        </div> */}
+        <Filter>
+          <div className='flex gap-10'>
+            <FilterItem isActive>📝 Memo</FilterItem>
+            <FilterItem isActive={false}>🏷 Issue</FilterItem>
+            <FilterItem isActive={false}>💬 Comment</FilterItem>
+          </div>
+        </Filter>
+        <div className='flex justify-between'>
+          <h2 className='font-bold text-xl'>Memo</h2>
+          <div className='flex'>
+            <MenuIcon>
+              <path
+                className='text-gray-400 '
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
+              />
+            </MenuIcon>
+            <p className='text-penn-gray ml-2'>Search</p>
+          </div>
+        </div>
+
+        <MemoList>
+          {memos.map((memo) => (
+            <>
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+            </>
+          ))}
+        </MemoList>
       </div>
     </div>
   );

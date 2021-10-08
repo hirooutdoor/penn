@@ -1,5 +1,5 @@
 import React from 'react'
-import { FollowButotn } from '../atoms/FollowButton'
+import FollowButton from '../atoms/FollowButton'
 import { AvatarWithName } from '../molecles/AvatarWithName'
 
 interface Props {
@@ -15,19 +15,19 @@ export const PopularUsers = (props: Props) => {
     <div className='flex flex-col border dark:border-penn-gray dark:bg-penn-darkGray rounded-lg p-4 gap-2 divide-y dark:divide-gray-500'>
       <div className='flex gap-4'>
       <AvatarWithName/>
-      <FollowButotn/>
+      <FollowButton/>
       </div>
       <div className='flex gap-4 pt-2'>
       <AvatarWithName/>
-      <FollowButotn/>
+      <FollowButton/>
       </div>
       <div className='flex gap-4 pt-2'>
       <AvatarWithName/>
-      <FollowButotn/>
+      <FollowButton/>
       </div>
       <div className='flex gap-4 pt-2'>
       <AvatarWithName/>
-      <FollowButotn/>
+      <FollowButton/>
       </div>
       </div>
     </>

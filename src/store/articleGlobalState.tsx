@@ -20,6 +20,18 @@ export const articleState = atom({
 //   default: false
 // })
 
+export const memoState = atom({
+  key: 'memoState',
+  default: [{
+    title: '',
+    content: '',
+    category: '',
+    commentsNum: 0,
+    comments: '',
+    likes: 0,
+    id: 0,
+  }],
+});
 
 
 export const currentTodoSelector = selector({
