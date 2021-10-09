@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 
 import { UserInfo } from 'src/components/molecles/UserInfo';
-import { FollowButotn } from 'src/components/atoms/FollowButotn';
+import FollowButton from 'src/components/atoms/FollowButton';
 import PostContents from 'src/components/templates/PostContents';
 import DarkModeSwitch from 'src/components/molecles/DarkModeSwitch';
 
@@ -22,7 +22,7 @@ const Articles: NextPage = () => {
         <h1 className='text-xl my-6' >魅力的なエンジニアの要素とは？</h1>
         <div className='flex justify-start gap-20'>
           <UserInfo/>
-          <FollowButotn/>
+          <FollowButton/>
           <DarkModeSwitch />
         </div>
         <PostContents/>

@@ -1,7 +1,5 @@
 import React from 'react';
 import { UserInfo } from '../molecles/UserInfo';
-import { articleState } from 'src/store/articleGlobalState';
-import { useRecoilValue } from 'recoil';
 import { Like } from '../atoms/Like';
 import { Comment } from '../atoms/Comment';
 import MenuIcon from '../atoms/MenuIcon';
@@ -10,7 +8,6 @@ import MyCodeBlock from 'src/components/molecles/CodeBlock';
 interface Props {}
 
 export const PostItem = (props: Props) => {
-  const articles = useRecoilValue(articleState);
 
   const inputCode = {
     code: 'const articles = useRecoilValue(articleState);\nconst inputCode = console.log("hello world") ',
