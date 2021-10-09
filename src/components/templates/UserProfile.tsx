@@ -48,7 +48,7 @@ const UserProfile = (props: Props) => {
           好きな食べ物はプリンです。
         </p>
       </div>
-      <div className='ml-24 mt-6 flex flex-col gap-10'>
+      <div className='ml-8 mt-6 flex flex-col gap-2'>
         {/* TODO Heatmapの実装 */}
         {/* <p className='text-sm text-penn-gray'>120 memos in 2021</p>
         <div className='flex gap-4'>
@@ -60,13 +60,13 @@ const UserProfile = (props: Props) => {
           </div>
         </div> */}
         <Filter>
-          <div className='flex gap-10'>
+          <div className='ml-16 flex gap-10'>
             <FilterItem isActive>📝 Memo</FilterItem>
             <FilterItem isActive={false}>🏷 Issue</FilterItem>
             <FilterItem isActive={false}>💬 Comment</FilterItem>
           </div>
         </Filter>
-        <div className='flex justify-between'>
+        <div className='border-t-2 border-opacity-50 pt-8 flex justify-between'>
           <h2 className='font-bold text-xl'>Memo</h2>
           <div className='flex'>
             <MenuIcon>
@@ -85,6 +85,18 @@ const UserProfile = (props: Props) => {
         <MemoList>
           {memos.map((memo) => (
             <>
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
+              <MemoListItem key={memo.id} />
               <MemoListItem key={memo.id} />
               <MemoListItem key={memo.id} />
               <MemoListItem key={memo.id} />
