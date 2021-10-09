@@ -7,7 +7,7 @@ type Props = {
 export const Post = ({children}:Props) => {
 
   return (
-    <ul className='flex flex-col justify-center align-middle text-center gap-y-6'>
+    <ul className='flex flex-col gap-y-6 overflow-y-scroll h-[1000px] no-scrollbar'>
       {children}
     </ul>
   )

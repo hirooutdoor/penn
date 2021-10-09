@@ -755,6 +755,9 @@ video {
 .ml-2 {
 	margin-left: 0.5rem;
 }
+.mt-20 {
+	margin-top: 5rem;
+}
 .block {
 	display: block;
 }

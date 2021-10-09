@@ -13,7 +13,7 @@ const PublicFeed = () => {
   const articles = useRecoilValue(articleState)
 
   return (
-    <div className='flex flex-col ml-48 '>
+    <div className='flex flex-col ml-48 mt-10'>
       <div className='flex justify-start gap-4'>
         <SortButton />
         <Filter>
@@ -27,6 +27,9 @@ const PublicFeed = () => {
       <Post>
         {articles.map((article) => (
           <>
+          <PostItem key={article.id} />
+          <PostItem key={article.id} />
+          <PostItem key={article.id} />
           <PostItem key={article.id} />
           <PostItem key={article.id} />
           <PostItem key={article.id} />
