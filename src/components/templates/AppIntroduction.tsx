@@ -10,11 +10,12 @@ const AppIntroduction = () => {
   return (
     <>
       <div className='flex flex-col ml-48 mt-40'>
+        {/* TODO・文章考える */}
         {/* Top */}
         <div className='bg-white dark:bg-black'>
           <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between'>
             <div className='text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl'>
-              <span className='block dark:text-penn-light'>準備はできる前でOK。</span>
+              <span className='block dark:text-penn-light'>未完成でOK。</span>
               <span className='block text-penn-green'>小さくアウトプットをはじめよう。</span>
               <div className=' flex lg:mt-0 lg:flex-shrink-0'>
                 <div className='mt-10 inline-flex rounded-md shadow'>
@@ -35,6 +36,7 @@ const AppIntroduction = () => {
                 </div>
               </div>
             </div>
+            {/* TODO・いい画像に変える？ */}
             <Image src='/hero.svg' alt='Top Image' width={400} height={400} />
           </div>
         </div>
@@ -47,19 +49,19 @@ const AppIntroduction = () => {
                   start from Small step.
                 </h2>
                 <p className='mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl'>
-                  エンジニアのための発信の場
+                  エンジニアのための”プチ”発信の場
                 </p>
-                <p className='mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto'>
-                  Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum
-                  cupiditate veritatis in accusamus quisquam.
+                <p className='mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto '>
+                  忙しい私にとって記事を書くのにはどうしてもハードルがある。<br/>pennを使えば日々の学びを簡単にアウトプットに変えてくことができる。
                 </p>
+                <p className="mt-1 text-lg text-gray-500">- Steve Jobs (Apple ex CEO)</p>
               </div>
-
+              {/* TODO・適切な数にする ＆ 特徴を3つに絞る？機能とは別に */}
               <div className='mt-10'>
                 <dl className='space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10'>
                   <div className='relative'>
                     <dt>
-                      <div className='absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white'>
+                      <div className='absolute flex items-center justify-center h-12 w-12 rounded-md bg-penn-green text-white'>
                         <svg
                           className='h-6 w-6'
                           xmlns='http://www.w3.org/2000/svg'
@@ -77,7 +79,7 @@ const AppIntroduction = () => {
                         </svg>
                       </div>
                       <p className='ml-16 text-lg leading-6 font-medium text-gray-900'>
-                        Competitive exchange rates
+                        Memo
                       </p>
                     </dt>
                     <dd className='mt-2 ml-16 text-base text-gray-500'>
@@ -88,7 +90,7 @@ const AppIntroduction = () => {
 
                   <div className='relative'>
                     <dt>
-                      <div className='absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white'>
+                      <div className='absolute flex items-center justify-center h-12 w-12 rounded-md bg-penn-green text-white'>
                         <svg
                           className='h-6 w-6'
                           xmlns='http://www.w3.org/2000/svg'
@@ -106,7 +108,7 @@ const AppIntroduction = () => {
                         </svg>
                       </div>
                       <p className='ml-16 text-lg leading-6 font-medium text-gray-900'>
-                        No hidden fees
+                        Issue
                       </p>
                     </dt>
                     <dd className='mt-2 ml-16 text-base text-gray-500'>
@@ -117,7 +119,7 @@ const AppIntroduction = () => {
 
                   <div className='relative'>
                     <dt>
-                      <div className='absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white'>
+                      <div className='absolute flex items-center justify-center h-12 w-12 rounded-md bg-penn-green text-white'>
                         <svg
                           className='h-6 w-6'
                           xmlns='http://www.w3.org/2000/svg'
@@ -135,7 +137,7 @@ const AppIntroduction = () => {
                         </svg>
                       </div>
                       <p className='ml-16 text-lg leading-6 font-medium text-gray-900'>
-                        Transfers are instant
+                        Tsumiage
                       </p>
                     </dt>
                     <dd className='mt-2 ml-16 text-base text-gray-500'>
@@ -146,7 +148,7 @@ const AppIntroduction = () => {
 
                   <div className='relative'>
                     <dt>
-                      <div className='absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white'>
+                      <div className='absolute flex items-center justify-center h-12 w-12 rounded-md bg-penn-green text-white'>
                         <svg
                           className='h-6 w-6'
                           xmlns='http://www.w3.org/2000/svg'
