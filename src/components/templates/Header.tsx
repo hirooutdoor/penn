@@ -9,12 +9,12 @@ export const Header = (props: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
-    <div className='container border-b dark:border-b-penn-gray flex justify-between gap-8 py-6 mb-6'>
-      <Logo />
-      <div className='flex gap-4'>
-        {isLoggedIn ? (
+    <div className='container fixed border-b dark:border-b-penn-gray flex justify-end gap-8 py-6 mb-6 h-30 bg-white dark:bg-black'>
+      {/* <Logo /> */}
+      <div className='flex gap-4 mr-20'>
+        {!isLoggedIn ? (
           <>
-            {/* Search */}
+            {/*             
             <button type='button' className='text-gray-400 hover:text-penn-green pt-1'>
               <span className='sr-only'>Search</span>
               <svg
@@ -33,10 +33,8 @@ export const Header = (props: Props) => {
               </svg>
             </button>
 
-            {/* Dark Mode */}
             <DarkModeSwitch />
 
-            {/* Notifications */}
             <button type='button' className='text-gray-400 hover:text-penn-green pt-1'>
               <span className='sr-only'>View notifications</span>
               <svg
@@ -56,7 +54,7 @@ export const Header = (props: Props) => {
               </svg>
             </button>
 
-            {/* Avatar Image */}
+
             <div className='relative'>
               <button
                 type='button'
@@ -74,7 +72,7 @@ export const Header = (props: Props) => {
                   height={30}
                 />
               </button>
-            </div>
+            </div> */}
           </>
         ) : (
           <>
