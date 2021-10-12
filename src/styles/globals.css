@@ -640,6 +640,12 @@ video {
 .z-10 {
 	z-index: 10;
 }
+.z-0 {
+	z-index: 0;
+}
+.z-20 {
+	z-index: 20;
+}
 .m-1 {
 	margin: 0.25rem;
 }
@@ -770,6 +776,12 @@ video {
 }
 .mt-1 {
 	margin-top: 0.25rem;
+}
+.ml-10 {
+	margin-left: 2.5rem;
+}
+.ml-20 {
+	margin-left: 5rem;
 }
 .block {
 	display: block;
