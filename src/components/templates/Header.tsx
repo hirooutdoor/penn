@@ -9,7 +9,7 @@ export const Header = (props: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
-    <div className='container fixed border-b dark:border-b-penn-gray flex justify-end gap-8 py-6 mb-6 h-30 bg-white dark:bg-black'>
+    <div className='container fixed border-b dark:border-b-penn-gray flex justify-end gap-8 py-6 mb-6 h-30 bg-white dark:bg-black z-10'>
       {/* <Logo /> */}
       <div className='flex gap-4 mr-20'>
         {!isLoggedIn ? (

@@ -9,7 +9,7 @@ const AppIntroduction = () => {
 
   return (
     <>
-      <div className='flex flex-col ml-48 mt-40'>
+      <div className='flex flex-col ml-48 mt-40 z-0'>
         {/* TODO・文章考える */}
         {/* Top */}
         <div className='bg-white dark:bg-black'>
