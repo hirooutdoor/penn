@@ -10,7 +10,7 @@ module.exports = {
         'penn-gray': '#788292',
         'penn-dark': '#203758',
         'penn-light': '#9EA7B6',
-        'penn-darkGray': '#242525',
+        'penn-darkGray': '#0D1117',
       },
       fontSize: {
         tiny: '.5rem',
