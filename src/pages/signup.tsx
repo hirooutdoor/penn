@@ -56,9 +56,12 @@ const signin = (props: Props) => {
           </div>
           <form action='#' className='flex flex-col space-y-5'>
             <div className='flex flex-col space-y-1'>
-              <label htmlFor='name' className='text-sm font-semibold text-gray-500'>
-                User name
-              </label>
+              <div className='flex'>
+                <label htmlFor='name' className='text-sm font-semibold text-gray-500'>
+                  User name
+                </label>
+                <p className='ml-2 text-red-600 text-xs'>*Required</p>
+              </div>
               <div className='flex'>
                 <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400 text-opacity-75'>
                   <svg
@@ -87,9 +90,12 @@ const signin = (props: Props) => {
               </div>
             </div>
             <div className='flex flex-col space-y-1'>
-              <label htmlFor='email' className='text-sm font-semibold C'>
-                Email address
-              </label>
+              <div className='flex'>
+                <label htmlFor='email' className='text-sm font-semibold'>
+                  Email address
+                </label>
+                <p className='ml-2 text-red-600 text-xs'>*Required</p>
+              </div>
               <div className='flex'>
                 <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400 text-opacity-75'>
                   <svg
@@ -123,6 +129,7 @@ const signin = (props: Props) => {
                   Password
                 </label>
                 <p className='text-sm ml-2 text-penn-light'>8文字以上の英数字</p>
+                <p className='ml-2 text-red-600 text-xs'>*Required</p>
               </div>
               <div className='flex'>
                 <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400 text-opacity-75'>
@@ -157,6 +164,7 @@ const signin = (props: Props) => {
                 <label htmlFor='password-confirm' className='text-sm font-semibold text-gray-500'>
                   Confirm Password
                 </label>
+                <p className='ml-2 text-red-600 text-xs'>*Required</p>
               </div>
               <div className='flex'>
                 <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400 text-opacity-75'>
