@@ -40,23 +40,9 @@ const signin = (props: Props) => {
             </p>
           </div>
           <div className='p-8 md:flex-1 flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row lg:max-w-screen-md '>
-            <div className='flex justify-center my-2'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='h-7 w-7 text-penn-green m-1'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'
-                />
-              </svg>
+          <div className='text-center my-4 pb-4'>
               <p className='text-penn-dark dark:text-penn-light font-Ubuntu font-bold text-2xl '>
-                penn
+                pennに登録する
               </p>
             </div>
             <form action='#' className='flex flex-col space-y-5'>
@@ -223,7 +209,7 @@ const signin = (props: Props) => {
                   <span className='font-normal text-gray-500'>or sign up with</span>
                   <span className='h-px bg-gray-400 w-14'></span>
                 </span>
-                <div className='flex flex-col space-y-4'>
+                <div className='flex space-x-4 justify-around'>
                   <a
                     href='#'
                     className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
