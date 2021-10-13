@@ -60,7 +60,7 @@ const signin = (props: Props) => {
                 User name
               </label>
               <div className='flex'>
-                <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400'>
+                <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400 text-opacity-75'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='h-4 w-4'
@@ -82,7 +82,7 @@ const signin = (props: Props) => {
                   placeholder='penn-san'
                   autoFocus
                   required
-                  className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200'
+                  className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
                 />
               </div>
             </div>
@@ -91,7 +91,7 @@ const signin = (props: Props) => {
                 Email address
               </label>
               <div className='flex'>
-                <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400'>
+                <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400 text-opacity-75'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='h-4 w-4'
@@ -113,7 +113,7 @@ const signin = (props: Props) => {
                   placeholder='123abc@example.com'
                   autoFocus
                   required
-                  className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200'
+                  className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
                 />
               </div>
             </div>
@@ -125,7 +125,7 @@ const signin = (props: Props) => {
                 <p className='text-sm ml-2 text-penn-light'>8文字以上の英数字</p>
               </div>
               <div className='flex'>
-                <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400'>
+                <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400 text-opacity-75'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='h-4 w-4'
@@ -148,7 +148,7 @@ const signin = (props: Props) => {
                   placeholder='********'
                   autoComplete='new-password'
                   min={8}
-                  className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200'
+                  className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
                 />
               </div>
             </div>
@@ -159,7 +159,7 @@ const signin = (props: Props) => {
                 </label>
               </div>
               <div className='flex'>
-                <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400'>
+                <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400 text-opacity-75'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='h-4 w-4'
@@ -183,7 +183,7 @@ const signin = (props: Props) => {
                   placeholder='********'
                   autoComplete='new-password'
                   min={8}
-                  className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200'
+                  className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
                 />
               </div>
             </div>

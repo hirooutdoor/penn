@@ -59,17 +59,35 @@ const login = (props: Props) => {
               <label htmlFor='email' className='text-sm font-semibold text-gray-500'>
                 Email address
               </label>
-              <input
-                type='email'
-                id='email'
-                placeholder='123abc@example.com'
-                autoFocus
-                required
-                className='px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200'
-              />
+              <div className='flex'>
+                <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400 text-opacity-75'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='h-4 w-4'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+                    />
+                  </svg>
+                </i>
+                <input
+                  type='email'
+                  id='email'
+                  placeholder='123abc@example.com'
+                  autoFocus
+                  required
+                  className='-ml-10 pl-10 w-full px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 '
+                />
+              </div>
             </div>
             <div className='flex flex-col space-y-1'>
-              <div className='flex items-center justify-between'>
+              <div className='flex justify-between'>
                 <label htmlFor='password' className='text-sm font-semibold text-gray-500'>
                   Password
                 </label>
@@ -80,14 +98,32 @@ const login = (props: Props) => {
                   Forgot Password?
                 </a>
               </div>
-              <input
-                type='password'
-                id='password'
-                autoComplete='new-password'
-                placeholder='********'
-                required
-                className='px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200'
-              />
+              <div className='flex'>
+                <i className='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center text-gray-400 text-opacity-75'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='h-4 w-4'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'
+                    />
+                  </svg>
+                </i>
+                <input
+                  type='password'
+                  id='password'
+                  autoComplete='new-password'
+                  placeholder='********'
+                  required
+                  className='-ml-10 pl-10 w-full px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
+                />
+              </div>
             </div>
             <div className='flex items-center space-x-2'>
               <input
