@@ -7,6 +7,7 @@ module.exports = {
       colors: {
         'penn-green': '#00B6B9',
         'penn-lightGreen': '#00FFF0',
+        'penn-darkGreen': '#008E90',
         'penn-gray': '#788292',
         'penn-dark': '#203758',
         'penn-light': '#9EA7B6',
@@ -26,6 +27,10 @@ module.exports = {
         '6xl': '4rem',
         '7xl': '5rem',
       },
+      backgroundImage: {
+        'login-pattern': "url('/city-highway.svg')",
+        'signin-pattern': "url('/city.svg')",
+       },
     },
     fontFamily: {
       Poppins: ['Poppins, sans-serif'],
