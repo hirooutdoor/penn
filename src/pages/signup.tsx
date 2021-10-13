@@ -40,7 +40,7 @@ const signin = (props: Props) => {
             </p>
           </div>
           <div className='p-8 md:flex-1 flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row lg:max-w-screen-md '>
-          <div className='text-center my-4 pb-4'>
+            <div className='text-center my-4 pb-4'>
               <p className='text-penn-dark dark:text-penn-light font-Ubuntu font-bold text-2xl '>
                 pennに登録する
               </p>
@@ -76,7 +76,7 @@ const signin = (props: Props) => {
                     placeholder='penn-san'
                     autoFocus
                     required
-                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
+                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300 '
                   />
                 </div>
               </div>
@@ -109,7 +109,7 @@ const signin = (props: Props) => {
                     id='email'
                     placeholder='123abc@example.com'
                     required
-                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
+                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
                   />
                 </div>
               </div>
@@ -145,7 +145,7 @@ const signin = (props: Props) => {
                     placeholder='********'
                     autoComplete='new-password'
                     min={8}
-                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
+                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
                   />
                 </div>
               </div>
@@ -181,7 +181,7 @@ const signin = (props: Props) => {
                     placeholder='********'
                     autoComplete='new-password'
                     min={8}
-                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
+                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
                   />
                 </div>
               </div>
