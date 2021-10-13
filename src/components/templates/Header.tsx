@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import DarkModeSwitch from '../molecles/DarkModeSwitch';
 import Logo from 'src/components/molecles/Logo';
@@ -77,17 +77,21 @@ export const Header = (props: Props) => {
         ) : (
           <>
             {/* Login Button*/}
-            <button type='button' className='text-penn-gray p-1 text-xs rounded-md'>
-              Login
-            </button>
+            <Link href='/login' passHref>
+              <button type='button' className='text-penn-gray p-1 text-xs rounded-md'>
+                Login
+              </button>
+            </Link>
 
             {/* Signup Button */}
-            <button
-              type='button'
-              className='text-white bg-penn-green py-2 px-3 text-xs rounded-lg uppercase'
-            >
-              Signup
-            </button>
+            <Link href='/signup' passHref>
+              <button
+                type='button'
+                className='text-white bg-penn-green py-2 px-3 text-xs rounded-lg uppercase'
+              >
+                Signup
+              </button>
+            </Link>
           </>
         )}
       </div>
