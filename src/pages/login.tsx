@@ -3,9 +3,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'src/components/molecles/Logo';
 
+import { useUser, login, logout } from 'src/lib/firebase/auth';
+
 interface Props {}
 
-const login = (props: Props) => {
+const Login = (props: Props) => {
+  const user = useUser();
+
+  const handleLogin = (): void => {
+    login().catch((error) => console.error(error));
+  };
+
+  const handleLogout = (): void => {
+    logout().catch((error) => console.error(error));
+  };
+
   return (
     <>
       <div className='container fixed border-b dark:border-b-penn-gray flex gap-8 py-6 mb-6 h-30 bg-white dark:bg-black z-10'>
@@ -126,14 +138,27 @@ const login = (props: Props) => {
                   Remember me
                 </label>
               </div>
-              <div>
-                <button
-                  type='submit'
-                  className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
-                >
-                  Log in
-                </button>
-              </div>
+              {user == null ? (
+                <div>
+                  <button
+                    type='submit'
+                    className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
+                    onClick={handleLogin}
+                  >
+                    Log in
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <button
+                    type='submit'
+                    className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
               <div className='flex flex-col space-y-5'>
                 <span className='flex items-center justify-center space-x-2'>
                   <span className='h-px bg-gray-400 w-14'></span>
@@ -201,4 +226,4 @@ const login = (props: Props) => {
   );
 };
 
-export default login;
+export default Login;

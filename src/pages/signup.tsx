@@ -2,8 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'src/components/molecles/Logo';
+import 'firebase/compat/auth';
 
-interface Props {}
+interface Props {
+  signInSuccessUrl: string;
+  signInOptions: any[];
+}
+
 
 const signin = (props: Props) => {
   return (
