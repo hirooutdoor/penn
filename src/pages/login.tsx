@@ -3,15 +3,23 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'src/components/molecles/Logo';
 
-import { useUser, login, logout } from 'src/lib/firebase/auth';
+import { useUser, googleLogin, githubLogin, twitterLogin, logout } from 'src/lib/firebase/auth';
 
 interface Props {}
 
 const Login = (props: Props) => {
   const user = useUser();
 
-  const handleLogin = (): void => {
-    login().catch((error) => console.error(error));
+  const handleGoogleLogin = (): void => {
+    googleLogin().catch((error) => console.error(error));
+  };
+
+  const handleGithubLogin = (): void => {
+    githubLogin().catch((error) => console.error(error));
+  };
+
+  const handleTwitterLogin = (): void => {
+    twitterLogin().catch((error) => console.error(error));
   };
 
   const handleLogout = (): void => {
@@ -143,7 +151,6 @@ const Login = (props: Props) => {
                   <button
                     type='submit'
                     className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
-                    onClick={handleLogin}
                   >
                     Log in
                   </button>
@@ -165,10 +172,11 @@ const Login = (props: Props) => {
                   <span className='font-normal text-gray-500'>or login with</span>
                   <span className='h-px bg-gray-400 w-14'></span>
                 </span>
-                <div className='flex flex-col space-y-4'>
+                <div className='flex flex-col space-y-4' >
                   <a
                     href='#'
                     className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    onClick={handleGoogleLogin}
                   >
                     <span className='flex items-center'>
                       <Image alt='google icon' src='/google-icon.svg' height={18} width={18} />
@@ -180,6 +188,7 @@ const Login = (props: Props) => {
                   <a
                     href='#'
                     className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    onClick={handleGithubLogin}
                   >
                     <span>
                       <svg
@@ -201,6 +210,7 @@ const Login = (props: Props) => {
                   <a
                     href='#'
                     className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border dark:border-blue-500 border-gray-300 rounded-md group hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    onClick={handleTwitterLogin}
                   >
                     <span>
                       <svg
