@@ -1,16 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'src/components/molecles/Logo';
 import 'firebase/compat/auth';
+import { createUserWithEmailAndPassword, UserCredential } from 'firebase/auth';
+import { useRouter } from 'next/router';
+import { useUser, googleLogin, githubLogin, twitterLogin, logout } from 'src/lib/firebase/auth';
+import { auth } from 'src/lib/firebase/firebase';
+import { useRecoilState } from 'recoil';
+import { emailState, passwordState } from 'src/store/state';
 
 interface Props {
   signInSuccessUrl: string;
   signInOptions: any[];
 }
 
+const SignUp = (props: Props) => {
+  const user = useUser();
+  const router = useRouter();
 
-const signin = (props: Props) => {
+  const [email, setEmail] = useRecoilState(emailState);
+  const [password, setPassword] = useRecoilState(passwordState);
+
+  const handleEmailSignup = (): Promise<void | UserCredential> => {
+    return createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        router.push('/community');
+      })
+      .catch((err) => alert(err.message));
+  };
+
+  //TODO userStateにまとめる
+  //TODO 自分が前に作ったtodoアプリを参考にする
+
+  const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setPassword(e.target.value);
+  };
+
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setEmail(e.target.value);
+  };
+
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setPassword(e.target.value);
+  };
+
   return (
     <>
       <div className='container fixed border-b dark:border-b-penn-gray flex gap-8 py-6 mb-6 h-30 bg-white dark:bg-black z-10'>
@@ -82,6 +121,7 @@ const signin = (props: Props) => {
                     autoFocus
                     required
                     className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300 '
+                    onChange={onChangeUserName}
                   />
                 </div>
               </div>
@@ -115,6 +155,7 @@ const signin = (props: Props) => {
                     placeholder='123abc@example.com'
                     required
                     className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
+                    onChange={onChangeEmail}
                   />
                 </div>
               </div>
@@ -151,6 +192,7 @@ const signin = (props: Props) => {
                     autoComplete='new-password'
                     min={8}
                     className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
+                    onClick={handleEmailSignup}
                   />
                 </div>
               </div>
@@ -187,6 +229,7 @@ const signin = (props: Props) => {
                     autoComplete='new-password'
                     min={8}
                     className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
+                    onChange={onChangePassword}
                   />
                 </div>
               </div>
@@ -204,6 +247,7 @@ const signin = (props: Props) => {
                 <button
                   type='submit'
                   className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
+                  onClick={handleEmailSignup}
                 >
                   Sign up
                 </button>
@@ -275,4 +319,4 @@ const signin = (props: Props) => {
   );
 };
 
-export default signin;
+export default SignUp;

@@ -2,13 +2,61 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'src/components/molecles/Logo';
+import { useState } from 'react';
 
 import { useUser, googleLogin, githubLogin, twitterLogin, logout } from 'src/lib/firebase/auth';
+import { auth } from 'src/lib/firebase/firebase';
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  UserCredential,
+} from 'firebase/auth';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { emailState, passwordState } from 'src/store/state';
 
 interface Props {}
 
 const Login = (props: Props) => {
   const user = useUser();
+  const router = useRouter();
+
+  const [email, setEmail] = useRecoilState(emailState);
+  const [password, setPassword] = useRecoilState(passwordState);
+
+  const handleEmailSignup = (): Promise<void | UserCredential> => {
+    return createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        router.push('/community');
+      })
+      .catch((err) => alert(err.message));
+  };
+
+  const emailLogin = async (): Promise<void | UserCredential> => {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        router.push('/community');
+      })
+      .catch((err) => alert(err.message));
+  };
+
+  const handleEmailleLogin = (): void => {
+    emailLogin().catch((error) => console.error(error));
+  };
+
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setEmail(e.target.value);
+  };
+
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setPassword(e.target.value);
+  };
 
   const handleGoogleLogin = (): void => {
     googleLogin().catch((error) => console.error(error));
@@ -21,6 +69,8 @@ const Login = (props: Props) => {
   const handleTwitterLogin = (): void => {
     twitterLogin().catch((error) => console.error(error));
   };
+
+  //TODO CommunityページにLogout移動移
 
   const handleLogout = (): void => {
     logout().catch((error) => console.error(error));
@@ -91,6 +141,8 @@ const Login = (props: Props) => {
                     type='email'
                     id='email'
                     placeholder='123abc@example.com'
+                    value={email}
+                    onChange={onChangeEmail}
                     autoFocus
                     required
                     className='-ml-10 pl-10 w-full px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
@@ -129,6 +181,8 @@ const Login = (props: Props) => {
                   <input
                     type='password'
                     id='password'
+                    value={password}
+                    onChange={onChangePassword}
                     autoComplete='new-password'
                     placeholder='********'
                     required
@@ -146,33 +200,22 @@ const Login = (props: Props) => {
                   Remember me
                 </label>
               </div>
-              {user == null ? (
-                <div>
-                  <button
-                    type='submit'
-                    className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
-                  >
-                    Log in
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  <button
-                    type='submit'
-                    className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
+              <div>
+                <button
+                  type='submit'
+                  className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
+                  onClick={handleEmailleLogin}
+                >
+                  Log in
+                </button>
+              </div>
               <div className='flex flex-col space-y-5'>
                 <span className='flex items-center justify-center space-x-2'>
                   <span className='h-px bg-gray-400 w-14'></span>
                   <span className='font-normal text-gray-500'>or login with</span>
                   <span className='h-px bg-gray-400 w-14'></span>
                 </span>
-                <div className='flex flex-col space-y-4' >
+                <div className='flex flex-col space-y-4'>
                   <a
                     href='#'
                     className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'

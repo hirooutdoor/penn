@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import { useRecoilValue } from 'recoil';
-import { articleState } from 'src/store/articleGlobalState';
+import { articleState } from 'src/store/state';
 
 const AppIntroduction = () => {
   const articles = useRecoilValue(articleState);

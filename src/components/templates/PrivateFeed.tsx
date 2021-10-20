@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { articleState } from 'src/store/articleGlobalState';
+import { articleState } from 'src/store/state';
 import { PostItem } from '../organism/PostItem';
 import { Post } from '../organism/Post';
 

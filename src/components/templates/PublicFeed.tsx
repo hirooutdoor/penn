@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { articleState } from 'src/store/articleGlobalState'
+import { articleState } from 'src/store/state'
 import SortButton from '../atoms/SortButton'
 import FilterItem from '../organism/FilterItem'
 import { PostItem } from '../organism/PostItem'

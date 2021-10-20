@@ -35,3 +35,20 @@ export const currentTodoSelector = selector({
     return currentArticle;
   },
 });
+
+//TODO userStateにまとめる
+
+export const emailState = atom({
+  key: 'emailState',
+  default: '',
+});
+
+export const passwordState = atom({
+  key: 'passwordState',
+  default: '',
+});
+
+export const userNameState = atom({
+  key: 'userNameState',
+  default: '',
+});

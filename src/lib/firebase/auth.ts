@@ -5,8 +5,6 @@ import {
   signInWithRedirect,
   signOut,
   onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   sendPasswordResetEmail,
   GoogleAuthProvider,
   GithubAuthProvider,
@@ -15,6 +13,7 @@ import {
 } from 'firebase/auth';
 
 import { app, auth, db, storage } from './firebase';
+import router from 'next/router';
 
 type UserState = User | null;
 
@@ -24,23 +23,37 @@ const userState = atom<UserState>({
   dangerouslyAllowMutability: true,
 });
 
-export const googleLogin = (): Promise<void> => {
+export const googleLogin = async (): Promise<void> => {
   const provider = new GoogleAuthProvider();
-  return signInWithRedirect(auth, provider).catch((err) => alert(err.message));
+  await signInWithRedirect(auth, provider)
+    .then(() => {
+      router.push('/community');
+    })
+    .catch((err) => alert(err.message));
 };
 
-export const githubLogin = (): Promise<void> => {
+export const githubLogin = async (): Promise<void> => {
   const provider = new GithubAuthProvider();
-  return signInWithRedirect(auth, provider).catch((err) => alert(err.message));
+  await signInWithRedirect(auth, provider)
+    .then(() => {
+      router.push('/community');
+    })
+    .catch((err) => alert(err.message));
 };
 
-export const twitterLogin = (): Promise<void> => {
+export const twitterLogin = async (): Promise<void> => {
   const provider = new TwitterAuthProvider();
-  return signInWithRedirect(auth, provider).catch((err) => alert(err.message));
+  await signInWithRedirect(auth, provider)
+    .then(() => {
+      router.push('/community');
+    })
+    .catch((err) => alert(err.message));
 };
 
 export const logout = (): Promise<void> => {
-  return signOut(auth);
+  return signOut(auth).then(() => {
+    router.push('/');
+  });
 };
 
 // To manage the user authentication
