@@ -23,6 +23,11 @@ export const articleState = atom({
 //   default: false
 // })
 
+export const buttonState = atom({
+  key: '',
+  default: false,
+});
+
 export const memoState = atom({
   key: 'memoState',
   default: [{ id: '' }],
