@@ -22,8 +22,12 @@ export const googleLogin = (): Promise<void> => {
   return signInWithRedirect(auth, provider)
     .then(() => {
       router.push('/community');
+      process.exit(0);
     })
-    .catch((err) => alert(err.message));
+    .catch((err) => {
+      alert(err.message);
+      process.exit(1);
+    });
 };
 
 export const githubLogin = (): Promise<void> => {
@@ -31,8 +35,12 @@ export const githubLogin = (): Promise<void> => {
   return signInWithRedirect(auth, provider)
     .then(() => {
       router.push('/community');
+      process.exit(0);
     })
-    .catch((err) => alert(err.message));
+    .catch((err) => {
+      alert(err.message);
+      process.exit(1);
+    });
 };
 
 export const twitterLogin = (): Promise<void> => {
@@ -40,16 +48,24 @@ export const twitterLogin = (): Promise<void> => {
   return signInWithRedirect(auth, provider)
     .then(() => {
       router.push('/community');
+      process.exit(0);
     })
-    .catch((err) => alert(err.message));
+    .catch((err) => {
+      alert(err.message);
+      process.exit(1);
+    });
 };
 
 export const logout = (): Promise<void> => {
   return signOut(auth)
     .then(() => {
       router.push('/');
+      process.exit(0);
     })
-    .catch((err) => alert(err.message));
+    .catch((err) => {
+      alert(err.message);
+      process.exit(1);
+    });
 };
 
 // To manage the user authentication

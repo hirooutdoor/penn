@@ -19,8 +19,8 @@ interface Props {}
 
 const Login = (props: Props) => {
   const router = useRouter();
-  const [user, setUser ] = useRecoilState(userState);
-  const [email, setEmail ] = useRecoilState(emailState)
+  const [user, setUser] = useRecoilState(userState);
+  const [email, setEmail] = useRecoilState(emailState);
   const [password, setPassword] = useRecoilState(passwordState);
 
   const handleEmailSignup = (): Promise<void | UserCredential> => {
@@ -29,8 +29,12 @@ const Login = (props: Props) => {
         // Signed in
         const user = userCredential.user;
         router.push('/community');
+        process.exit(0);
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => {
+        alert(err.message);
+        process.exit(1);
+      });
   };
 
   const emailLogin = (): Promise<void | UserCredential> => {
@@ -39,8 +43,12 @@ const Login = (props: Props) => {
         // Signed in
         const user = userCredential.user;
         router.push('/community');
+        process.exit(0);
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => {
+        alert(err.message);
+        process.exit(1);
+      });
   };
 
   const handleEmailleLogin = (): void => {
