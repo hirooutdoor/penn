@@ -34,15 +34,15 @@ const SignUp = (props: Props) => {
   };
 
   const handleGoogleLogin = (): void => {
-    googleLogin().catch((error) => console.error(error));
+    googleLogin();
   };
 
   const handleGithubLogin = (): void => {
-    githubLogin().catch((error) => console.error(error));
+    githubLogin();
   };
 
   const handleTwitterLogin = (): void => {
-    twitterLogin().catch((error) => console.error(error));
+    twitterLogin();
   };
 
   const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {

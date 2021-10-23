@@ -58,15 +58,15 @@ const Login = (props: Props) => {
   };
 
   const handleGoogleLogin = (): void => {
-    googleLogin().catch((error) => console.error(error));
+    googleLogin();
   };
 
   const handleGithubLogin = (): void => {
-    githubLogin().catch((error) => console.error(error));
+    githubLogin();
   };
 
   const handleTwitterLogin = (): void => {
-    twitterLogin().catch((error) => console.error(error));
+    twitterLogin();
   };
 
   return (
