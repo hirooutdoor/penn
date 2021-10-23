@@ -45,9 +45,11 @@ export const twitterLogin = (): Promise<void> => {
 };
 
 export const logout = (): Promise<void> => {
-  return signOut(auth).then(() => {
-    router.push('/');
-  });
+  return signOut(auth)
+    .then(() => {
+      router.push('/');
+    })
+    .catch((err) => alert(err.message));
 };
 
 // To manage the user authentication

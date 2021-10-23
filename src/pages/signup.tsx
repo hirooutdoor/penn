@@ -29,8 +29,12 @@ const SignUp = (props: Props) => {
         // Signed in
         const user = userCredential.user;
         router.push('/community');
+        process.exit(0);
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => {
+        alert(err.message);
+        process.exit(1);
+      });
   };
 
   const handleGoogleLogin = (): void => {
