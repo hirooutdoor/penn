@@ -23,32 +23,26 @@ const Login = (props: Props) => {
   const [email, setEmail] = useRecoilState(emailState);
   const [password, setPassword] = useRecoilState(passwordState);
 
-  const handleEmailSignup = (): Promise<void | UserCredential> => {
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        router.push('/community');
-        process.exit(0);
-      })
-      .catch((err) => {
-        alert(err.message);
-        process.exit(1);
-      });
+  const handleEmailSignup = async () => {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    try {
+      // Signed in
+      const user = userCredential.user;
+      router.push('/community');
+    } catch (err: any) {
+      alert(err.message);
+    }
   };
 
-  const emailLogin = (): Promise<void | UserCredential> => {
-    return signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        router.push('/community');
-        process.exit(0);
-      })
-      .catch((err) => {
-        alert(err.message);
-        process.exit(1);
-      });
+  const emailLogin = async () => {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    try {
+      // Signed in
+      const user = userCredential.user;
+      router.push('/community');
+    } catch (err: any) {
+      alert(err.message);
+    }
   };
 
   const handleEmailleLogin = (): void => {

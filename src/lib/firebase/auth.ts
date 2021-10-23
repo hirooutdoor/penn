@@ -17,55 +17,43 @@ import router from 'next/router';
 import { userState } from 'src/store/state';
 import { UserState } from 'src/types/User';
 
-export const googleLogin = (): Promise<void> => {
+export const googleLogin = async () => {
   const provider = new GoogleAuthProvider();
-  return signInWithRedirect(auth, provider)
-    .then(() => {
-      router.push('/community');
-      process.exit(0);
-    })
-    .catch((err) => {
-      alert(err.message);
-      process.exit(1);
-    });
+  await signInWithRedirect(auth, provider);
+  try {
+    router.push('/community');
+  } catch (err: any) {
+    alert(err.message);
+  }
 };
 
-export const githubLogin = (): Promise<void> => {
+export const githubLogin = async () => {
   const provider = new GithubAuthProvider();
-  return signInWithRedirect(auth, provider)
-    .then(() => {
-      router.push('/community');
-      process.exit(0);
-    })
-    .catch((err) => {
-      alert(err.message);
-      process.exit(1);
-    });
+  await signInWithRedirect(auth, provider);
+  try {
+    router.push('/community');
+  } catch (err: any) {
+    alert(err.message);
+  }
 };
 
-export const twitterLogin = (): Promise<void> => {
+export const twitterLogin = async () => {
   const provider = new TwitterAuthProvider();
-  return signInWithRedirect(auth, provider)
-    .then(() => {
-      router.push('/community');
-      process.exit(0);
-    })
-    .catch((err) => {
-      alert(err.message);
-      process.exit(1);
-    });
+  await signInWithRedirect(auth, provider);
+  try {
+    router.push('/community');
+  } catch (err: any) {
+    alert(err.message);
+  }
 };
 
-export const logout = (): Promise<void> => {
-  return signOut(auth)
-    .then(() => {
-      router.push('/');
-      process.exit(0);
-    })
-    .catch((err) => {
-      alert(err.message);
-      process.exit(1);
-    });
+export const logout = async () => {
+  await signOut(auth);
+  try {
+    router.push('/');
+  } catch (err: any) {
+    alert(err.message);
+  }
 };
 
 // To manage the user authentication

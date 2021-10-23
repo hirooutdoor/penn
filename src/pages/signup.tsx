@@ -8,7 +8,13 @@ import { useRouter } from 'next/router';
 import { useUser, googleLogin, githubLogin, twitterLogin, logout } from 'src/lib/firebase/auth';
 import { auth } from 'src/lib/firebase/firebase';
 import { useRecoilState } from 'recoil';
-import { displayNameState, emailState, passwordState, userState } from 'src/store/state';
+import {
+  avatarImageState,
+  displayNameState,
+  emailState,
+  passwordState,
+  userState,
+} from 'src/store/state';
 
 interface Props {
   signInSuccessUrl: string;
@@ -22,19 +28,17 @@ const SignUp = (props: Props) => {
   const [email, setEmail] = useRecoilState(emailState);
   const [password, setPassword] = useRecoilState(passwordState);
   const [displayName, setDisplayName] = useRecoilState(displayNameState);
+  const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
 
-  const handleEmailSignup = (): Promise<void | UserCredential> => {
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        router.push('/community');
-        process.exit(0);
-      })
-      .catch((err) => {
-        alert(err.message);
-        process.exit(1);
-      });
+  const handleEmailSignup = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // Signed in
+      const user = await userCredential.user;
+      router.push('/community');
+    } catch (err: any) {
+      alert(err.message);
+    }
   };
 
   const handleGoogleLogin = (): void => {
@@ -62,6 +66,14 @@ const SignUp = (props: Props) => {
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setPassword(e.target.value);
+  };
+
+  const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (e.target.files![0]) {
+      setAvatarImage(e.target.files![0]);
+      e.target.value = '';
+    }
   };
 
   return (
@@ -133,6 +145,7 @@ const SignUp = (props: Props) => {
                     id='name'
                     placeholder='penn-san'
                     value={displayName}
+                    autoComplete='username'
                     autoFocus
                     required
                     className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300 '
