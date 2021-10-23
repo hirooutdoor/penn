@@ -33,8 +33,8 @@ const Login = (props: Props) => {
       .catch((err) => alert(err.message));
   };
 
-  const emailLogin = async (): Promise<void | UserCredential> => {
-    await signInWithEmailAndPassword(auth, email, password)
+  const emailLogin = (): Promise<void | UserCredential> => {
+    return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;

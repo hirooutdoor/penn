@@ -23,8 +23,8 @@ const SignUp = (props: Props) => {
   const [password, setPassword] = useRecoilState(passwordState);
   const [displayName, setDisplayName] = useRecoilState(displayNameState);
 
-  const handleEmailSignup = async (): Promise<void | UserCredential> => {
-    await createUserWithEmailAndPassword(auth, email, password)
+  const handleEmailSignup = (): Promise<void | UserCredential> => {
+    return createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;

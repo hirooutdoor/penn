@@ -17,27 +17,27 @@ import router from 'next/router';
 import { userState } from 'src/store/state';
 import { UserState } from 'src/types/User';
 
-export const googleLogin = async (): Promise<void> => {
+export const googleLogin = (): Promise<void> => {
   const provider = new GoogleAuthProvider();
-  await signInWithRedirect(auth, provider)
+  return signInWithRedirect(auth, provider)
     .then(() => {
       router.push('/community');
     })
     .catch((err) => alert(err.message));
 };
 
-export const githubLogin = async (): Promise<void> => {
+export const githubLogin = (): Promise<void> => {
   const provider = new GithubAuthProvider();
-  await signInWithRedirect(auth, provider)
+  return signInWithRedirect(auth, provider)
     .then(() => {
       router.push('/community');
     })
     .catch((err) => alert(err.message));
 };
 
-export const twitterLogin = async (): Promise<void> => {
+export const twitterLogin = (): Promise<void> => {
   const provider = new TwitterAuthProvider();
-  await signInWithRedirect(auth, provider)
+  return signInWithRedirect(auth, provider)
     .then(() => {
       router.push('/community');
     })
