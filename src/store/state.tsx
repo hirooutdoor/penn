@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+import { UserState } from 'src/types/User';
 
 export const articleState = atom({
   key: 'articleState',
@@ -36,7 +37,11 @@ export const currentTodoSelector = selector({
   },
 });
 
-//TODO userStateにまとめる
+export const userState = atom<UserState>({
+  key: 'userState',
+  default: null,
+  dangerouslyAllowMutability: true,
+});
 
 export const emailState = atom({
   key: 'emailState',
@@ -48,7 +53,7 @@ export const passwordState = atom({
   default: '',
 });
 
-export const userNameState = atom({
-  key: 'userNameState',
+export const displayNameState = atom({
+  key: 'displayNameState',
   default: '',
 });

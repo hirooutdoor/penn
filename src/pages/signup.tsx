@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { useUser, googleLogin, githubLogin, twitterLogin, logout } from 'src/lib/firebase/auth';
 import { auth } from 'src/lib/firebase/firebase';
 import { useRecoilState } from 'recoil';
-import { emailState, passwordState } from 'src/store/state';
+import { displayNameState, emailState, passwordState, userState } from 'src/store/state';
 
 interface Props {
   signInSuccessUrl: string;
@@ -16,14 +16,15 @@ interface Props {
 }
 
 const SignUp = (props: Props) => {
-  const user = useUser();
   const router = useRouter();
 
+  const [user, setUser] = useRecoilState(userState);
   const [email, setEmail] = useRecoilState(emailState);
   const [password, setPassword] = useRecoilState(passwordState);
+  const [displayName, setDisplayName] = useRecoilState(displayNameState);
 
-  const handleEmailSignup = (): Promise<void | UserCredential> => {
-    return createUserWithEmailAndPassword(auth, email, password)
+  const handleEmailSignup = async (): Promise<void | UserCredential> => {
+    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -32,12 +33,21 @@ const SignUp = (props: Props) => {
       .catch((err) => alert(err.message));
   };
 
-  //TODO userStateにまとめる
-  //TODO 自分が前に作ったtodoアプリを参考にする
+  const handleGoogleLogin = (): void => {
+    googleLogin().catch((error) => console.error(error));
+  };
+
+  const handleGithubLogin = (): void => {
+    githubLogin().catch((error) => console.error(error));
+  };
+
+  const handleTwitterLogin = (): void => {
+    twitterLogin().catch((error) => console.error(error));
+  };
 
   const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setPassword(e.target.value);
+    setDisplayName(e.target.value);
   };
 
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,6 +128,7 @@ const SignUp = (props: Props) => {
                     type='text'
                     id='name'
                     placeholder='penn-san'
+                    value={displayName}
                     autoFocus
                     required
                     className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300 '
@@ -164,7 +175,7 @@ const SignUp = (props: Props) => {
                   <label htmlFor='password' className='text-sm font-semibold text-gray-500'>
                     Password
                   </label>
-                  <p className='text-sm ml-2 text-penn-light'>8文字以上の英数字</p>
+                  <p className='text-sm ml-2 text-penn-light'>6文字以上の英数字</p>
                   <p className='ml-2 text-red-600 text-xs'>*Required</p>
                 </div>
                 <div className='flex'>
@@ -190,9 +201,9 @@ const SignUp = (props: Props) => {
                     required
                     placeholder='********'
                     autoComplete='new-password'
-                    min={8}
+                    min={6}
                     className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
-                    onClick={handleEmailSignup}
+                    onChange={onChangePassword}
                   />
                 </div>
               </div>
@@ -227,7 +238,7 @@ const SignUp = (props: Props) => {
                     required
                     placeholder='********'
                     autoComplete='new-password'
-                    min={8}
+                    min={6}
                     className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
                     onChange={onChangePassword}
                   />
@@ -262,6 +273,7 @@ const SignUp = (props: Props) => {
                   <a
                     href='#'
                     className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    onClick={handleGoogleLogin}
                   >
                     <span className='flex items-center'>
                       <Image alt='google icon' src='/google-icon.svg' height={18} width={18} />
@@ -273,6 +285,7 @@ const SignUp = (props: Props) => {
                   <a
                     href='#'
                     className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    onClick={handleGithubLogin}
                   >
                     <span>
                       <svg
@@ -294,6 +307,7 @@ const SignUp = (props: Props) => {
                   <a
                     href='#'
                     className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border dark:border-blue-500 border-gray-300 rounded-md group hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    onClick={handleTwitterLogin}
                   >
                     <span>
                       <svg

@@ -13,15 +13,14 @@ import {
 } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
-import { emailState, passwordState } from 'src/store/state';
+import { emailState, passwordState, userState } from 'src/store/state';
 
 interface Props {}
 
 const Login = (props: Props) => {
-  const user = useUser();
   const router = useRouter();
-
-  const [email, setEmail] = useRecoilState(emailState);
+  const [user, setUser ] = useRecoilState(userState);
+  const [email, setEmail ] = useRecoilState(emailState)
   const [password, setPassword] = useRecoilState(passwordState);
 
   const handleEmailSignup = (): Promise<void | UserCredential> => {
@@ -68,12 +67,6 @@ const Login = (props: Props) => {
 
   const handleTwitterLogin = (): void => {
     twitterLogin().catch((error) => console.error(error));
-  };
-
-  //TODO CommunityページにLogout移動移
-
-  const handleLogout = (): void => {
-    logout().catch((error) => console.error(error));
   };
 
   return (
@@ -180,8 +173,8 @@ const Login = (props: Props) => {
                   </i>
                   <input
                     type='password'
-                    id='password'
                     value={password}
+                    id='password'
                     onChange={onChangePassword}
                     autoComplete='new-password'
                     placeholder='********'

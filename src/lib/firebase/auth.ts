@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
-  User,
+  UserInfo,
   signInWithRedirect,
   signOut,
   onAuthStateChanged,
@@ -14,14 +14,8 @@ import {
 
 import { app, auth, db, storage } from './firebase';
 import router from 'next/router';
-
-type UserState = User | null;
-
-const userState = atom<UserState>({
-  key: 'userState',
-  default: null,
-  dangerouslyAllowMutability: true,
-});
+import { userState } from 'src/store/state';
+import { UserState } from 'src/types/User';
 
 export const googleLogin = async (): Promise<void> => {
   const provider = new GoogleAuthProvider();
@@ -59,7 +53,7 @@ export const logout = (): Promise<void> => {
 // To manage the user authentication
 export const useAuth = (): boolean => {
   const [isLoading, setIsLoading] = useState(true);
-  const setUser = useSetRecoilState(userState);
+  const setUser = useSetRecoilState<UserState | null>(userState);
 
   useEffect(() => {
     return onAuthStateChanged(auth, (user) => {
@@ -72,6 +66,6 @@ export const useAuth = (): boolean => {
 };
 
 // Fuction to recall the userState in the other components
-export const useUser = (): UserState => {
+export const useUser = () => {
   return useRecoilValue(userState);
 };
