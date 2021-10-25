@@ -23,26 +23,15 @@ const Login = (props: Props) => {
   const [email, setEmail] = useRecoilState(emailState);
   const [password, setPassword] = useRecoilState(passwordState);
 
-  const handleEmailSignup = async () => {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    try {
-      // Signed in
-      const user = userCredential.user;
-      router.push('/community');
-    } catch (err: any) {
-      alert(err.message);
-    }
-  };
-
   const emailLogin = async () => {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    try {
-      // Signed in
-      const user = userCredential.user;
-      router.push('/community');
-    } catch (err: any) {
-      alert(err.message);
-    }
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        router.push('/community');
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   };
 
   const handleEmailleLogin = (): void => {
@@ -136,6 +125,7 @@ const Login = (props: Props) => {
                     type='email'
                     id='email'
                     placeholder='123abc@example.com'
+                    autoComplete='email'
                     value={email}
                     onChange={onChangeEmail}
                     autoFocus

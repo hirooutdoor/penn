@@ -13,44 +13,47 @@ import {
 } from 'firebase/auth';
 
 import { app, auth, db, storage } from './firebase';
-import router from 'next/router';
+import Router from 'next/router';
 import { userState } from 'src/store/state';
 import { UserState } from 'src/types/User';
 
 export const googleLogin = async () => {
   const provider = new GoogleAuthProvider();
-  await signInWithRedirect(auth, provider);
-  try {
-    router.push('/community');
-  } catch (err: any) {
-    alert(err.message);
-  }
+  await signInWithRedirect(auth, provider)
+    .then(() => {
+      Router.push('/community');
+    })
+    .catch((err: any) => {
+      alert(err.message);
+    });
 };
 
 export const githubLogin = async () => {
   const provider = new GithubAuthProvider();
-  await signInWithRedirect(auth, provider);
-  try {
-    router.push('/community');
-  } catch (err: any) {
-    alert(err.message);
-  }
+  await signInWithRedirect(auth, provider)
+    .then(() => {
+      Router.push('/community');
+    })
+    .catch((err: any) => {
+      alert(err.message);
+    });
 };
 
 export const twitterLogin = async () => {
   const provider = new TwitterAuthProvider();
-  await signInWithRedirect(auth, provider);
-  try {
-    router.push('/community');
-  } catch (err: any) {
-    alert(err.message);
-  }
+  await signInWithRedirect(auth, provider)
+    .then(() => {
+      Router.push('/community');
+    })
+    .catch((err: any) => {
+      alert(err.message);
+    });
 };
 
 export const logout = async () => {
   await signOut(auth);
   try {
-    router.push('/');
+    Router.push('/');
   } catch (err: any) {
     alert(err.message);
   }

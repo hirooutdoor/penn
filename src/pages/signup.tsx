@@ -31,14 +31,14 @@ const SignUp = (props: Props) => {
   const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
 
   const handleEmailSignup = async () => {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    try {
-      // Signed in
-      const user = await userCredential.user;
-      router.push('/community');
-    } catch (err: any) {
-      alert(err.message);
-    }
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        router.push('/community');
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   };
 
   const handleGoogleLogin = (): void => {
