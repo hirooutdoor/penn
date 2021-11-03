@@ -13,7 +13,6 @@ export const articleState = atom({
       commentsNum: 0,
       comments: '',
       likes: 0,
-      id: 0,
     },
   ],
 });

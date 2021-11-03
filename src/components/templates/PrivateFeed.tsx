@@ -45,14 +45,9 @@ const PublicFeed = () => {
         </div>
         <div className='flex flex-col gap-6 my-6 overflow-y-scroll scrollbar-none h-[1000px] no-scrollbar'>
           <Post>
-            {articles.map((article) => (
+            {articles.map((article, index) => (
               <>
-                <PostItem key={article.id} />
-                <PostItem key={article.id} />
-                <PostItem key={article.id} />
-                <PostItem key={article.id} />
-                <PostItem key={article.id} />
-                <PostItem key={article.id} />
+                <PostItem key={index} />
               </>
             ))}
           </Post>

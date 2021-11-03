@@ -7,8 +7,21 @@ import { SideWidget } from 'src/components/templates/SideWidget';
 import SideBar from 'src/components/templates/SideBar';
 import { Header } from 'src/components/templates/Header';
 import AppIntroduction from 'src/components/templates/AppIntroduction';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { userState } from 'src/store/state';
 
 const Home: NextPage = () => {
+
+  const router = useRouter();
+
+  const [user, setUser] = useRecoilState(userState);
+
+  useEffect(() => {
+    user && router.push('/community')
+  }, [router, user])
+
   return (
     <>
       <Head>

@@ -25,14 +25,10 @@ const PublicFeed = () => {
         </Filter>
       </div>
       <Post>
-        {articles.map((article) => (
+        {articles.map((article,index) => (
           <>
-          <PostItem key={article.id} />
-          <PostItem key={article.id} />
-          <PostItem key={article.id} />
-          <PostItem key={article.id} />
-          <PostItem key={article.id} />
-          <PostItem key={article.id} />
+          {/* TODO unique idを付与する。 */}
+          <PostItem key={index} />
           </>
         ))}
       </Post>

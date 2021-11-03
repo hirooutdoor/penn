@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'src/components/molecles/Logo';
 import 'firebase/compat/auth';
-import { createUserWithEmailAndPassword, UserCredential } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useRouter } from 'next/router';
-import { useUser, googleLogin, githubLogin, twitterLogin, logout } from 'src/lib/firebase/auth';
-import { auth } from 'src/lib/firebase/firebase';
+import { githubLogin, googleLogin, twitterLogin } from 'src/lib/firebase/auth';
+import { auth, storage } from 'src/lib/firebase/firebase';
 import { useRecoilState } from 'recoil';
 import {
   avatarImageState,
@@ -15,6 +15,7 @@ import {
   passwordState,
   userState,
 } from 'src/store/state';
+import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
 
 interface Props {
   signInSuccessUrl: string;
@@ -28,7 +29,11 @@ const SignUp = (props: Props) => {
   const [email, setEmail] = useRecoilState(emailState);
   const [password, setPassword] = useRecoilState(passwordState);
   const [displayName, setDisplayName] = useRecoilState(displayNameState);
-  const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
+  // const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
+
+  useEffect(() => {
+    user && router.push('/community');
+  }, [router, user]);
 
   const handleEmailSignup = async () => {
     await createUserWithEmailAndPassword(auth, email, password)
@@ -38,20 +43,15 @@ const SignUp = (props: Props) => {
       })
       .catch((err) => {
         alert(err.message);
+        console.log('error');
       });
   };
 
-  const handleGoogleLogin = (): void => {
-    googleLogin();
-  };
+  const handleGoogleLogin = async (): Promise<void> => googleLogin();
 
-  const handleGithubLogin = (): void => {
-    githubLogin();
-  };
+  const handleGithubLogin = (): Promise<void> => githubLogin();
 
-  const handleTwitterLogin = (): void => {
-    twitterLogin();
-  };
+  const handleTwitterLogin = (): Promise<void> => twitterLogin();
 
   const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -68,13 +68,13 @@ const SignUp = (props: Props) => {
     setPassword(e.target.value);
   };
 
-  const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (e.target.files![0]) {
-      setAvatarImage(e.target.files![0]);
-      e.target.value = '';
-    }
-  };
+  // const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   if (e.target.files![0]) {
+  //     setAvatarImage(e.target.files![0]);
+  //     e.target.value = '';
+  //   }
+  // };
 
   return (
     <>
@@ -115,7 +115,7 @@ const SignUp = (props: Props) => {
                 pennに登録する
               </p>
             </div>
-            <form action='#' className='flex flex-col space-y-5'>
+            <form className='flex flex-col space-y-5'>
               <div className='flex flex-col space-y-1'>
                 <div className='flex'>
                   <label htmlFor='name' className='text-sm font-semibold text-gray-500'>
@@ -224,7 +224,7 @@ const SignUp = (props: Props) => {
                   />
                 </div>
               </div>
-              <div className='flex flex-col space-y-1'>
+              {/* <div className='flex flex-col space-y-1'>
                 <div className='flex'>
                   <label htmlFor='password-confirm' className='text-sm font-semibold text-gray-500'>
                     Confirm Password
@@ -260,7 +260,7 @@ const SignUp = (props: Props) => {
                     onChange={onChangePassword}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className='flex items-center space-x-2'>
                 <input
                   type='checkbox'
@@ -273,7 +273,6 @@ const SignUp = (props: Props) => {
               </div>
               <div>
                 <button
-                  type='submit'
                   className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
                   onClick={handleEmailSignup}
                 >
@@ -288,8 +287,7 @@ const SignUp = (props: Props) => {
                 </span>
                 <div className='flex space-x-4 justify-around'>
                   <a
-                    href='#'
-                    className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
                     onClick={handleGoogleLogin}
                   >
                     <span className='flex items-center'>
@@ -300,8 +298,7 @@ const SignUp = (props: Props) => {
                     </span>
                   </a>
                   <a
-                    href='#'
-                    className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
                     onClick={handleGithubLogin}
                   >
                     <span>
@@ -322,8 +319,7 @@ const SignUp = (props: Props) => {
                     </span>
                   </a>
                   <a
-                    href='#'
-                    className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border dark:border-blue-500 border-gray-300 rounded-md group hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border dark:border-blue-500 border-gray-300 rounded-md group hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
                     onClick={handleTwitterLogin}
                   >
                     <span>
