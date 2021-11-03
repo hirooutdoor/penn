@@ -13,14 +13,13 @@ import { useRecoilState } from 'recoil';
 import { userState } from 'src/store/state';
 
 const Home: NextPage = () => {
-
   const router = useRouter();
 
   const [user, setUser] = useRecoilState(userState);
 
   useEffect(() => {
-    user && router.push('/community')
-  }, [router, user])
+    user && router.push('/community');
+  }, [router, user]);
 
   return (
     <>
@@ -33,8 +32,8 @@ const Home: NextPage = () => {
         <div className='container font-Poppins text-penn-dark dark:text-penn-light'>
           {/* justify-between で要素の幅が固定されている */}
           <Header />
-            <SideBar />
-          <main className='flex justify-between gap-10'>
+          <SideBar />
+          <main className='flex justify-between gap-10 '>
             <AppIntroduction />
           </main>
         </div>

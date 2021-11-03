@@ -4,17 +4,18 @@ import DarkModeSwitch from '../molecles/DarkModeSwitch';
 import Logo from 'src/components/molecles/Logo';
 import Modal from 'src/components/molecles/Modal';
 import { googleLogin } from 'src/lib/firebase/auth';
+import { showState } from 'src/store/state';
+import { useRecoilState } from 'recoil';
 
 interface Props {}
 
 export const Header = (props: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [show, setShow] = useState<boolean>(false);
+  const [show, setShow] = useRecoilState(showState);
 
   const openModal = () => {
-    setShow(true)
-  }
-  const handleLogin = () => googleLogin();
+    setShow(true);
+  };
 
   return (
     <div className='container fixed border-b dark:border-b-penn-gray flex justify-end gap-8 py-6 mb-6 h-30 bg-white dark:bg-black z-10'>
@@ -93,7 +94,7 @@ export const Header = (props: Props) => {
             >
               Login
             </button>
-            <Modal show={show} setShow={setShow}/>
+            <Modal show={show} setShow={setShow} />
             {/* </Link> */}
 
             {/* Signup Button */}

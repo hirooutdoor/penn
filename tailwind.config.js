@@ -4,6 +4,11 @@ module.exports = {
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
+      zIndex: {
+        '-10': '-10',
+        '-20': '-20',
+        '-30': '-30',
+      },
       colors: {
         'penn-green': '#00B6B9',
         'penn-lightGreen': '#00FFF0',
@@ -30,7 +35,7 @@ module.exports = {
       backgroundImage: {
         'login-pattern': "url('/city-highway.svg')",
         'signin-pattern': "url('/city.svg')",
-       },
+      },
     },
     fontFamily: {
       Poppins: ['Poppins, sans-serif'],

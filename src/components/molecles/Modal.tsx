@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { googleLogin } from 'src/lib/firebase/auth';
+import Logo from './Logo';
 
 interface Props {
   show: boolean;
@@ -17,10 +18,10 @@ const Modal = (props: Props) => {
   };
 
   return (
-    <>
+    <div className='z-50'>
       {show ? (
         <div
-          className='fixed z-10 inset-0 overflow-y-auto'
+          className='fixed inset-0 overflow-y-auto'
           aria-labelledby='modal-title'
           role='dialog'
           aria-modal='true'
@@ -83,8 +84,9 @@ const Modal = (props: Props) => {
                   </svg>
                 </button>
               </div>
+
               <div className='flex justify-center'>
-              <Image src='/explore2.svg' alt='explore' height={200} width={200} />
+                <Image src='/share.svg' alt='app image' height={200} width={200} />
               </div>
               <div className='bg-white px-4 pb-4 '>
                 <div className='sm:flex sm:items-start'>
@@ -99,7 +101,7 @@ const Modal = (props: Props) => {
               </div>
               <div className='bg-gray-50 px-4 pt-3 pb-6 sm:px-6 sm:flex-col sm:justify-center items-start'>
                 <a
-                  className='cursor-pointer flex items-center justify-center px-4 py-2 mt-4 mb-8 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                  className='cursor-pointer flex items-center justify-center px-4 py-2 mt-4 mb-8 mx-20 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
                   onClick={handleGoogleLogin}
                 >
                   <span className='flex items-center'>
@@ -110,7 +112,13 @@ const Modal = (props: Props) => {
                   </span>
                 </a>
                 <p className='text-sm'>
-                  <a href='#'>利用規約</a>、<a href='#'>プライバシーポリシー</a>
+                  <a className='underline' href='#'>
+                    利用規約
+                  </a>
+                  、
+                  <a className='underline' href='#'>
+                    プライバシーポリシー
+                  </a>
                   に同意したうえでログインしてください。
                 </p>
               </div>
@@ -118,7 +126,7 @@ const Modal = (props: Props) => {
           </div>
         </div>
       ) : null}
-    </>
+    </div>
   );
 };
 
