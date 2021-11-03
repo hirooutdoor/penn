@@ -18,8 +18,10 @@ export const Header = (props: Props) => {
   };
 
   return (
-    <div className='container fixed border-b dark:border-b-penn-gray flex justify-end gap-8 py-6 mb-6 h-30 bg-white dark:bg-black z-10'>
-      {/* <Logo /> */}
+    <div className='container fixed border-b dark:border-b-penn-gray flex justify-between gap-8 py-6 mb-6 h-30 bg-white dark:bg-black z-10'>
+      <div className='-ml-24'>
+        <Logo />
+      </div>
       <div className='flex gap-4 mr-20'>
         {!isLoggedIn ? (
           <>

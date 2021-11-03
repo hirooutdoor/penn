@@ -9,14 +9,10 @@ import Link from 'next/link';
 import DarkModeSwitch from '../molecles/DarkModeSwitch';
 import Image from 'next/image';
 import { logout } from 'src/lib/firebase/auth';
-import { useRecoilValue } from 'recoil';
-import { showState } from 'src/store/state';
 
 interface Props {}
 
 const SideBar = (props: Props) => {
-
-  const show = useRecoilValue(showState)
 
   const handleLogout = (): void => {
     logout().catch((error) => console.error(error));
@@ -24,7 +20,7 @@ const SideBar = (props: Props) => {
 
   return (
     <>
-      <div className={show?('fixed mx-6 flex flex-col mt-10 gap-6 z-0'):('fixed mx-6 flex flex-col mt-10 gap-6 z-10')}>
+      <div className='fixed mx-6 flex flex-col mt-10 gap-6 z-0'>
         <Logo />
         <WriteButton />
         {/* eslint-disable-next-line @next/next/link-passhref */}
