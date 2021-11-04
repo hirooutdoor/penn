@@ -5,7 +5,7 @@ import Logo from 'src/components/molecles/Logo';
 
 import { googleLogin } from 'src/lib/firebase/auth';
 import { auth } from 'src/lib/firebase/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { emailState, passwordState, userState } from 'src/store/state';
@@ -49,7 +49,7 @@ const Login = (props: Props) => {
     setPassword(e.target.value);
   };
 
-  const handleGoogleLogin = (): Promise<void> => googleLogin();
+  const handleGoogleLogin = (): Promise<void | UserCredential> => googleLogin();
 
   // const handleGithubLogin = (): Promise<void> => githubLogin();
 

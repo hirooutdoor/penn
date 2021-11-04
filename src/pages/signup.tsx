@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'src/components/molecles/Logo';
 import 'firebase/compat/auth';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile, UserCredential } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { googleLogin } from 'src/lib/firebase/auth';
 import { auth, storage } from 'src/lib/firebase/firebase';
@@ -48,7 +48,7 @@ const SignUp = (props: Props) => {
   //     });
   // };
 
-  const handleGoogleLogin = (): Promise<void> => googleLogin();
+  const handleGoogleLogin = (): Promise<void | UserCredential> => googleLogin();
 
   // const handleGithubLogin = (): Promise<void> => githubLogin();
 

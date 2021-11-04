@@ -13,7 +13,7 @@ import {
   signInAnonymously,
 } from 'firebase/auth';
 
-import { app, auth, db, storage } from './firebase';
+import { app, auth, db, provider, storage } from './firebase';
 import Router, { useRouter } from 'next/router';
 import { userState } from 'src/store/state';
 import { UserState } from 'src/types/User';
@@ -29,14 +29,9 @@ import { UserState } from 'src/types/User';
 // }}
 
 export const googleLogin = () => {
-  const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider)
-    .then(() => {
-      Router.push('/community');
-    })
-    .catch((err) => {
-      alert(err.message);
-    });
+  return signInWithPopup(auth, provider).catch((err) => {
+    alert(err.message);
+  });
 };
 
 // export const githubLogin = async () => {
