@@ -5,7 +5,7 @@ import Logo from 'src/components/molecles/Logo';
 import 'firebase/compat/auth';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useRouter } from 'next/router';
-import { githubLogin, googleLogin, twitterLogin } from 'src/lib/firebase/auth';
+import { googleLogin } from 'src/lib/firebase/auth';
 import { auth, storage } from 'src/lib/firebase/firebase';
 import { useRecoilState } from 'recoil';
 import {
@@ -50,9 +50,9 @@ const SignUp = (props: Props) => {
 
   const handleGoogleLogin = (): Promise<void> => googleLogin();
 
-  const handleGithubLogin = (): Promise<void> => githubLogin();
+  // const handleGithubLogin = (): Promise<void> => githubLogin();
 
-  const handleTwitterLogin = (): Promise<void> => twitterLogin();
+  // const handleTwitterLogin = (): Promise<void> => twitterLogin();
 
   const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -300,7 +300,7 @@ const SignUp = (props: Props) => {
                   </a>
                   <a
                     className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
-                    onClick={handleGithubLogin}
+                    // onClick={handleGithubLogin}
                   >
                     <span>
                       <svg
@@ -321,7 +321,7 @@ const SignUp = (props: Props) => {
                   </a>
                   <a
                     className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border dark:border-blue-500 border-gray-300 rounded-md group hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
-                    onClick={handleTwitterLogin}
+                    // onClick={handleTwitterLogin}
                   >
                     <span>
                       <svg

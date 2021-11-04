@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'src/components/molecles/Logo';
 
-import { googleLogin, githubLogin, twitterLogin } from 'src/lib/firebase/auth';
+import { googleLogin } from 'src/lib/firebase/auth';
 import { auth } from 'src/lib/firebase/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
@@ -51,9 +51,9 @@ const Login = (props: Props) => {
 
   const handleGoogleLogin = (): Promise<void> => googleLogin();
 
-  const handleGithubLogin = (): Promise<void> => githubLogin();
+  // const handleGithubLogin = (): Promise<void> => githubLogin();
 
-  const handleTwitterLogin = (): Promise<void> => twitterLogin();
+  // const handleTwitterLogin = (): Promise<void> => twitterLogin();
 
   return (
     <>
@@ -208,7 +208,7 @@ const Login = (props: Props) => {
                   </a>
                   <a
                     className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
-                    onClick={handleGithubLogin}
+                    // onClick={handleGithubLogin}
                   >
                     <span>
                       <svg
@@ -229,7 +229,7 @@ const Login = (props: Props) => {
                   </a>
                   <a
                     className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border dark:border-blue-500 border-gray-300 rounded-md group hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
-                    onClick={handleTwitterLogin}
+                    // onClick={handleTwitterLogin}
                   >
                     <span>
                       <svg
