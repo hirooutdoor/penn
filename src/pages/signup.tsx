@@ -35,19 +35,20 @@ const SignUp = (props: Props) => {
     user && router.push('/community');
   }, [router, user]);
 
-  const handleEmailSignup = async () => {
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        router.push('/community');
-      })
-      .catch((err) => {
-        alert(err.message);
-        console.log('error');
-      });
-  };
+  // <----- Email Signup ------>
+  // const handleEmailSignup = async () => {
+  //   await createUserWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       const user = userCredential.user;
+  //       router.push('/community');
+  //     })
+  //     .catch((err) => {
+  //       alert(err.message);
+  //       console.log('error');
+  //     });
+  // };
 
-  const handleGoogleLogin = async (): Promise<void> => googleLogin();
+  const handleGoogleLogin = (): Promise<void> => googleLogin();
 
   const handleGithubLogin = (): Promise<void> => githubLogin();
 
@@ -274,7 +275,7 @@ const SignUp = (props: Props) => {
               <div>
                 <button
                   className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
-                  onClick={handleEmailSignup}
+                  // onClick={handleEmailSignup}
                 >
                   Sign up
                 </button>

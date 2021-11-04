@@ -22,21 +22,22 @@ const Login = (props: Props) => {
     user && router.push('/community');
   }, [router, user]);
 
-  const emailLogin = async () => {
-    console.log('hello1');
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        router.push('/community');
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
+  // <----- Email Login ------>
+  // const emailLogin = async () => {
+  //   console.log('hello1');
+  //   await signInWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       const user = userCredential.user;
+  //       router.push('/community');
+  //     })
+  //     .catch((err) => {
+  //       alert(err.message);
+  //     });
+  // };
 
-  const handleEmailleLogin = (): void => {
-    emailLogin().catch((error) => console.error(error));
-  };
+  // const handleEmailleLogin = (): void => {
+  //   emailLogin().catch((error) => console.error(error));
+  // };
 
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -48,7 +49,7 @@ const Login = (props: Props) => {
     setPassword(e.target.value);
   };
 
-  const handleGoogleLogin = async (): Promise<void> => googleLogin();
+  const handleGoogleLogin = (): Promise<void> => googleLogin();
 
   const handleGithubLogin = (): Promise<void> => githubLogin();
 
@@ -182,7 +183,7 @@ const Login = (props: Props) => {
               <div>
                 <button
                   className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
-                  onClick={handleEmailleLogin}
+                  // onClick={handleEmailleLogin}
                 >
                   Log in
                 </button>

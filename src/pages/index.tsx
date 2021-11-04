@@ -9,17 +9,19 @@ import { Header } from 'src/components/templates/Header';
 import AppIntroduction from 'src/components/templates/AppIntroduction';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
-import { userState } from 'src/store/state';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { showState, userState } from 'src/store/state';
 
 const Home: NextPage = () => {
   const router = useRouter();
 
   const [user, setUser] = useRecoilState(userState);
+  const setShow = useSetRecoilState(showState);
 
   useEffect(() => {
     user && router.push('/community');
-  }, [router, user]);
+    setShow(false)
+  }, [router, user, setShow]);
 
   return (
     <>
