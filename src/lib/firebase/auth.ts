@@ -57,13 +57,7 @@ export const googleLogin = () => {
 // };
 
 export const logout = (): Promise<void> => {
-  return signOut(auth)
-    .then(() => {
-      Router.push('/');
-    })
-    .catch((err) => {
-      alert(err.message);
-    });
+  return signOut(auth);
 };
 
 // To manage the user authentication

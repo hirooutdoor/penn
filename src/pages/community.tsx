@@ -5,8 +5,19 @@ import Head from 'next/head';
 import PublicFeed from 'src/components/templates/PublicFeed';
 import { SideWidget } from 'src/components/templates/SideWidget';
 import SideBar from 'src/components/templates/SideBar';
+import { useRecoilState } from 'recoil';
+import { userState } from 'src/store/state';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const Community: NextPage = () => {
+  const [user, setUser] = useRecoilState(userState);
+
+  const router = useRouter();
+  useEffect(() => {
+    !user && router.push('/');
+  }, [router, user]);
+
   return (
     <>
       <div className='dark:bg-black transition duration-500'>
