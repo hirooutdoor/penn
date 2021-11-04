@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
@@ -28,8 +29,8 @@ import { UserState } from 'src/types/User';
 //     }
 // }}
 
-export const googleLogin = () => {
-  return signInWithPopup(auth, provider).catch((err) => {
+export const googleLogin = async () => {
+  await signInWithPopup(auth, provider).catch((err) => {
     alert(err.message);
   });
 };
