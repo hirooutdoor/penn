@@ -49,7 +49,7 @@ const Login = (props: Props) => {
     setPassword(e.target.value);
   };
 
-  const handleGoogleLogin = () =>
+  const handleGoogleLogin = (): Promise<void> =>
     googleLogin().catch((e) => {
       console.log(e.message);
     });

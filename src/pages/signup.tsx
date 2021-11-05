@@ -48,7 +48,10 @@ const SignUp = (props: Props) => {
   //     });
   // };
 
-  const handleGoogleLogin = (): Promise<void | UserCredential> => googleLogin();
+  const handleGoogleLogin = (): Promise<void> =>
+    googleLogin().catch((e) => {
+      console.log(e.message);
+    });
 
   // const handleGithubLogin = (): Promise<void> => githubLogin();
 
