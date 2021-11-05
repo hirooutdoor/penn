@@ -2,8 +2,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import PublicFeed from 'src/components/templates/PublicFeed';
-import { SideWidget } from 'src/components/templates/SideWidget';
 import SideBar from 'src/components/templates/SideBar';
 import { Header } from 'src/components/templates/Header';
 import AppIntroduction from 'src/components/templates/AppIntroduction';
@@ -20,7 +18,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     user && router.push('/community');
-    setShow(false)
+    setShow(false);
   }, [router, user, setShow]);
 
   return (

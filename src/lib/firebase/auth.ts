@@ -30,9 +30,14 @@ import { UserState } from 'src/types/User';
 // }}
 
 export const googleLogin = async () => {
-  await signInWithPopup(auth, provider).catch((err) => {
-    alert(err.message);
-  });
+  await signInWithPopup(auth, provider)
+    .then(() => {
+      console.log('google resolved');
+      Router.push('/community');
+    })
+    .catch((e: any) => {
+      alert(e.message);
+    });
 };
 
 // export const githubLogin = async () => {
@@ -57,8 +62,15 @@ export const googleLogin = async () => {
 //   }
 // };
 
-export const logout = (): Promise<void> => {
-  return signOut(auth);
+export const logout = async (): Promise<void> => {
+  await signOut(auth)
+    .then(() => {
+      console.log('logout resolved');
+      Router.push('/');
+    })
+    .catch((e: any) => {
+      alert(e.message);
+    });
 };
 
 // To manage the user authentication
