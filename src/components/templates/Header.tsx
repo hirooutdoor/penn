@@ -2,15 +2,26 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import DarkModeSwitch from '../molecles/DarkModeSwitch';
 import Logo from 'src/components/molecles/Logo';
+import Modal from 'src/components/molecles/Modal';
+import { googleLogin } from 'src/lib/firebase/auth';
+import { showState } from 'src/store/state';
+import { useRecoilState } from 'recoil';
 
 interface Props {}
 
 export const Header = (props: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [show, setShow] = useRecoilState(showState);
+
+  const openModal = () => {
+    setShow(true);
+  };
 
   return (
-    <div className='container fixed border-b dark:border-b-penn-gray flex justify-end gap-8 py-6 mb-6 h-30 bg-white dark:bg-black z-10'>
-      {/* <Logo /> */}
+    <div className='container fixed border-b dark:border-b-penn-gray flex justify-between gap-8 py-6 mb-6 h-30 bg-white dark:bg-black z-10'>
+      <div className='-ml-24'>
+        <Logo />
+      </div>
       <div className='flex gap-4 mr-20'>
         {!isLoggedIn ? (
           <>
@@ -77,21 +88,26 @@ export const Header = (props: Props) => {
         ) : (
           <>
             {/* Login Button*/}
-            <Link href='/login' passHref>
-              <button type='button' className='text-penn-gray p-1 text-xs rounded-md'>
-                Login
-              </button>
-            </Link>
+            {/* <Link href='/login' passHref> */}
+            <button
+              onClick={openModal}
+              type='button'
+              className='text-white bg-penn-green py-2 px-3 text-xs rounded-lg'
+            >
+              Login
+            </button>
+            <Modal show={show} setShow={setShow} />
+            {/* </Link> */}
 
             {/* Signup Button */}
-            <Link href='/signup' passHref>
+            {/* <Link href='/signup' passHref>
               <button
                 type='button'
                 className='text-white bg-penn-green py-2 px-3 text-xs rounded-lg uppercase'
               >
                 Signup
               </button>
-            </Link>
+            </Link> */}
           </>
         )}
       </div>

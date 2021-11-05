@@ -1,11 +1,63 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'src/components/molecles/Logo';
 
+import { googleLogin } from 'src/lib/firebase/auth';
+import { auth } from 'src/lib/firebase/firebase';
+import { signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { emailState, passwordState, userState } from 'src/store/state';
+
 interface Props {}
 
-const login = (props: Props) => {
+const Login = (props: Props) => {
+  const router = useRouter();
+  const [user, setUser] = useRecoilState(userState);
+  const [email, setEmail] = useRecoilState(emailState);
+  const [password, setPassword] = useRecoilState(passwordState);
+
+  useEffect(() => {
+    user && router.push('/community');
+  }, [router, user]);
+
+  // <----- Email Login ------>
+  // const emailLogin = async () => {
+  //   console.log('hello1');
+  //   await signInWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       const user = userCredential.user;
+  //       router.push('/community');
+  //     })
+  //     .catch((err) => {
+  //       alert(err.message);
+  //     });
+  // };
+
+  // const handleEmailleLogin = (): void => {
+  //   emailLogin().catch((error) => console.error(error));
+  // };
+
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setEmail(e.target.value);
+  };
+
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setPassword(e.target.value);
+  };
+
+  const handleGoogleLogin = (): Promise<void> =>
+    googleLogin().catch((e) => {
+      alert(e.message);
+    });
+
+  // const handleGithubLogin = (): Promise<void> => githubLogin();
+
+  // const handleTwitterLogin = (): Promise<void> => twitterLogin();
+
   return (
     <>
       <div className='container fixed border-b dark:border-b-penn-gray flex gap-8 py-6 mb-6 h-30 bg-white dark:bg-black z-10'>
@@ -40,26 +92,12 @@ const login = (props: Props) => {
             </p>
           </div>
           <div className='p-8 md:flex-1 flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row lg:max-w-screen-md '>
-            <div className='flex justify-center my-4'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='h-7 w-7 text-penn-green m-1'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'
-                />
-              </svg>
+            <div className='text-center my-4 pb-6'>
               <p className='text-penn-dark dark:text-penn-light font-Ubuntu font-bold text-2xl '>
-                penn
+                Login
               </p>
             </div>
-            <form action='#' className='flex flex-col space-y-5'>
+            <form className='flex flex-col space-y-5'>
               <div className='flex flex-col space-y-1'>
                 <label htmlFor='email' className='text-sm font-semibold text-gray-500'>
                   Email address
@@ -85,9 +123,12 @@ const login = (props: Props) => {
                     type='email'
                     id='email'
                     placeholder='123abc@example.com'
+                    autoComplete='email'
+                    value={email}
+                    onChange={onChangeEmail}
                     autoFocus
                     required
-                    className='-ml-10 pl-10 w-full px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 '
+                    className='-ml-10 pl-10 w-full px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
                   />
                 </div>
               </div>
@@ -122,11 +163,13 @@ const login = (props: Props) => {
                   </i>
                   <input
                     type='password'
+                    value={password}
                     id='password'
+                    onChange={onChangePassword}
                     autoComplete='new-password'
                     placeholder='********'
                     required
-                    className='-ml-10 pl-10 w-full px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
+                    className='-ml-10 pl-10 w-full px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
                   />
                 </div>
               </div>
@@ -142,8 +185,8 @@ const login = (props: Props) => {
               </div>
               <div>
                 <button
-                  type='submit'
                   className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
+                  // onClick={handleEmailleLogin}
                 >
                   Log in
                 </button>
@@ -156,8 +199,8 @@ const login = (props: Props) => {
                 </span>
                 <div className='flex flex-col space-y-4'>
                   <a
-                    href='#'
-                    className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    onClick={handleGoogleLogin}
                   >
                     <span className='flex items-center'>
                       <Image alt='google icon' src='/google-icon.svg' height={18} width={18} />
@@ -167,8 +210,8 @@ const login = (props: Props) => {
                     </span>
                   </a>
                   <a
-                    href='#'
-                    className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    // onClick={handleGithubLogin}
                   >
                     <span>
                       <svg
@@ -188,8 +231,8 @@ const login = (props: Props) => {
                     </span>
                   </a>
                   <a
-                    href='#'
-                    className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border dark:border-blue-500 border-gray-300 rounded-md group hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border dark:border-blue-500 border-gray-300 rounded-md group hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    // onClick={handleTwitterLogin}
                   >
                     <span>
                       <svg
@@ -215,4 +258,4 @@ const login = (props: Props) => {
   );
 };
 
-export default login;
+export default Login;

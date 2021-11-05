@@ -10,7 +10,7 @@ import FilterItem from '../organism/FilterItem';
 import MemoListItem from '../organism/MemoListItem';
 import MemoList from '../organism/MemoList';
 import { useRecoilValue } from 'recoil';
-import { memoState } from 'src/store/articleGlobalState';
+import { memoState } from 'src/store/state';
 import MenuIcon from '../atoms/MenuIcon';
 
 interface Props {}

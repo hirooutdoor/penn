@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { articleState } from 'src/store/articleGlobalState';
+import { articleState } from 'src/store/state';
 import { PostItem } from '../organism/PostItem';
 import { Post } from '../organism/Post';
 
@@ -45,14 +45,9 @@ const PublicFeed = () => {
         </div>
         <div className='flex flex-col gap-6 my-6 overflow-y-scroll scrollbar-none h-[1000px] no-scrollbar'>
           <Post>
-            {articles.map((article) => (
+            {articles.map((article, index) => (
               <>
-                <PostItem key={article.id} />
-                <PostItem key={article.id} />
-                <PostItem key={article.id} />
-                <PostItem key={article.id} />
-                <PostItem key={article.id} />
-                <PostItem key={article.id} />
+                <PostItem key={index} />
               </>
             ))}
           </Post>

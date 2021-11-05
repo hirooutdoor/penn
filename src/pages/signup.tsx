@@ -1,11 +1,85 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'src/components/molecles/Logo';
+import 'firebase/compat/auth';
+import { createUserWithEmailAndPassword, updateProfile, UserCredential } from 'firebase/auth';
+import { useRouter } from 'next/router';
+import { googleLogin } from 'src/lib/firebase/auth';
+import { auth, storage } from 'src/lib/firebase/firebase';
+import { useRecoilState } from 'recoil';
+import {
+  avatarImageState,
+  displayNameState,
+  emailState,
+  passwordState,
+  userState,
+} from 'src/store/state';
+import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
 
-interface Props {}
+interface Props {
+  signInSuccessUrl: string;
+  signInOptions: any[];
+}
 
-const signin = (props: Props) => {
+const SignUp = (props: Props) => {
+  const router = useRouter();
+
+  const [user, setUser] = useRecoilState(userState);
+  const [email, setEmail] = useRecoilState(emailState);
+  const [password, setPassword] = useRecoilState(passwordState);
+  const [displayName, setDisplayName] = useRecoilState(displayNameState);
+  // const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
+
+  useEffect(() => {
+    user && router.push('/community');
+  }, [router, user]);
+
+  // <----- Email Signup ------>
+  // const handleEmailSignup = async () => {
+  //   await createUserWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       const user = userCredential.user;
+  //       router.push('/community');
+  //     })
+  //     .catch((err) => {
+  //       alert(err.message);
+  //       console.log('error');
+  //     });
+  // };
+
+  const handleGoogleLogin = (): Promise<void> =>
+    googleLogin().catch((e) => {
+      alert(e.message);
+    });
+
+  // const handleGithubLogin = (): Promise<void> => githubLogin();
+
+  // const handleTwitterLogin = (): Promise<void> => twitterLogin();
+
+  const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setDisplayName(e.target.value);
+  };
+
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setEmail(e.target.value);
+  };
+
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setPassword(e.target.value);
+  };
+
+  // const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   if (e.target.files![0]) {
+  //     setAvatarImage(e.target.files![0]);
+  //     e.target.value = '';
+  //   }
+  // };
+
   return (
     <>
       <div className='container fixed border-b dark:border-b-penn-gray flex gap-8 py-6 mb-6 h-30 bg-white dark:bg-black z-10'>
@@ -40,26 +114,12 @@ const signin = (props: Props) => {
             </p>
           </div>
           <div className='p-8 md:flex-1 flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row lg:max-w-screen-md '>
-            <div className='flex justify-center my-2'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='h-7 w-7 text-penn-green m-1'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'
-                />
-              </svg>
+            <div className='text-center my-4 pb-4'>
               <p className='text-penn-dark dark:text-penn-light font-Ubuntu font-bold text-2xl '>
-                penn
+                pennに登録する
               </p>
             </div>
-            <form action='#' className='flex flex-col space-y-5'>
+            <form className='flex flex-col space-y-5'>
               <div className='flex flex-col space-y-1'>
                 <div className='flex'>
                   <label htmlFor='name' className='text-sm font-semibold text-gray-500'>
@@ -88,9 +148,12 @@ const signin = (props: Props) => {
                     type='text'
                     id='name'
                     placeholder='penn-san'
+                    value={displayName}
+                    autoComplete='username'
                     autoFocus
                     required
-                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
+                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300 '
+                    onChange={onChangeUserName}
                   />
                 </div>
               </div>
@@ -123,7 +186,8 @@ const signin = (props: Props) => {
                     id='email'
                     placeholder='123abc@example.com'
                     required
-                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
+                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
+                    onChange={onChangeEmail}
                   />
                 </div>
               </div>
@@ -132,7 +196,7 @@ const signin = (props: Props) => {
                   <label htmlFor='password' className='text-sm font-semibold text-gray-500'>
                     Password
                   </label>
-                  <p className='text-sm ml-2 text-penn-light'>8文字以上の英数字</p>
+                  <p className='text-sm ml-2 text-penn-light'>6文字以上の英数字</p>
                   <p className='ml-2 text-red-600 text-xs'>*Required</p>
                 </div>
                 <div className='flex'>
@@ -158,12 +222,13 @@ const signin = (props: Props) => {
                     required
                     placeholder='********'
                     autoComplete='new-password'
-                    min={8}
-                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
+                    min={6}
+                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
+                    onChange={onChangePassword}
                   />
                 </div>
               </div>
-              <div className='flex flex-col space-y-1'>
+              {/* <div className='flex flex-col space-y-1'>
                 <div className='flex'>
                   <label htmlFor='password-confirm' className='text-sm font-semibold text-gray-500'>
                     Confirm Password
@@ -194,11 +259,12 @@ const signin = (props: Props) => {
                     required
                     placeholder='********'
                     autoComplete='new-password'
-                    min={8}
-                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75'
+                    min={6}
+                    className='-ml-10 pl-10 w-full px-4 py-1 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-400 placeholder-opacity-75 focus:placeholder-gray-300'
+                    onChange={onChangePassword}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className='flex items-center space-x-2'>
                 <input
                   type='checkbox'
@@ -211,8 +277,8 @@ const signin = (props: Props) => {
               </div>
               <div>
                 <button
-                  type='submit'
                   className='w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-penn-green rounded-md shadow hover:bg-penn-darkGreen focus:outline-none focus:ring-blue-200 focus:ring-4'
+                  // onClick={handleEmailSignup}
                 >
                   Sign up
                 </button>
@@ -223,10 +289,10 @@ const signin = (props: Props) => {
                   <span className='font-normal text-gray-500'>or sign up with</span>
                   <span className='h-px bg-gray-400 w-14'></span>
                 </span>
-                <div className='flex flex-col space-y-4'>
+                <div className='flex space-x-4 justify-around'>
                   <a
-                    href='#'
-                    className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-red-400 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    onClick={handleGoogleLogin}
                   >
                     <span className='flex items-center'>
                       <Image alt='google icon' src='/google-icon.svg' height={18} width={18} />
@@ -236,8 +302,8 @@ const signin = (props: Props) => {
                     </span>
                   </a>
                   <a
-                    href='#'
-                    className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-300 rounded-md group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    // onClick={handleGithubLogin}
                   >
                     <span>
                       <svg
@@ -257,8 +323,8 @@ const signin = (props: Props) => {
                     </span>
                   </a>
                   <a
-                    href='#'
-                    className='flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border dark:border-blue-500 border-gray-300 rounded-md group hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    className='cursor-pointer flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border dark:border-blue-500 border-gray-300 rounded-md group hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-200'
+                    // onClick={handleTwitterLogin}
                   >
                     <span>
                       <svg
@@ -284,4 +350,4 @@ const signin = (props: Props) => {
   );
 };
 
-export default signin;
+export default SignUp;

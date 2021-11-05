@@ -1,15 +1,20 @@
 import React from 'react';
 import Image from 'next/image';
 
-import { useRecoilValue } from 'recoil';
-import { articleState } from 'src/store/articleGlobalState';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { articleState, showState } from 'src/store/state';
 
 const AppIntroduction = () => {
   const articles = useRecoilValue(articleState);
+  const setShow = useSetRecoilState(showState);
+
+  const openModal = () => {
+    setShow(true);
+  };
 
   return (
     <>
-      <div className='flex flex-col ml-48 mt-40 z-0'>
+      <div className='flex flex-col ml-48 mt-40'>
         {/* TODO・文章考える */}
         {/* Top */}
         <div className='bg-white dark:bg-black'>
@@ -21,7 +26,8 @@ const AppIntroduction = () => {
                 <div className='mt-10 inline-flex rounded-md shadow'>
                   <a
                     href='#'
-                    className='inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-penn-green hover:bg-green-600'
+                    className='inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-penn-green hover:bg-penn-darkGreen'
+                    onClick={openModal}
                   >
                     はじめる
                   </a>
@@ -52,9 +58,11 @@ const AppIntroduction = () => {
                   エンジニアのための”プチ”発信の場
                 </p>
                 <p className='mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto '>
-                  忙しい私にとって記事を書くのにはどうしてもハードルがある。<br/>pennを使えば日々の学びを簡単にアウトプットに変えてくことができる。
+                  忙しい私にとって記事を書くのにはどうしてもハードルがある。
+                  <br />
+                  pennを使えば日々の学びを簡単にアウトプットに変えてくことができる。
                 </p>
-                <p className="mt-1 text-lg text-gray-500">- Steve Jobs (Apple ex CEO)</p>
+                <p className='mt-1 text-lg text-gray-500'>- Steve Jobs (Apple ex CEO)</p>
               </div>
               {/* TODO・適切な数にする ＆ 特徴を3つに絞る？機能とは別に */}
               <div className='mt-10'>
@@ -78,9 +86,7 @@ const AppIntroduction = () => {
                           />
                         </svg>
                       </div>
-                      <p className='ml-16 text-lg leading-6 font-medium text-gray-900'>
-                        Memo
-                      </p>
+                      <p className='ml-16 text-lg leading-6 font-medium text-gray-900'>Memo</p>
                     </dt>
                     <dd className='mt-2 ml-16 text-base text-gray-500'>
                       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit
@@ -107,9 +113,7 @@ const AppIntroduction = () => {
                           />
                         </svg>
                       </div>
-                      <p className='ml-16 text-lg leading-6 font-medium text-gray-900'>
-                        Issue
-                      </p>
+                      <p className='ml-16 text-lg leading-6 font-medium text-gray-900'>Issue</p>
                     </dt>
                     <dd className='mt-2 ml-16 text-base text-gray-500'>
                       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit
@@ -136,9 +140,7 @@ const AppIntroduction = () => {
                           />
                         </svg>
                       </div>
-                      <p className='ml-16 text-lg leading-6 font-medium text-gray-900'>
-                        Tsumiage
-                      </p>
+                      <p className='ml-16 text-lg leading-6 font-medium text-gray-900'>Tsumiage</p>
                     </dt>
                     <dd className='mt-2 ml-16 text-base text-gray-500'>
                       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit

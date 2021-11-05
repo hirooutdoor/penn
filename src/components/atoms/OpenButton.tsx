@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { buttonState } from 'src/store/buttonGlobalState';
+import { buttonState } from 'src/store/state';
 
 interface Props {}
 

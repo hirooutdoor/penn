@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+import { UserState } from 'src/types/User';
 
 export const articleState = atom({
   key: 'articleState',
@@ -12,7 +13,6 @@ export const articleState = atom({
       commentsNum: 0,
       comments: '',
       likes: 0,
-      id: 0,
     },
   ],
 });
@@ -21,6 +21,11 @@ export const articleState = atom({
 //   key: "isDisabledState",
 //   default: false
 // })
+
+export const buttonState = atom({
+  key: '',
+  default: false,
+});
 
 export const memoState = atom({
   key: 'memoState',
@@ -34,4 +39,35 @@ export const currentTodoSelector = selector({
 
     return currentArticle;
   },
+});
+
+export const userState = atom<UserState>({
+  key: 'userState',
+  default: null,
+  dangerouslyAllowMutability: true,
+});
+
+export const emailState = atom({
+  key: 'emailState',
+  default: '',
+});
+
+export const passwordState = atom({
+  key: 'passwordState',
+  default: '',
+});
+
+export const displayNameState = atom({
+  key: 'displayNameState',
+  default: '',
+});
+
+export const avatarImageState = atom<File | null>({
+  key: 'avatarImageState',
+  default: null,
+});
+
+export const showState = atom({
+  key: 'showState',
+  default: false,
 });

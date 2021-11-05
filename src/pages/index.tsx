@@ -2,13 +2,25 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import PublicFeed from 'src/components/templates/PublicFeed';
-import { SideWidget } from 'src/components/templates/SideWidget';
 import SideBar from 'src/components/templates/SideBar';
 import { Header } from 'src/components/templates/Header';
 import AppIntroduction from 'src/components/templates/AppIntroduction';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { showState, userState } from 'src/store/state';
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
+  const [user, setUser] = useRecoilState(userState);
+  const setShow = useSetRecoilState(showState);
+
+  useEffect(() => {
+    user && router.push('/community');
+    setShow(false);
+  }, [router, user, setShow]);
+
   return (
     <>
       <Head>
@@ -20,8 +32,8 @@ const Home: NextPage = () => {
         <div className='container font-Poppins text-penn-dark dark:text-penn-light'>
           {/* justify-between で要素の幅が固定されている */}
           <Header />
-            <SideBar />
-          <main className='flex justify-between gap-10'>
+          <SideBar />
+          <main className='flex justify-between gap-10 '>
             <AppIntroduction />
           </main>
         </div>
