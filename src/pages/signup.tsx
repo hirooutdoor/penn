@@ -50,7 +50,7 @@ const SignUp = (props: Props) => {
 
   const handleGoogleLogin = (): Promise<void> =>
     googleLogin().catch((e) => {
-      console.log(e.message);
+      alert(e.message);
     });
 
   // const handleGithubLogin = (): Promise<void> => githubLogin();
