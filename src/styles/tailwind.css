@@ -29,3 +29,9 @@
     }
   }
 }
+
+/* @layer components {
+  .modalArea {
+    @apply transform transition-all duration-700 ease-in-out;
+  }
+} */

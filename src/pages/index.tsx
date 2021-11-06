@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { showState, userState } from 'src/store/state';
 
+
 const Home: NextPage = () => {
   const router = useRouter();
 
