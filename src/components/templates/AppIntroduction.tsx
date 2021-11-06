@@ -26,7 +26,7 @@ const AppIntroduction = () => {
                 <div className='mt-10 inline-flex rounded-md shadow'>
                   <a
                     href='#'
-                    className='inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-penn-green hover:bg-penn-darkGreen'
+                    className='inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md transition-all duration-500 text-white bg-penn-green hover:bg-penn-darkGreen'
                     onClick={openModal}
                   >
                     はじめる
@@ -35,7 +35,7 @@ const AppIntroduction = () => {
                 <div className='mt-10 ml-3 inline-flex rounded-md shadow'>
                   <a
                     href='#'
-                    className='inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-penn-green dark:text-white bg-white dark:bg-gray-400 hover:bg-indigo-50'
+                    className='inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-penn-green transition-all duration-500 dark:text-white bg-white dark:bg-gray-400 hover:bg-indigo-50'
                   >
                     もっと読む
                   </a>

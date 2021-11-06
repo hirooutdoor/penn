@@ -92,7 +92,7 @@ export const Header = (props: Props) => {
             <button
               onClick={openModal}
               type='button'
-              className='text-white bg-penn-green py-2 px-3 text-xs rounded-lg'
+              className='text-white bg-penn-green transition-all duration-500 hover:bg-penn-darkGreen py-1 px-3 text-xs rounded-lg'
             >
               Login
             </button>
