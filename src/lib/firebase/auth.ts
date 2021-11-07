@@ -33,7 +33,8 @@ export const googleLogin = async () => {
   await signInWithPopup(auth, provider)
     .then(() => {
       console.log('google resolved');
-      Router.push('/community');
+      // TODO user.displayNameの有無によって'/onboarding'か'/community'に遷移させる
+      // Router.push('/community');
     })
     .catch((e: any) => {
       alert(e.message);
