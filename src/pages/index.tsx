@@ -10,7 +10,6 @@ import { useRouter } from 'next/router';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { showState, userState } from 'src/store/state';
 
-
 const Home: NextPage = () => {
   const router = useRouter();
 
@@ -18,7 +17,9 @@ const Home: NextPage = () => {
   const setShow = useSetRecoilState(showState);
 
   useEffect(() => {
-    user && router.push('/community');
+    {
+      user?.displayName ? router.push('/community') : router.push('/onboarding');
+    }
     setShow(false);
   }, [router, user, setShow]);
 

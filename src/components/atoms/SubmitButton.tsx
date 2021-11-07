@@ -5,6 +5,8 @@ interface Props {}
 const SubmitButton = (props: Props) => {
   const [isFilled, setIsFilled] = useState(true);
 
+  //TODO 同じボタンのスタイルはButtonをchildren渡して１つに統一
+
   return (
     <>
       {isFilled ? (
