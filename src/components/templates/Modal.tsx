@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { googleLogin } from 'src/lib/firebase/auth';
-import Logo from './Logo';
+import Logo from '../molecles/Logo';
 
 interface Props {
   show: boolean;

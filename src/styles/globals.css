@@ -813,6 +813,9 @@ video {
 .ml-32 {
 	margin-left: 8rem;
 }
+.mt-5 {
+	margin-top: 1.25rem;
+}
 .block {
 	display: block;
 }
@@ -1248,6 +1251,14 @@ video {
 .border-gray-200 {
 	--tw-border-opacity: 1;
 	border-color: rgba(229, 231, 235, var(--tw-border-opacity));
+}
+.border-gray-700 {
+	--tw-border-opacity: 1;
+	border-color: rgba(55, 65, 81, var(--tw-border-opacity));
+}
+.border-gray-600 {
+	--tw-border-opacity: 1;
+	border-color: rgba(75, 85, 99, var(--tw-border-opacity));
 }
 .border-opacity-50 {
 	--tw-border-opacity: 0.5;

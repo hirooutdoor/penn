@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import DarkModeSwitch from '../molecles/DarkModeSwitch';
 import Logo from 'src/components/molecles/Logo';
-import Modal from 'src/components/molecles/Modal';
+import Modal from 'src/components/templates/Modal';
 import { googleLogin } from 'src/lib/firebase/auth';
 import { showState } from 'src/store/state';
 import { useRecoilState } from 'recoil';

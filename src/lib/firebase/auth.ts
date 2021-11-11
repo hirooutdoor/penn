@@ -12,6 +12,7 @@ import {
   GithubAuthProvider,
   TwitterAuthProvider,
   signInAnonymously,
+  getAdditionalUserInfo,
 } from 'firebase/auth';
 
 import { app, auth, db, provider, storage } from './firebase';
@@ -31,14 +32,19 @@ import { UserState } from 'src/types/User';
 
 export const googleLogin = async () => {
   await signInWithPopup(auth, provider)
-    .then(() => {
+    .then((result) => {
       console.log('google resolved');
-      // TODO user.displayNameの有無によって'/onboarding'か'/community'に遷移させる
-      // Router.push('/community');
+      //初回ログインかどうかによって'/onboarding'か'/community'に遷移させる
+      const isNewUser = getAdditionalUserInfo(result)?.isNewUser;
+      const user = result.user;
+      console.log(user);
+      console.log(isNewUser);
+      isNewUser ? Router.push('/onboarding') : Router.push('community');
     })
     .catch((e: any) => {
       alert(e.message);
     });
+  return;
 };
 
 // export const githubLogin = async () => {
@@ -73,6 +79,7 @@ export const logout = async (): Promise<void> => {
       alert(e.message);
     });
 };
+// if user inputs are null, setIsNewUser(true)?
 
 // To manage the user authentication
 export const useAuth = (): boolean => {
@@ -83,6 +90,7 @@ export const useAuth = (): boolean => {
     return onAuthStateChanged(auth, (user) => {
       setUser(user);
       setIsLoading(false);
+      console.log(user);
     });
   }, [setUser]);
 
