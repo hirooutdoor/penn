@@ -9,13 +9,22 @@ import Link from 'next/link';
 import DarkModeSwitch from '../molecles/DarkModeSwitch';
 import Image from 'next/image';
 import { logout } from 'src/lib/firebase/auth';
+import { toast } from 'react-toastify';
+import { useTheme } from 'next-themes';
+import { auth } from 'src/lib/firebase/firebase';
 
 interface Props {}
 
 const SideBar = (props: Props) => {
+  const { theme, setTheme } = useTheme();
+  const user = auth.currentUser;
 
   const handleLogout = (): void => {
-    logout().catch((error) => console.error(error));
+    logout()
+      .then(() => {
+        user ? toast.success('ログアウトしました') : null;
+      })
+      .catch((error) => console.error(error));
   };
 
   return (

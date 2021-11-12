@@ -8,6 +8,7 @@ import { logout } from 'src/lib/firebase/auth';
 import { auth } from 'src/lib/firebase/firebase';
 import { deleteUser } from 'firebase/auth';
 import router from 'next/router';
+import { toast } from 'react-toastify';
 
 const Onboarding: NextPage = () => {
   const [isNext, setIsNext] = useState(false);
@@ -62,6 +63,7 @@ const Onboarding: NextPage = () => {
   const completeSignup = async (): Promise<void> => {
     setIsOnboarding(false);
     try {
+      toast.success('新規登録が成功しました！');
       await router.push('/community');
       console.log('complete signup resolved!');
     } catch {
