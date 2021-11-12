@@ -5,18 +5,21 @@ import Head from 'next/head';
 import PublicFeed from 'src/components/templates/PublicFeed';
 import { SideWidget } from 'src/components/templates/SideWidget';
 import SideBar from 'src/components/templates/SideBar';
-import { useRecoilState } from 'recoil';
-import { userState } from 'src/store/state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { isOnboardingState, userState } from 'src/store/state';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 const Community: NextPage = () => {
   const [user, setUser] = useRecoilState(userState);
+  const isOnboarding = useRecoilValue(isOnboardingState);
 
   const router = useRouter();
   useEffect(() => {
+    console.log(`isOnboarding: ${isOnboarding}`);
+    isOnboarding ? router.push('/onboarding'): null;
     !user && router.push('/');
-  }, [router, user]);
+  }, [router, user, isOnboarding]);
 
   return (
     <>

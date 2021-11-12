@@ -13,7 +13,7 @@ const Onboarding: NextPage = () => {
   const [isNext, setIsNext] = useState(false);
   const [isOnboarding, setIsOnboarding] = useRecoilState(isOnboardingState);
   const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
-  const [updatedUser, setUpdatedUser] = useState({ displayName: '', uid: '' });
+  const [updatedUser, setUpdatedUser] = useState({ displayName: '', uid: '', description: '' });
   const user = auth.currentUser;
 
   useEffect(() => {
@@ -54,7 +54,28 @@ const Onboarding: NextPage = () => {
     setUpdatedUser((user) => ({ ...user, displayName: e.target.value }));
   };
 
-  console.log(user);
+  const handleUpdateUserDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    setUpdatedUser((user) => ({ ...user, description: e.target.value }));
+  };
+
+  const completeSignup = async (): Promise<void> => {
+    setIsOnboarding(false);
+    try {
+      await router.push('/community');
+      console.log('complete signup resolved!');
+    } catch {
+      (error: any) => console.error(error);
+    }
+  };
+
+  const handleSignupComplete = () => {
+    console.log('clicked!!');
+    updatedUser.description === '' ? null : completeSignup();
+  };
+  console.log(`onboarding: ${isOnboarding}`);
+  console.log(`user description:"${updatedUser.description}"`);
+  console.log(`user: ${user}`);
   return (
     <div className=' p-5'>
       {!isNext ? (
@@ -64,7 +85,7 @@ const Onboarding: NextPage = () => {
           <h2 className='text-2xl mb-6 text-penn-dark font-semibold cursor-default'>
             What is your name?
           </h2>
-          <form className='mb-10' id='userName'>
+          <form className='mb-10' id='userName' action='submit'>
             <input
               className='w-60 p-2 mb-4 outline-none border-b transition-all duration-500 focus:outline-none focus:border-penn-green focus:border-b-2 focus:border-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
               type='text'
@@ -97,6 +118,7 @@ const Onboarding: NextPage = () => {
               form='userName'
               className='inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md transition-all duration-500 text-white bg-penn-green hover:bg-penn-darkGreen outline-none focus:ring-2 focus:ring-penn-green focus:ring-opacity-50'
               onClick={handleIsNext}
+              type='submit'
             >
               Next
             </button>
@@ -138,18 +160,23 @@ const Onboarding: NextPage = () => {
                 accept='image/png, image/jpeg'
               />
             </div>
-            <form className=''>
+            <form className='' id='description'>
               <textarea
                 className='bg-gray-100 rounded-md border border-gray-100 leading-normal resize-none w-96 h-40 py-2 px-3 my-8 font-medium outline-none transition-all duration-500 focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
                 name='body'
                 placeholder='自己紹介'
                 maxLength={180}
+                value={updatedUser?.description}
+                onChange={handleUpdateUserDescription}
                 required
               ></textarea>
               <div className='flex justify-center gap-10'>
                 <button
                   className='inline-flex items-center justify-center mt-6 px-5 py-2 border border-transparent text-base font-medium rounded-md transition-all duration-500 text-white bg-penn-green hover:bg-penn-darkGreen outline-none focus:ring-2 focus:ring-penn-green focus:ring-opacity-50'
-                  type='submit'
+                  form='description'
+                  type='button'
+                  onClick={handleSignupComplete}
+                  // disabled={updatedUser?.description === '' ? true: false} //別にいらない？
                 >
                   Pennをはじめる
                 </button>
