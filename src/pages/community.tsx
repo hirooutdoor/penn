@@ -9,9 +9,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { isOnboardingState, userState } from 'src/store/state';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { auth } from 'src/lib/firebase/firebase';
 
 const Community: NextPage = () => {
-  const [user, setUser] = useRecoilState(userState);
+  const user = auth.currentUser;
   const isOnboarding = useRecoilValue(isOnboardingState);
 
   const router = useRouter();

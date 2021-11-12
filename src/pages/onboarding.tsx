@@ -140,6 +140,7 @@ const Onboarding: NextPage = () => {
             <Image
               className='rounded-full cursor-pointer'
               src='/avatar.png'
+              //src={`${user?.photoURL}`}
               alt='Avatar Image'
               width={100}
               height={100}
