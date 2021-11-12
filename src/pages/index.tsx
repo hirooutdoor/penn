@@ -7,21 +7,26 @@ import { Header } from 'src/components/templates/Header';
 import AppIntroduction from 'src/components/templates/AppIntroduction';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { showState, userState } from 'src/store/state';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { isOnboardingState, showState, userState } from 'src/store/state';
+import { auth } from 'src/lib/firebase/firebase';
 
 const Home: NextPage = () => {
   const router = useRouter();
 
-  const [user, setUser] = useRecoilState(userState);
+  const user = auth.currentUser;
   const setShow = useSetRecoilState(showState);
+  const isOnboarding = useRecoilValue(isOnboardingState);
 
   useEffect(() => {
-    {
-      user?.displayName ? router.push('/community') : router.push('/onboarding');
-    }
+    isOnboarding ? router.push('/onboarding') : (user ? router.push('/community') : null);
     setShow(false);
-  }, [router, user, setShow]);
+  }, [isOnboarding, router, user, setShow]);
+
+  console.log(user);
+  console.log(user?.displayName);
+  console.log(user?.uid);
+  console.log(user?.photoURL);
 
   return (
     <>

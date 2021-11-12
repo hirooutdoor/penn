@@ -71,3 +71,8 @@ export const showState = atom({
   key: 'showState',
   default: false,
 });
+
+export const isOnboardingState = atom ({
+  key: 'isOnboardingState',
+  default: false,
+})
