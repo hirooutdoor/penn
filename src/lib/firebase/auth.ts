@@ -29,7 +29,7 @@ import { toast } from 'react-toastify';
 //       permanent: true, // 永続的なリダイレクトかどうか
 //       destination: '/community',
 //     }
-// }}
+// }} 
 
 export const googleLogin = async () => {
   const loginSuccess = () => {
