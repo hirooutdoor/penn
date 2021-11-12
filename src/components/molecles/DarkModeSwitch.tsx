@@ -6,7 +6,10 @@ const DarkModeSwitch = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   useEffect(() => setMounted(true), []);
-
+  // localStorageから値が取れるか確認用
+  // const localTheme = localStorage.getItem('theme')
+  // console.log(localTheme);
+  
   return (
     <div>
       <button

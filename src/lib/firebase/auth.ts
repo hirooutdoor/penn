@@ -19,6 +19,7 @@ import { app, auth, db, provider, storage } from './firebase';
 import Router, { useRouter } from 'next/router';
 import { userState } from 'src/store/state';
 import { UserState } from 'src/types/User';
+import { toast } from 'react-toastify';
 // import { GetServerSideProps } from 'next';
 // import { toast } from 'react-toastify'
 
@@ -31,6 +32,11 @@ import { UserState } from 'src/types/User';
 // }}
 
 export const googleLogin = async () => {
+  const loginSuccess = () => {
+    toast.success('ログインが成功しました');
+    Router.push('community');
+  };
+
   await signInWithPopup(auth, provider)
     .then((result) => {
       console.log('google resolved');
@@ -39,7 +45,7 @@ export const googleLogin = async () => {
       const user = result.user;
       console.log(user);
       console.log(isNewUser);
-      isNewUser ? Router.push('/onboarding') : Router.push('community');
+      isNewUser ? Router.push('/onboarding') : loginSuccess();
     })
     .catch((e: any) => {
       alert(e.message);
