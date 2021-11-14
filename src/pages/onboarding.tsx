@@ -9,13 +9,27 @@ import { auth } from 'src/lib/firebase/firebase';
 import { deleteUser } from 'firebase/auth';
 import router from 'next/router';
 import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
 
 const Onboarding: NextPage = () => {
   const [isNext, setIsNext] = useState(false);
   const [isOnboarding, setIsOnboarding] = useRecoilState(isOnboardingState);
   const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
-  const [updatedUser, setUpdatedUser] = useState({ displayName: '', uid: '', description: '' });
+  const [updatedUser, setUpdatedUser] = useState({ displayName: '', pid: '', description: '' });
   const user = auth.currentUser;
+
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+    criteriaMode: 'all',
+    shouldFocusError: false,
+  });
+
+  const onSubmit = (data: any) => console.log(data);
 
   useEffect(() => {
     setIsOnboarding(true);
@@ -55,6 +69,11 @@ const Onboarding: NextPage = () => {
     setUpdatedUser((user) => ({ ...user, displayName: e.target.value }));
   };
 
+  const handleUpdateUserPid = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setUpdatedUser((user) => ({ ...user, pid: e.target.value }));
+  };
+
   const handleUpdateUserDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setUpdatedUser((user) => ({ ...user, description: e.target.value }));
@@ -71,13 +90,15 @@ const Onboarding: NextPage = () => {
     }
   };
 
-  const handleSignupComplete = () => {
+  const handleSignupComplete = (data: any) => {
+    console.log(data);
     console.log('clicked!!');
-    updatedUser.description === '' ? null : completeSignup();
+    completeSignup();
+    // updatedUser.description === '' ? null : completeSignup();
   };
-  console.log(`onboarding: ${isOnboarding}`);
-  console.log(`user description:"${updatedUser.description}"`);
-  console.log(`user: ${user}`);
+  // console.log(`onboarding: ${isOnboarding}`);
+  // console.log(`user description:"${updatedUser.description}"`);
+  // console.log(`user: ${user}`);
   return (
     <div className=' p-5'>
       {!isNext ? (
@@ -87,7 +108,8 @@ const Onboarding: NextPage = () => {
           <h2 className='text-2xl mb-6 text-penn-dark font-semibold cursor-default'>
             What is your name?
           </h2>
-          <form className='mb-10' id='userName' action='submit'>
+          {/* normal form */}
+          {/* <form className='mb-10' id='userName' action='submit'>
             <input
               className='w-60 p-2 mb-4 outline-none border-b transition-all duration-500 focus:outline-none focus:border-penn-green focus:border-b-2 focus:border-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
               type='text'
@@ -101,14 +123,42 @@ const Onboarding: NextPage = () => {
               <input
                 className='-ml-4 pl-4 w-64 p-2 outline-none border-b transition-all duration-500 focus:outline-none focus:border-penn-green focus:border-b-2 focus:border-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
                 type='text'
-                placeholder='ユーザー名（例: @penn_taro）'
+                placeholder='プロフィールURL(penn.jp/penn_taro)'
                 required
+                value={updatedUser?.pid}
+                onChange={handleUpdateUserPid}
               />
             </div>
             <p className='' hidden>
               ユーザー名には半角英数字とアンダースコア（_）のみ使用できます
             </p>
+          </form> */}
+          {/* React Hook Form */}
+          <form className='mb-10' id='userName' onSubmit={handleSubmit(handleIsNext)}>
+            <input
+              className='w-60 p-2 outline-none border-b transition-all duration-500 focus:outline-none focus:border-penn-green focus:border-b-2 focus:border-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
+              type='text'
+              placeholder='ニックネーム（例: Penn太郎）'
+              {...register('displayName', { required: true })}
+            />
+            <br />
+            {errors.displayName?.types?.required && (
+              <span className='text-sm text-red-500'>文字を入力してください</span>
+            )}
+            <div className='flex justify-center'>
+              <p className='z-10 pt-2  text-penn-gray'>@</p>
+              <input
+                className='-ml-4 pl-4 w-64 p-2 outline-none border-b transition-all duration-500 focus:outline-none focus:border-penn-green focus:border-b-2 focus:border-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
+                type='text'
+                placeholder='プロフィールURL(penn.jp/penn_taro)'
+                {...register('pid', { required: true })}
+              />
+            </div>
+            {errors.pid?.types?.required && (
+              <span className='text-sm text-red-500'>文字を入力してください</span>
+            )}
           </form>
+
           <div className='flex justify-center gap-10 mt-6'>
             <button
               className='text-gray-400 transition-all duration-500 hover:text-penn-gray outline-none focus:ring-2 focus:ring-penn-green focus:ring-opacity-30 rounded-md'
@@ -116,14 +166,12 @@ const Onboarding: NextPage = () => {
             >
               登録を中断する
             </button>
-            <button
+            <input
               form='userName'
               className='inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md transition-all duration-500 text-white bg-penn-green hover:bg-penn-darkGreen outline-none focus:ring-2 focus:ring-penn-green focus:ring-opacity-50'
-              onClick={handleIsNext}
               type='submit'
-            >
-              Next
-            </button>
+              value='Next'
+            />
           </div>
         </div>
       ) : (
@@ -163,8 +211,10 @@ const Onboarding: NextPage = () => {
                 accept='image/png, image/jpeg'
               />
             </div>
-            <form className='' id='description'>
-              <textarea
+            {/* <form className='' id='description'> */}
+            <form className='' onSubmit={handleSubmit(handleSignupComplete)}>
+              {/* normal */}
+              {/* <textarea
                 className='bg-gray-100 rounded-md border border-gray-100 leading-normal resize-none w-96 h-40 py-2 px-3 my-8 font-medium outline-none transition-all duration-500 focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
                 name='body'
                 placeholder='自己紹介'
@@ -172,17 +222,39 @@ const Onboarding: NextPage = () => {
                 value={updatedUser?.description}
                 onChange={handleUpdateUserDescription}
                 required
+              ></textarea> */}
+
+              {/* React Hook Form */}
+              <textarea
+                className='bg-gray-100 rounded-md border border-gray-100 leading-normal resize-none w-96 h-40 py-2 px-3 my-8 font-medium outline-none transition-all duration-500 focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
+                placeholder='自己紹介 （160文字以内）'
+                maxLength={180}
+                {...register('Description', { required: true, maxLength: 160 })}
               ></textarea>
+              <br />
+              {errors.Description?.types?.required && (
+                <span className='text-sm text-red-500'>文字を入力してください</span>
+              )}
+              {errors.Description?.types?.maxLength && (
+                <span className='text-sm text-red-500'>160文字以内にしてください</span>
+              )}
               <div className='flex justify-center gap-10'>
-                <button
+                {/* normal */}
+                {/* <button
                   className='inline-flex items-center justify-center mt-6 px-5 py-2 border border-transparent text-base font-medium rounded-md transition-all duration-500 text-white bg-penn-green hover:bg-penn-darkGreen outline-none focus:ring-2 focus:ring-penn-green focus:ring-opacity-50'
                   form='description'
                   type='button'
                   onClick={handleSignupComplete}
-                  // disabled={updatedUser?.description === '' ? true: false} //別にいらない？
+                  // disabled={updatedUser?.description === '' ? true: false} //required設定しとけば別にいらない？
                 >
                   Pennをはじめる
-                </button>
+                </button> */}
+                {/* react hook form */}
+                <input
+                  className='inline-flex items-center justify-center mt-6 px-5 py-2 border border-transparent text-base font-medium rounded-md transition-all duration-500 text-white bg-penn-green hover:bg-penn-darkGreen outline-none focus:ring-2 focus:ring-penn-green focus:ring-opacity-50 cursor-pointer'
+                  type='submit'
+                  value='Pennを始める'
+                />
               </div>
             </form>
           </div>
