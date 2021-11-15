@@ -5,18 +5,18 @@ import WriteButton from 'src/components/atoms/WriteButton';
 import SideMenu from '../molecles/SideMenu';
 import MenuIcon from '../atoms/MenuIcon';
 import MenuText from '../atoms/MenuText';
-import Link from 'next/link';
 import DarkModeSwitch from '../molecles/DarkModeSwitch';
 import Image from 'next/image';
 import { logout } from 'src/lib/firebase/auth';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import { auth } from 'src/lib/firebase/firebase';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-interface Props {}
-
-const SideBar = (props: Props) => {
+const SideBar = () => {
   const { theme, setTheme } = useTheme();
+  const router = useRouter();
   const user = auth.currentUser;
 
   const handleLogout = (): void => {
@@ -27,53 +27,63 @@ const SideBar = (props: Props) => {
       .catch((error) => console.error(error));
   };
 
+  const handleHomePush = () => {
+    user ? router.push('/') : null;
+  };
+
   return (
     <>
       <div className='fixed mx-6 flex flex-col mt-10 gap-6 z-0'>
         <Logo />
         <WriteButton />
         {/* eslint-disable-next-line @next/next/link-passhref */}
-        <Link href='/'>
-          <SideMenu>
-            <MenuIcon>
+        <SideMenu>
+          <MenuIcon>
+            <Link href={user ? '#' : '/'} passHref>
               <path
                 strokeLinecap='round'
                 strokeLinejoin='round'
                 strokeWidth={2}
                 d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'
               />
-            </MenuIcon>
-            <MenuText>Home</MenuText>
-          </SideMenu>
-        </Link>
+            </Link>
+          </MenuIcon>
+          <MenuText>
+            <Link href={user ? '/community' : '/'}>Home</Link>
+          </MenuText>
+        </SideMenu>
         {/* eslint-disable-next-line @next/next/link-passhref */}
-        <Link href='/memos'>
-          <SideMenu>
-            <MenuIcon>
+        <SideMenu>
+          <MenuIcon>
+            <Link href={user ? '/memos' : '#'} passHref>
               <path
                 strokeLinecap='round'
                 strokeLinejoin='round'
                 strokeWidth={2}
                 d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
               />
-            </MenuIcon>
-            <MenuText>Memo</MenuText>
-          </SideMenu>
-        </Link>
+            </Link>
+          </MenuIcon>
+          <MenuText>
+            <Link href={user ? '/memos' : '#'}>Memo</Link>
+          </MenuText>
+        </SideMenu>
         {/* eslint-disable-next-line @next/next/link-passhref */}
-        <Link href='/issues'>
-          <SideMenu>
-            <MenuIcon>
+        <SideMenu>
+          <MenuIcon>
+            <Link href={user ? '/issues' : '#'} passHref>
               <path
                 strokeLinecap='round'
                 strokeLinejoin='round'
                 strokeWidth={2}
                 d='M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4'
               />
-            </MenuIcon>
-            <MenuText>Issue</MenuText>
-          </SideMenu>
-        </Link>
+            </Link>
+          </MenuIcon>
+          <MenuText>
+            <Link href={user ? '/issues' : '#'}>Issue</Link>
+          </MenuText>
+        </SideMenu>
         <SideMenu>
           <MenuIcon>
             <path
