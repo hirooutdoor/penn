@@ -1,11 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
+import { auth } from 'src/lib/firebase/firebase';
 
 interface Props {}
 
 const Logo = (props: Props) => {
+  const user = auth.currentUser;
   return (
-    <Link href='/' passHref>
+    <Link href={user ? 'community' : '/'} passHref>
       <div className='flex cursor-pointer'>
         <svg
           xmlns='http://www.w3.org/2000/svg'

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Logo from '../molecles/Logo';
 import WriteButton from 'src/components/atoms/WriteButton';
@@ -13,11 +13,13 @@ import { useTheme } from 'next-themes';
 import { auth } from 'src/lib/firebase/firebase';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Popover from '../organism/Popover';
 
 const SideBar = () => {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const user = auth.currentUser;
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleLogout = (): void => {
     logout()
@@ -29,6 +31,10 @@ const SideBar = () => {
 
   const handleHomePush = () => {
     user ? router.push('/') : null;
+  };
+
+  const handlePopover = () => {
+    user && setIsOpen(!isOpen);
   };
 
   return (
@@ -127,14 +133,21 @@ const SideBar = () => {
               d='M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9'
             />
           </MenuIcon>
-          <Image
-            className='h-8 w-8 rounded-full cursor-pointer'
-            src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHBlb3BsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-            alt='Avatar Image'
-            width={30}
-            height={30}
-            onClick={handleLogout}
-          />
+          <div className='flex'>
+            <Image
+              className={`h-8 w-8 rounded-full ${user && 'cursor-pointer'}`}
+              src={
+                user
+                  ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHBlb3BsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+                  : '/nouser-icon.png'
+              }
+              alt='Avatar Image'
+              width={30}
+              height={30}
+              onClick={handlePopover}
+            />
+            {isOpen && <Popover isOpen={isOpen} setIsOpen={setIsOpen} />}
+          </div>
         </div>
       </div>
     </>
