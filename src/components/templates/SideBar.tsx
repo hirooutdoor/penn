@@ -19,7 +19,7 @@ const SideBar = () => {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const user = auth.currentUser;
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleLogout = (): void => {
     logout()
@@ -34,8 +34,8 @@ const SideBar = () => {
   };
 
   const handlePopover = () => {
-    setIsOpen(!isOpen);
-  }
+    user && setIsOpen(!isOpen);
+  };
 
   return (
     <>
@@ -135,14 +135,18 @@ const SideBar = () => {
           </MenuIcon>
           <div className='flex'>
             <Image
-              className='h-8 w-8 rounded-full cursor-pointer'
-              src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHBlb3BsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+              className={`h-8 w-8 rounded-full ${user && 'cursor-pointer'}`}
+              src={
+                user
+                  ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHBlb3BsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+                  : '/nouser-icon.png'
+              }
               alt='Avatar Image'
               width={30}
               height={30}
               onClick={handlePopover}
             />
-            {isOpen && <Popover isOpen={isOpen} setIsOpen={setIsOpen}/>}
+            {isOpen && <Popover isOpen={isOpen} setIsOpen={setIsOpen} />}
           </div>
         </div>
       </div>
