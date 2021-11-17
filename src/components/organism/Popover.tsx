@@ -1,4 +1,7 @@
 import React, { SetStateAction } from 'react';
+import { toast } from 'react-toastify';
+import { logout } from 'src/lib/firebase/auth';
+import { auth } from 'src/lib/firebase/firebase';
 
 interface Props {
   isOpen: boolean;
@@ -6,6 +9,16 @@ interface Props {
 }
 
 const Popover = ({ isOpen, setIsOpen }: Props) => {
+  const user = auth.currentUser;
+
+  const handleLogout = async (): Promise<void> => {
+    await logout()
+      .then(() => {
+        user ? toast.success('ログアウトしました') : null;
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div>
       <div
@@ -17,16 +30,16 @@ const Popover = ({ isOpen, setIsOpen }: Props) => {
       >
         <a
           href='#'
-          className='block px-4 py-2 text-sm text-gray-700'
+          className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:bg-opacity-75'
           role='menuitem'
           tabIndex={-1}
           id='user-menu-item-0'
         >
-          Your Profile
+          My Profile
         </a>
         <a
           href='#'
-          className='block px-4 py-2 text-sm text-gray-700'
+          className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:bg-opacity-75'
           role='menuitem'
           tabIndex={-1}
           id='user-menu-item-1'
@@ -35,10 +48,11 @@ const Popover = ({ isOpen, setIsOpen }: Props) => {
         </a>
         <a
           href='#'
-          className='block px-4 py-2 text-sm text-gray-700'
+          className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:bg-opacity-75'
           role='menuitem'
           tabIndex={-1}
           id='user-menu-item-2'
+          onClick={handleLogout}
         >
           Sign out
         </a>
