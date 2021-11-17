@@ -82,8 +82,8 @@ const Onboarding: NextPage = () => {
   const completeSignup = async (): Promise<void> => {
     setIsOnboarding(false);
     try {
-      toast.success('新規登録が成功しました！');
       await router.push('/community');
+      toast.success('新規登録が成功しました！');
       console.log('complete signup resolved!');
     } catch {
       (error: any) => console.error(error);
