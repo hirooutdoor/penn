@@ -1,4 +1,5 @@
 import React, { SetStateAction } from 'react';
+import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { logout } from 'src/lib/firebase/auth';
 import { auth } from 'src/lib/firebase/firebase';
@@ -28,34 +29,36 @@ const Popover = ({ isOpen, setIsOpen }: Props) => {
         aria-labelledby='user-menu-button'
         tabIndex={-1}
       >
-        <a
-          href='#'
-          className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:bg-opacity-75'
-          role='menuitem'
-          tabIndex={-1}
-          id='user-menu-item-0'
-        >
-          My Profile
-        </a>
-        <a
-          href='#'
-          className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:bg-opacity-75'
-          role='menuitem'
-          tabIndex={-1}
-          id='user-menu-item-1'
-        >
-          Settings
-        </a>
-        <a
-          href='#'
-          className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:bg-opacity-75'
+        <Link href='/profile'>
+          <a
+            className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:bg-opacity-75'
+            role='menuitem'
+            tabIndex={-1}
+            id='user-menu-item-0'
+          >
+            My Profile
+          </a>
+        </Link>
+        <Link href='/settings'>
+          <a
+            href='#'
+            className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:bg-opacity-75'
+            role='menuitem'
+            tabIndex={-1}
+            id='user-menu-item-1'
+          >
+            Settings
+          </a>
+        </Link>
+        <p
+          className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:bg-opacity-75 cursor-pointer'
           role='menuitem'
           tabIndex={-1}
           id='user-menu-item-2'
           onClick={handleLogout}
         >
           Sign out
-        </a>
+        </p>
       </div>
       {/* This is transparent background to trigger setIsOpen(false) */}
       <div
