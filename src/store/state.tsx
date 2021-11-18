@@ -62,7 +62,7 @@ export const displayNameState = atom({
   default: '',
 });
 
-export const avatarImageState = atom<File | null>({
+export const avatarImageState = atom<string | null | undefined | File | void>({
   key: 'avatarImageState',
   default: null,
 });

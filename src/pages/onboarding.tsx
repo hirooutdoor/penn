@@ -10,13 +10,19 @@ import { deleteUser } from 'firebase/auth';
 import router from 'next/router';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+import { Callback, FileUpload, useFileUpload } from 'use-file-upload';
 
 const Onboarding: NextPage = () => {
   const [isNext, setIsNext] = useState(false);
   const [isOnboarding, setIsOnboarding] = useRecoilState(isOnboardingState);
   const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
   const [updatedUser, setUpdatedUser] = useState({ displayName: '', pid: '', description: '' });
+  const [files, selectFiles] = useFileUpload();
   const user = auth.currentUser;
+
+  useEffect(() => {
+    setAvatarImage(user?.photoURL);
+  }, []);
 
   const {
     register,
@@ -29,8 +35,6 @@ const Onboarding: NextPage = () => {
     shouldFocusError: false,
   });
 
-  const onSubmit = (data: any) => console.log(data);
-
   useEffect(() => {
     setIsOnboarding(true);
   }, [setIsOnboarding]);
@@ -42,14 +46,16 @@ const Onboarding: NextPage = () => {
   const hiddenFileInput = useRef<HTMLInputElement>(null);
 
   const handleFileClick = () => {
-    hiddenFileInput.current?.click();
+    // hiddenFileInput.current?.click();
+    selectFiles({ accept: 'image/*', multiple: false }, ({ name, size, source, file }:any) => {
+      console.log('Files Selected', { name, size, source, file });
+    });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    // const uploadedFile = e.target.files?.[0];
-    setAvatarImage(e.target.files![0]); //[0]なくてもいい？ 指定の仕方を考え直す必要あるかも
-    console.log(avatarImage);
+    const uploadedFile = e.target.files![0];
+    setAvatarImage(uploadedFile); //[0]なくてもいい？ 指定の仕方を考え直す必要あるかも
   };
 
   const handleSignupCancel = async (): Promise<void> => {
@@ -84,7 +90,6 @@ const Onboarding: NextPage = () => {
     try {
       await router.push('/community');
       toast.success('新規登録が成功しました！');
-      console.log('complete signup resolved!');
     } catch {
       (error: any) => console.error(error);
     }
@@ -99,6 +104,7 @@ const Onboarding: NextPage = () => {
   // console.log(`onboarding: ${isOnboarding}`);
   // console.log(`user description:"${updatedUser.description}"`);
   // console.log(`user: ${user}`);
+
   return (
     <div className=' p-5'>
       {!isNext ? (
@@ -139,11 +145,14 @@ const Onboarding: NextPage = () => {
               className='w-60 p-2 outline-none border-b transition-all duration-500 focus:outline-none focus:border-penn-green focus:border-b-2 focus:border-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
               type='text'
               placeholder='ニックネーム（例: Penn太郎）'
-              {...register('displayName', { required: true })}
+              {...register('displayName', { required: true, maxLength: 16 })}
             />
             <br />
             {errors.displayName?.types?.required && (
               <span className='text-sm text-red-500'>文字を入力してください</span>
+            )}
+            {errors.displayName?.types?.maxLength && (
+              <span className='text-sm text-red-500'>16文字以内にしてください</span>
             )}
             <div className='flex justify-center'>
               <p className='z-10 pt-2  text-penn-gray'>@</p>
@@ -151,11 +160,14 @@ const Onboarding: NextPage = () => {
                 className='-ml-4 pl-4 w-64 p-2 outline-none border-b transition-all duration-500 focus:outline-none focus:border-penn-green focus:border-b-2 focus:border-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
                 type='text'
                 placeholder='プロフィールURL(penn.jp/penn_taro)'
-                {...register('pid', { required: true })}
+                {...register('pid', { required: true, maxLength: 16 })}
               />
             </div>
             {errors.pid?.types?.required && (
               <span className='text-sm text-red-500'>文字を入力してください</span>
+            )}
+            {errors.pid?.types?.maxLength && (
+              <span className='text-sm text-red-500'>16文字以内にしてください</span>
             )}
           </form>
 
@@ -189,8 +201,9 @@ const Onboarding: NextPage = () => {
             </h1>
             <Image
               className='rounded-full cursor-pointer'
-              src='/avatar.png'
-              //src={`${user?.photoURL}`}
+              // src='/avatar.png'
+              // src={`${avatarImage}`}
+              src={files?.source.replace(/^...../g, '') || avatarImage} //replace(/^...../g, '')先頭の5文字を空文字に置換（blob:が邪魔なので。。。）
               alt='Avatar Image'
               width={100}
               height={100}
@@ -207,8 +220,8 @@ const Onboarding: NextPage = () => {
                 className='hidden'
                 type='file'
                 ref={hiddenFileInput}
-                onChange={handleFileChange}
-                accept='image/png, image/jpeg'
+                // onChange={handleFileChange}
+                accept='image/*'
               />
             </div>
             {/* <form className='' id='description'> */}
