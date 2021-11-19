@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 
 import Logo from '../molecles/Logo';
@@ -14,12 +15,15 @@ import { auth } from 'src/lib/firebase/firebase';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Popover from '../organism/Popover';
+import { useRecoilValue } from 'recoil';
+import { avatarImageState } from 'src/store/state';
 
 const SideBar = () => {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const user = auth.currentUser;
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const avatarImage = useRecoilValue(avatarImageState)
 
   const handleLogout = (): void => {
     logout()
@@ -134,12 +138,11 @@ const SideBar = () => {
             />
           </MenuIcon>
           <div className='flex'>
-            <Image
+            <img
               className={`h-8 w-8 rounded-full ${user && 'cursor-pointer'}`}
               src={
-                user
-                  ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHBlb3BsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-                  : '/nouser-icon.png'
+                avatarImage
+                  ? `${avatarImage}`: '/nouser-icon.png'
               }
               alt='Avatar Image'
               width={30}

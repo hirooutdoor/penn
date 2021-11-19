@@ -1,13 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { useRecoilState } from 'recoil';
-import { avatarImageState, isOnboardingState } from 'src/store/state';
-import { logout } from 'src/lib/firebase/auth';
-import { auth } from 'src/lib/firebase/firebase';
-import { deleteUser } from 'firebase/auth';
 import router from 'next/router';
+
+import { useRecoilState } from 'recoil';
+import { avatarImageState, isOnboardingState, progressState } from 'src/store/state';
+
+import { logout } from 'src/lib/firebase/auth';
+import { auth, storage } from 'src/lib/firebase/firebase';
+import { deleteUser } from 'firebase/auth';
+import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
+
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { Callback, FileUpload, useFileUpload } from 'use-file-upload';
@@ -18,11 +23,12 @@ const Onboarding: NextPage = () => {
   const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
   const [updatedUser, setUpdatedUser] = useState({ displayName: '', pid: '', description: '' });
   const [files, selectFiles] = useFileUpload();
+  const [progress, setProgress] = useRecoilState(progressState);
   const user = auth.currentUser;
 
   useEffect(() => {
     setAvatarImage(user?.photoURL);
-  }, []);
+  }, [setAvatarImage, user?.photoURL]);
 
   const {
     register,
@@ -46,16 +52,38 @@ const Onboarding: NextPage = () => {
   const hiddenFileInput = useRef<HTMLInputElement>(null);
 
   const handleFileClick = () => {
-    // hiddenFileInput.current?.click();
-    selectFiles({ accept: 'image/*', multiple: false }, ({ name, size, source, file }:any) => {
-      console.log('Files Selected', { name, size, source, file });
-    });
+    hiddenFileInput.current?.click();
+    // selectFiles({ accept: 'image/*', multiple: false }, ({ name, size, source, file }: any) => {
+    //   console.log('Files Selected', { name, size, source, file });
+    // });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const uploadedFile = e.target.files![0];
-    setAvatarImage(uploadedFile); //[0]なくてもいい？ 指定の仕方を考え直す必要あるかも
+    const file = e.target.files![0];
+    // setAvatarImage(file);
+    uploadFiles(file);
+  };
+
+  const uploadFiles = (file: any) => {
+    if (!file) return;
+    const storageRef = ref(storage, `/images/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        setProgress(progress);
+      },
+      (err) => console.log(err),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log(url);
+          setAvatarImage(url);
+        });
+      },
+    );
   };
 
   const handleSignupCancel = async (): Promise<void> => {
@@ -199,16 +227,17 @@ const Onboarding: NextPage = () => {
             <h1 className='text-4xl my-4 font-bold text-penn-dark cursor-default'>
               Setup your profile
             </h1>
-            <Image
-              className='rounded-full cursor-pointer'
-              // src='/avatar.png'
-              // src={`${avatarImage}`}
-              src={files?.source.replace(/^...../g, '') || avatarImage} //replace(/^...../g, '')先頭の5文字を空文字に置換（blob:が邪魔なので。。。）
-              alt='Avatar Image'
-              width={100}
-              height={100}
-              layout='fixed'
-            />
+            <div className='flex justify-center'>
+              <img
+                className='rounded-full cursor-pointer'
+                // src='/avatar.png'
+                src={`${avatarImage}`}
+                // src={files?.source.replace(/^...../g, '') || avatarImage} //replace(/^...../g, '')先頭の5文字を空文字に置換（blob:が邪魔なので。。。）
+                alt='Avatar Image'
+                width={100}
+                height={100}
+              />
+            </div>
             <div>
               <button
                 className='text-sm mb-4 text-gray-400 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'
@@ -220,7 +249,7 @@ const Onboarding: NextPage = () => {
                 className='hidden'
                 type='file'
                 ref={hiddenFileInput}
-                // onChange={handleFileChange}
+                onChange={handleFileChange}
                 accept='image/*'
               />
             </div>

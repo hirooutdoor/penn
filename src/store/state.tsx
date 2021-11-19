@@ -76,3 +76,8 @@ export const isOnboardingState = atom ({
   key: 'isOnboardingState',
   default: false,
 })
+
+export const progressState = atom({
+  key: 'progressState',
+  default: 0,
+})
