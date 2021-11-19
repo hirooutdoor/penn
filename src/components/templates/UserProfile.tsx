@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { FaGithub, FaTwitter, FaGlobe } from 'react-icons/fa';
 
 import FollowButton from '../atoms/FollowButton';
-import Heatmap from '../organism/Heatmap';
+// import Heatmap from '../organism/Heatmap';
 import { Filter } from '../organism/Filter';
 import FilterItem from '../organism/FilterItem';
 import MemoListItem from '../organism/MemoListItem';

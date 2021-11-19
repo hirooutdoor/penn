@@ -26,7 +26,8 @@
     "react-hook-form": "^7.19.5",
     "react-icons": "^4.3.1",
     "react-toastify": "^8.1.0",
-    "recoil": "^0.4.1"
+    "recoil": "^0.4.1",
+    "use-file-upload": "^1.0.11"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.2.0",

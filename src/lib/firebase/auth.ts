@@ -33,8 +33,8 @@ import { toast } from 'react-toastify';
 
 export const googleLogin = async () => {
   const loginSuccess = () => {
-    toast.success('ログインが成功しました');
     Router.push('community');
+    toast.success('ログインが成功しました');
   };
 
   await signInWithPopup(auth, provider)

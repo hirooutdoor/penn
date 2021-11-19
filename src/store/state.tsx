@@ -62,7 +62,7 @@ export const displayNameState = atom({
   default: '',
 });
 
-export const avatarImageState = atom<File | null>({
+export const avatarImageState = atom<string | null | undefined | File | void>({
   key: 'avatarImageState',
   default: null,
 });
@@ -75,4 +75,9 @@ export const showState = atom({
 export const isOnboardingState = atom ({
   key: 'isOnboardingState',
   default: false,
+})
+
+export const progressState = atom({
+  key: 'progressState',
+  default: 0,
 })

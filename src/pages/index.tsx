@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   const isOnboarding = useRecoilValue(isOnboardingState);
 
   useEffect(() => {
-    isOnboarding ? router.push('/onboarding') : (user ? router.push('/community') : null);
+    isOnboarding ? router.push('/onboarding') : user ? router.push('/community') : null;
     setShow(false);
   }, [isOnboarding, router, user, setShow]);
 
