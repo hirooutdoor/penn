@@ -10,7 +10,7 @@ import { avatarImageState, isOnboardingState, progressState } from 'src/store/st
 
 import { logout } from 'src/lib/firebase/auth';
 import { auth, storage } from 'src/lib/firebase/firebase';
-import { deleteUser } from 'firebase/auth';
+import { deleteUser, updateProfile } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 
 import { toast } from 'react-toastify';
@@ -76,11 +76,19 @@ const Onboarding: NextPage = () => {
         const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
         setProgress(progress);
       },
-      (err) => console.log(err),
+      (err) => alert(err.message),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           console.log(url);
-          setAvatarImage(url);
+          setAvatarImage(url); //一度クライアントサイドでステート保持したらそれが表示されるようにしたい
+          //Authユーザーのプロフィール更新（photoURLのみ）
+          updateProfile(user!, { photoURL: url })
+            .then(() => {
+              toast.success('プロフィール写真を変更しました');
+            })
+            .catch((error) => {
+              toast.error(error.message);
+            });
         });
       },
     );

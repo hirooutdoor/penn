@@ -1565,6 +1565,10 @@ video {
 	--tw-text-opacity: 1;
 	color: rgba(17, 24, 39, var(--tw-text-opacity));
 }
+.text-red-400 {
+	--tw-text-opacity: 1;
+	color: rgba(248, 113, 113, var(--tw-text-opacity));
+}
 .text-opacity-75 {
 	--tw-text-opacity: 0.75;
 }
