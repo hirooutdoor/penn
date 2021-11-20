@@ -157,7 +157,7 @@ const SideBar = () => {
               }}
               className='text-red-400'
             >
-              🚨Bye Forever🚨
+              🚨Dangerous Button🚨
             </button>
           )}
         </div>
