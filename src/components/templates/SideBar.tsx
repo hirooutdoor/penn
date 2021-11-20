@@ -9,6 +9,7 @@ import MenuText from '../atoms/MenuText';
 import DarkModeSwitch from '../molecles/DarkModeSwitch';
 import Image from 'next/image';
 import { logout } from 'src/lib/firebase/auth';
+import { deleteUser } from '@firebase/auth';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import { auth } from 'src/lib/firebase/firebase';
@@ -23,7 +24,7 @@ const SideBar = () => {
   const router = useRouter();
   const user = auth.currentUser;
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const avatarImage = useRecoilValue(avatarImageState)
+  const avatarImage = useRecoilValue(avatarImageState);
 
   const handleLogout = (): void => {
     logout()
@@ -140,10 +141,7 @@ const SideBar = () => {
           <div className='flex'>
             <img
               className={`h-8 w-8 rounded-full ${user && 'cursor-pointer'}`}
-              src={
-                avatarImage
-                  ? `${avatarImage}`: '/nouser-icon.png'
-              }
+              src={user?.photoURL ? user.photoURL : '/nouser-icon.png'}
               alt='Avatar Image'
               width={30}
               height={30}
@@ -151,6 +149,17 @@ const SideBar = () => {
             />
             {isOpen && <Popover isOpen={isOpen} setIsOpen={setIsOpen} />}
           </div>
+          {user && (
+            <button
+              onClick={async () => {
+                await deleteUser(user!);
+                router.push('/');
+              }}
+              className='text-red-400'
+            >
+              🚨Dangerous Button🚨
+            </button>
+          )}
         </div>
       </div>
     </>
