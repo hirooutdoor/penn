@@ -9,9 +9,10 @@ import { useRecoilState } from 'recoil';
 import { avatarImageState, isOnboardingState, progressState } from 'src/store/state';
 
 import { logout } from 'src/lib/firebase/auth';
-import { auth, storage } from 'src/lib/firebase/firebase';
+import { auth, storage, db } from 'src/lib/firebase/firebase';
 import { deleteUser, updateProfile } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
+import { collection, addDoc, getDocs, doc, updateDoc } from '@firebase/firestore';
 
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
@@ -26,9 +27,16 @@ const Onboarding: NextPage = () => {
   const [progress, setProgress] = useRecoilState(progressState);
   const user = auth.currentUser;
 
+  type Data = {
+    description: string;
+    pid: string;
+    displayName: string;
+  };
+
   useEffect(() => {
+    user && setIsOnboarding(true);
     setAvatarImage(user?.photoURL);
-  }, [setAvatarImage, user?.photoURL]);
+  }, [setAvatarImage, setIsOnboarding, user, user?.photoURL]);
 
   const {
     register,
@@ -40,10 +48,6 @@ const Onboarding: NextPage = () => {
     criteriaMode: 'all',
     shouldFocusError: false,
   });
-
-  useEffect(() => {
-    setIsOnboarding(true);
-  }, [setIsOnboarding]);
 
   const handleIsNext = () => {
     setIsNext(!isNext);
@@ -131,15 +135,22 @@ const Onboarding: NextPage = () => {
     }
   };
 
-  const handleSignupComplete = (data: any) => {
-    console.log(data);
-    console.log('clicked!!');
-    completeSignup();
-    // updatedUser.description === '' ? null : completeSignup();
+  // *Add User Data to Firestore
+  const usersCollectionRef = collection(db, 'users');
+  const createUser = async (data: Data) => {
+    await addDoc(usersCollectionRef, {
+      displayName: data.displayName,
+      pid: data.pid,
+      description: data.description,
+      uid: user?.uid,
+      photoURL: user?.photoURL,
+    });
   };
-  // console.log(`onboarding: ${isOnboarding}`);
-  // console.log(`user description:"${updatedUser.description}"`);
-  // console.log(`user: ${user}`);
+
+  const handleSignupComplete = (data: Data) => {
+    createUser(data);
+    completeSignup();
+  };
 
   return (
     <div className=' p-5'>
@@ -279,7 +290,7 @@ const Onboarding: NextPage = () => {
                 className='bg-gray-100 rounded-md border border-gray-100 leading-normal resize-none w-96 h-40 py-2 px-3 my-8 font-medium outline-none transition-all duration-500 focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
                 placeholder='自己紹介 （160文字以内）'
                 maxLength={180}
-                {...register('Description', { required: true, maxLength: 160 })}
+                {...register('description', { required: true, maxLength: 160 })}
               ></textarea>
               <br />
               {errors.Description?.types?.required && (
