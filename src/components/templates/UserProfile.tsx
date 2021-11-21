@@ -19,6 +19,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 interface Props {}
 
 const UserProfile = (props: Props) => {
+  const [isEditing, setIsEditing] = useState(false);
   const memos = useRecoilValue(memoState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const user = auth.currentUser;
@@ -54,13 +55,18 @@ const UserProfile = (props: Props) => {
           <p className='text-lg font-semibold'>{currentUser.displayName}</p>
           <p className='text-sm text-penn-gray'>100 followings 100 followers</p>
         </div>
-        <div className='flex gap-4 mt-4 cursor-pointer'>
-          <div className='flex gap-4 pt-1 text-penn-gray'>
+        <div className='flex gap-4 mt-4 '>
+          <div className='flex gap-4 pt-1 text-penn-gray cursor-pointer'>
             <FaGithub />
             <FaTwitter />
             <FaGlobe />
           </div>
           <FollowButton />
+          <div className='mt-14 ml-6 inline-flex rounded-md shadow'>
+            <button className='inline-flex items-center justify-center px-2 border border-transparent text-sm font-medium rounded-md text-penn-gray dark:text-penn-darkGray bg-white dark:bg-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-50 cursor-pointer transition-all duration-200'>
+              Edit Profile
+            </button>
+          </div>
         </div>
       </div>
       <div className='ml-32'>
