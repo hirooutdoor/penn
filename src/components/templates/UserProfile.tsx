@@ -64,7 +64,7 @@ const UserProfile = (props: Props) => {
           />
           {isEditing && (
             <div onClick={handleFileClick}>
-              <div className='absolute top-[66px] left-[403px] text-sm mb-4 text-white dark:text-gray-400 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'>
+              <div className='absolute top-[66px] left-[403px] text-sm mb-4 hover:text-gray-100 text-white dark:text-gray-400 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   className='h-8 w-8'
@@ -110,13 +110,31 @@ const UserProfile = (props: Props) => {
             <FaGlobe />
           </div>
           <FollowButton />
-          <div className='mt-14 ml-6 inline-flex rounded-md shadow'>
-            <button
-              onClick={() => setIsEditing(!isEditing)}
-              className='inline-flex items-center justify-center px-2 border border-transparent text-sm font-medium rounded-md text-penn-gray dark:text-penn-darkGray bg-white dark:bg-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-50 cursor-pointer transition-all duration-200'
-            >
-              Edit Profile
-            </button>
+          <div className='mt-14 inline-flex'>
+            {isEditing ? (
+              <div className='flex gap-4'>
+                {/* TODO 変更が削除されますがいいですか？モーダル */}
+                <button
+                  onClick={() => setIsEditing(!isEditing)}
+                  className='rounded-md shadow inline-flex items-center justify-center  px-2 border border-transparent text-sm font-medium text-red-400 dark:text-penn-darkGray bg-white dark:bg-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-50 cursor-pointer transition-all duration-200'
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => setIsEditing(!isEditing)}
+                  className='shadow inline-flex items-center justify-center px-2 border border-transparent text-sm font-medium rounded-md text-penn-gray dark:text-penn-darkGray bg-white dark:bg-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-50 cursor-pointer transition-all duration-200'
+                >
+                  Save
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setIsEditing(!isEditing)}
+                className='rounded-md shadow inline-flex items-center justify-center px-2 border border-transparent text-sm font-medium text-penn-gray dark:text-penn-darkGray bg-white dark:bg-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-50 cursor-pointer transition-all duration-200'
+              >
+                Edit Profile
+              </button>
+            )}
           </div>
         </div>
       </div>
