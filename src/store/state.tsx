@@ -47,6 +47,16 @@ export const userState = atom<UserState>({
   dangerouslyAllowMutability: true,
 });
 
+export const currentUserState = atom({
+  key: 'currentUserState',
+  default: {
+    displayName: 'Undefined',
+    description: '',
+    photoURL: null
+  },
+  dangerouslyAllowMutability: true,
+});
+
 export const emailState = atom({
   key: 'emailState',
   default: '',

@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable @next/next/no-img-element */
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 import { FaGithub, FaTwitter, FaGlobe } from 'react-icons/fa';
@@ -9,27 +10,48 @@ import { Filter } from '../organism/Filter';
 import FilterItem from '../organism/FilterItem';
 import MemoListItem from '../organism/MemoListItem';
 import MemoList from '../organism/MemoList';
-import { useRecoilValue } from 'recoil';
-import { memoState } from 'src/store/state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { currentUserState, memoState } from 'src/store/state';
 import MenuIcon from '../atoms/MenuIcon';
+import { db, auth } from 'src/lib/firebase/firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 interface Props {}
 
 const UserProfile = (props: Props) => {
   const memos = useRecoilValue(memoState);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const user = auth.currentUser;
+  const authUserCollectionRef = collection(db, 'users');
+  const q = query(authUserCollectionRef, where('uid', '==', user?.uid)); //firestoreのユーザーuidがログインユーザーのuidと一致するものを検索する
+  // ログインユーザーのデータをfirestoreから取得
+  const getAuthUserInfo = async () => {
+    const querySnapshot = await getDocs(q);
+    querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      console.log(doc.id, ' => ', data);
+      const { displayName, description, photoURL } = data;
+      setCurrentUser({ displayName: displayName, description: description, photoURL: photoURL });
+    });
+  };
+
+  useEffect(() => {
+    getAuthUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className='flex flex-col ml-60'>
       <div className='ml mt-8 w-[690px] flex gap-8'>
-        <Image
+        <img
           className='rounded-full cursor-pointer'
-          src='/avatar.png'
+          src={currentUser!.photoURL ? `${currentUser!.photoURL}` : '/nouser-icon.png'}
           alt='Avatar Image'
           width={100}
           height={100}
-          layout='fixed'
         />
         <div className='flex flex-col gap-4 mt-4'>
-          <p className='text-lg font-semibold'>Hiro-chan</p>
+          <p className='text-lg font-semibold'>{currentUser.displayName}</p>
           <p className='text-sm text-penn-gray'>100 followings 100 followers</p>
         </div>
         <div className='flex gap-4 mt-4 cursor-pointer'>
@@ -42,11 +64,7 @@ const UserProfile = (props: Props) => {
         </div>
       </div>
       <div className='ml-32'>
-        <p>
-          フロントエンドエンジニア。pennを開発してます。
-          <br />
-          好きな食べ物はプリンです。
-        </p>
+        <p>{currentUser.description}</p>
       </div>
       <div className='ml-8 mt-6 flex flex-col gap-2'>
         {/* TODO Heatmapの実装 */}
@@ -83,32 +101,32 @@ const UserProfile = (props: Props) => {
         </div>
 
         <MemoList>
-          {memos.map((memo) => (
+          {memos.map((memo, index) => (
             <>
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
-              <MemoListItem key={memo.id} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
+              <MemoListItem key={index} />
             </>
           ))}
         </MemoList>
