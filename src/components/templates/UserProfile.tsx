@@ -15,10 +15,19 @@ import { currentUserState, memoState } from 'src/store/state';
 import MenuIcon from '../atoms/MenuIcon';
 import { db, auth } from 'src/lib/firebase/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import { useUpload } from 'src/Hooks/useUpload';
 
 interface Props {}
 
 const UserProfile = (props: Props) => {
+  const {
+    progress,
+    avatarImage,
+    setAvatarImage,
+    hiddenFileInput,
+    handleFileClick,
+    handleFileChange,
+  } = useUpload();
   const [isEditing, setIsEditing] = useState(false);
   const memos = useRecoilValue(memoState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
@@ -33,6 +42,7 @@ const UserProfile = (props: Props) => {
       console.log(doc.id, ' => ', data);
       const { displayName, description, photoURL } = data;
       setCurrentUser({ displayName: displayName, description: description, photoURL: photoURL });
+      setAvatarImage(photoURL);
     });
   };
 
@@ -43,14 +53,52 @@ const UserProfile = (props: Props) => {
 
   return (
     <div className='flex flex-col ml-60'>
-      <div className='ml mt-8 w-[690px] flex gap-8'>
-        <img
-          className='rounded-full cursor-pointer'
-          src={currentUser!.photoURL ? `${currentUser!.photoURL}` : '/nouser-icon.png'}
-          alt='Avatar Image'
-          width={100}
-          height={100}
-        />
+      <div className='mt-8 w-[690px] flex gap-8'>
+        <div className='flex flex-col gap-2'>
+          <img
+            className='rounded-full cursor-pointer'
+            src={currentUser!.photoURL ? `${avatarImage}` : '/nouser-icon.png'}
+            alt='Avatar Image'
+            width={100}
+            height={100}
+          />
+          {isEditing && (
+            <div onClick={handleFileClick}>
+              <div className='absolute top-[66px] left-[403px] text-sm mb-4 text-white dark:text-gray-400 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='h-8 w-8'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z'
+                  />
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M15 13a3 3 0 11-6 0 3 3 0 016 0z'
+                  />
+                </svg>
+              </div>
+              <button className='absolute top-[140px] left-[390px] text-sm mb-4 text-gray-400 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'>
+                変更する
+              </button>
+            </div>
+          )}
+          <input
+            className='hidden'
+            type='file'
+            ref={hiddenFileInput}
+            onChange={handleFileChange}
+            accept='image/*'
+          />
+        </div>
         <div className='flex flex-col gap-4 mt-4'>
           <p className='text-lg font-semibold'>{currentUser.displayName}</p>
           <p className='text-sm text-penn-gray'>100 followings 100 followers</p>
@@ -63,7 +111,10 @@ const UserProfile = (props: Props) => {
           </div>
           <FollowButton />
           <div className='mt-14 ml-6 inline-flex rounded-md shadow'>
-            <button className='inline-flex items-center justify-center px-2 border border-transparent text-sm font-medium rounded-md text-penn-gray dark:text-penn-darkGray bg-white dark:bg-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-50 cursor-pointer transition-all duration-200'>
+            <button
+              onClick={() => setIsEditing(!isEditing)}
+              className='inline-flex items-center justify-center px-2 border border-transparent text-sm font-medium rounded-md text-penn-gray dark:text-penn-darkGray bg-white dark:bg-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-50 cursor-pointer transition-all duration-200'
+            >
               Edit Profile
             </button>
           </div>

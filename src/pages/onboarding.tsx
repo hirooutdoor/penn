@@ -8,6 +8,7 @@ import router from 'next/router';
 import { useRecoilState } from 'recoil';
 import { avatarImageState, isOnboardingState, progressState } from 'src/store/state';
 
+
 import { logout } from 'src/lib/firebase/auth';
 import { auth, storage, db } from 'src/lib/firebase/firebase';
 import { deleteUser, updateProfile } from 'firebase/auth';
@@ -17,15 +18,15 @@ import { collection, addDoc, getDocs, doc, updateDoc } from '@firebase/firestore
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { Callback, FileUpload, useFileUpload } from 'use-file-upload';
+import { useUpload } from 'src/Hooks/useUpload';
 
 const Onboarding: NextPage = () => {
   const [isNext, setIsNext] = useState(false);
   const [isOnboarding, setIsOnboarding] = useRecoilState(isOnboardingState);
-  const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
   const [updatedUser, setUpdatedUser] = useState({ displayName: '', pid: '', description: '' });
   const [files, selectFiles] = useFileUpload();
-  const [progress, setProgress] = useRecoilState(progressState);
   const user = auth.currentUser;
+  const { progress, avatarImage, setAvatarImage, hiddenFileInput, handleFileClick, handleFileChange } = useUpload();
 
   type Data = {
     description: string;
@@ -53,50 +54,52 @@ const Onboarding: NextPage = () => {
     setIsNext(!isNext);
   };
 
-  const hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  const handleFileClick = () => {
-    hiddenFileInput.current?.click();
-    // selectFiles({ accept: 'image/*', multiple: false }, ({ name, size, source, file }: any) => {
-    //   console.log('Files Selected', { name, size, source, file });
-    // });
-  };
+  //TODO カスタムHooks化（プロフィールページでも使用するため）
+  // const hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const file = e.target.files![0];
-    // setAvatarImage(file);
-    uploadFiles(file);
-  };
+  // const handleFileClick = () => {
+  //   hiddenFileInput.current?.click();
+  //   // selectFiles({ accept: 'image/*', multiple: false }, ({ name, size, source, file }: any) => {
+  //   //   console.log('Files Selected', { name, size, source, file });
+  //   // });
+  // };
 
-  const uploadFiles = (file: any) => {
-    if (!file) return;
-    const storageRef = ref(storage, `/images/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   const file = e.target.files![0];
+  //   // setAvatarImage(file);
+  //   uploadFiles(file);
+  // };
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        setProgress(progress);
-      },
-      (err) => alert(err.message),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log(url);
-          setAvatarImage(url); //一度クライアントサイドでステート保持したらそれが表示されるようにしたい
-          //Authユーザーのプロフィール更新（photoURLのみ）
-          updateProfile(user!, { photoURL: url })
-            .then(() => {
-              toast.success('プロフィール写真を変更しました');
-            })
-            .catch((error) => {
-              toast.error(error.message);
-            });
-        });
-      },
-    );
-  };
+  // const uploadFiles = (file: any) => {
+  //   if (!file) return;
+  //   const storageRef = ref(storage, `/images/${file.name}`);
+  //   const uploadTask = uploadBytesResumable(storageRef, file);
+
+  //   uploadTask.on(
+  //     'state_changed',
+  //     (snapshot) => {
+  //       const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+  //       setProgress(progress);
+  //     },
+  //     (err) => alert(err.message),
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+  //         console.log(url);
+  //         setAvatarImage(url); //一度クライアントサイドでステート保持したらそれが表示されるようにしたい
+  //         //Authユーザーのプロフィール更新（photoURLのみ）
+  //         updateProfile(user!, { photoURL: url })
+  //           .then(() => {
+  //             toast.success('プロフィール写真を変更しました');
+  //           })
+  //           .catch((error) => {
+  //             toast.error(error.message);
+  //           });
+  //       });
+  //     },
+  //   );
+  // };
 
   const handleSignupCancel = async (): Promise<void> => {
     await deleteUser(user!)
