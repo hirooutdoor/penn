@@ -20,6 +20,7 @@ import MemoList from '../organism/MemoList';
 
 import { FaGithub, FaTwitter, FaGlobe } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 interface Props {}
 
@@ -38,6 +39,7 @@ const UserProfile = (props: Props) => {
     setIsEditing,
     currentUser,
     setCurrentUser,
+    handleUploadFiles,
   } = useUpload();
   const memos = useRecoilValue(memoState);
   const user = auth.currentUser;
@@ -62,7 +64,7 @@ const UserProfile = (props: Props) => {
       console.log(doc.id, ' => ', data);
       const { displayName, description, photoURL } = data;
       setCurrentUser({ displayName: displayName, description: description, photoURL: photoURL });
-      setAvatarImage(photoURL);
+      setAvatarImage(user!.photoURL);
     });
   };
 
@@ -76,8 +78,8 @@ const UserProfile = (props: Props) => {
       <div className='mt-8 w-[690px] flex gap-8'>
         <div className='flex flex-col gap-2'>
           <img
-            className='rounded-full cursor-pointer'
-            src={currentUser!.photoURL ? `${avatarImage}` : '/nouser-icon.png'}
+            className='rounded-full cursor-pointer w-[100px] h-[100px]'
+            src={avatarImage ? `${avatarImage}` : '/nouser-icon.png'}
             alt='Avatar Image'
             width={100}
             height={100}
@@ -154,7 +156,11 @@ const UserProfile = (props: Props) => {
               <div className='flex gap-4'>
                 {/* TODO 変更が削除されますがいいですか？モーダル */}
                 <button
-                  onClick={() => setIsEditing(!isEditing)}
+                  onClick={() => {
+                    getAuthUserInfo();
+                    setIsEditing(!isEditing);
+                    toast.success('キャンセルしました')
+                  }}
                   className='rounded-md shadow inline-flex items-center justify-center  px-2 border border-transparent text-sm font-medium text-red-400 dark:text-penn-darkGray bg-white dark:bg-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-50 cursor-pointer transition-all duration-200'
                 >
                   Cancel
@@ -181,7 +187,7 @@ const UserProfile = (props: Props) => {
         {isEditing ? (
           <form onSubmit={handleSubmit(handleUpdateComplete)}>
             <textarea
-              className='bg-gray-100 rounded-md border border-gray-100 leading-normal resize-none w-96 h-40 py-2 px-3 my-8 font-medium outline-none transition-all duration-500 focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
+              className='bg-gray-100 dark:bg-gray-700 rounded-md border dark:border-none border-gray-100 leading-normal resize-none w-96 h-40 py-2 px-3 my-8 font-medium outline-none transition-all duration-500 focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
               placeholder='自己紹介 （160文字以内）'
               maxLength={180}
               defaultValue={currentUser.description}

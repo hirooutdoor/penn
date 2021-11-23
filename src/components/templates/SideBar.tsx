@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Logo from '../molecles/Logo';
 import WriteButton from 'src/components/atoms/WriteButton';
@@ -12,19 +12,25 @@ import { logout } from 'src/lib/firebase/auth';
 import { deleteUser } from '@firebase/auth';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
-import { auth } from 'src/lib/firebase/firebase';
+import { auth, provider } from 'src/lib/firebase/firebase';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Popover from '../organism/Popover';
 import { useRecoilValue } from 'recoil';
 import { avatarImageState } from 'src/store/state';
+import { GoogleAuthProvider, reauthenticateWithCredential, signInWithPopup } from 'firebase/auth';
+import { useUpload } from 'src/Hooks/useUpload';
 
 const SideBar = () => {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const user = auth.currentUser;
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const avatarImage = useRecoilValue(avatarImageState);
+  const {avatarImage, setAvatarImage} = useUpload();
+
+  useEffect(() => {
+    setAvatarImage(user?.photoURL)
+  },[setAvatarImage, user?.photoURL])
 
   const handleLogout = (): void => {
     logout()
@@ -141,7 +147,7 @@ const SideBar = () => {
           <div className='flex'>
             <img
               className={`h-8 w-8 rounded-full ${user && 'cursor-pointer'}`}
-              src={user?.photoURL ? user.photoURL : '/nouser-icon.png'}
+              src={user?.photoURL ? `${avatarImage}` : '/nouser-icon.png'}
               alt='Avatar Image'
               width={30}
               height={30}
@@ -152,6 +158,19 @@ const SideBar = () => {
           {user && (
             <button
               onClick={async () => {
+                // TODO(you): prompt the user to re-provide their sign-in credentials
+                // signInWithPopup(auth, provider).then((result) => {
+                //   const credential = GoogleAuthProvider.credentialFromResult(result);
+                //   const users = result.user
+                //   reauthenticateWithCredential(users, credential)
+                //     .then(() => {
+                //       // User re-authenticated.
+                //     })
+                //     .catch((error) => {
+                //       // An error ocurred
+                //       // ...
+                //     });
+                // })
                 await deleteUser(user!);
                 router.push('/');
               }}

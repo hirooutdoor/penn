@@ -301,10 +301,10 @@ const Onboarding: NextPage = () => {
                 {...register('description', { required: true, maxLength: 160 })}
               ></textarea>
               <br />
-              {errors.Description?.types?.required && (
+              {errors.description?.types?.required && (
                 <span className='text-sm text-red-500'>文字を入力してください</span>
               )}
-              {errors.Description?.types?.maxLength && (
+              {errors.description?.types?.maxLength && (
                 <span className='text-sm text-red-500'>160文字以内にしてください</span>
               )}
               <div className='flex justify-center gap-10'>

@@ -1,18 +1,16 @@
-import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 import React, { useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { storage, auth, db } from 'src/lib/firebase/firebase';
-import { avatarImageState, currentUserState, progressState } from 'src/store/state';
-import { updateProfile } from '@firebase/auth';
-import { toast } from 'react-toastify';
-import { addDoc, collection, getDocs, query, updateDoc, where } from '@firebase/firestore';
-import { doc } from 'firebase/firestore';
 
-type Data = {
-  description: string;
-  pid: string;
-  displayName: string;
-};
+import { updateProfile } from '@firebase/auth';
+import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
+import { updateDoc, doc } from '@firebase/firestore';
+import { storage, auth, db } from 'src/lib/firebase/firebase';
+
+import { avatarImageState, currentUserState, progressState } from 'src/store/state';
+import { useRecoilState } from 'recoil';
+
+import { Data } from 'src/types/types';
+
+import { toast } from 'react-toastify';
 
 export const useUpload = () => {
   const [progress, setProgress] = useRecoilState(progressState);
@@ -29,15 +27,22 @@ export const useUpload = () => {
     // });
   };
 
+  // avatarImageに情報を保持して表示
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const file = e.target.files![0];
-    // setAvatarImage(file);
-    uploadFiles(file);
-    return { handleFileChange };
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setAvatarImage(reader.result as string);
+      console.log(reader.result as string);
+    };
+    !isEditing && handleUploadFiles(file);//Save Buttonクリック実行時に実行したい
+
   };
 
-  const uploadFiles = (file: any) => {
+  // inputよりアップロードされた画像をStorageに保存し、Storageから取得した画像をログインユーザーのアバター画像(avatarImage)に情報を保持
+  const handleUploadFiles = (file: any) => {
     if (!file) return;
     const storageRef = ref(storage, `/images/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -50,11 +55,11 @@ export const useUpload = () => {
       },
       (err) => alert(err.message),
       () => {
+        // Storageに保存した画像のURLを取得
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          setAvatarImage(url);
           console.log(url);
-          setAvatarImage(url); //一度クライアントサイドでステート保持したらそれが表示されるようにしたい
-          //Authユーザーのプロフィール更新（photoURLのみ）
-          updateProfile(user!, { photoURL: url })
+          updateProfile(user!, { photoURL: url }) //ログインユーザーのphotoURLを取得した値に更新
             .then(() => {
               toast.success('プロフィール写真を変更しました');
             })
@@ -66,19 +71,7 @@ export const useUpload = () => {
     );
   };
 
-  const authUserCollectionRef = collection(db, 'users');
-  const q = query(authUserCollectionRef, where('uid', '==', user?.uid));
-  const getAuthUserInfo = async () => {
-    const querySnapshot = await getDocs(q);
-    querySnapshot.docs.map((doc) => {
-      const data = doc.data();
-      console.log(doc.id, ' => ', data);
-      const { displayName, description, photoURL } = data;
-      // setCurrentUser({ displayName: displayName, description: description, photoURL: photoURL });
-      // setAvatarImage(photoURL);
-    });
-  };
-  // ログインユーザーのデータをfirestoreから取得
+  // Firestoreにあるログインユーザーのデータをアップデート
   const updateAuthUserInfo = async (data: Data) => {
     const userDoc = doc(db, 'users', user!.uid); // ログインユーザーのドキュメント（ドキュメント作成時にドキュメントIDとuidを同じにした）
     await updateDoc(userDoc, {
@@ -100,6 +93,7 @@ export const useUpload = () => {
     // });
   };
 
+  //フォームから取得した内容をupdateAuthUserInfo関数に渡して更新完了
   const handleUpdateComplete = (data: Data) => {
     updateAuthUserInfo(data);
     toast.success('プロフィールを更新しました');
@@ -110,6 +104,7 @@ export const useUpload = () => {
 
   const handleTextInputClick = () => {
     hiddenTextInput.current?.click();
+    setIsEditing(false)
     // selectFiles({ accept: 'image/*', multiple: false }, ({ name, size, source, file }: any) => {
     //   console.log('Files Selected', { name, size, source, file });
     // });
@@ -130,5 +125,6 @@ export const useUpload = () => {
     setIsEditing,
     currentUser,
     setCurrentUser,
+    handleUploadFiles,
   };
 };
