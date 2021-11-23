@@ -18,7 +18,7 @@ import {
 import { app, auth, db, provider, storage } from './firebase';
 import Router, { useRouter } from 'next/router';
 import { userState } from 'src/store/state';
-import { UserState } from 'src/types/User';
+import { UserState } from 'src/types/types';
 import { toast } from 'react-toastify';
 // import { GetServerSideProps } from 'next';
 // import { toast } from 'react-toastify'

@@ -8,12 +8,11 @@ import router from 'next/router';
 import { useRecoilState } from 'recoil';
 import { avatarImageState, isOnboardingState, progressState } from 'src/store/state';
 
-
 import { logout } from 'src/lib/firebase/auth';
 import { auth, storage, db } from 'src/lib/firebase/firebase';
 import { deleteUser, updateProfile } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
-import { collection, addDoc, getDocs, doc, updateDoc } from '@firebase/firestore';
+import { collection, addDoc, getDocs, doc, updateDoc, setDoc } from '@firebase/firestore';
 
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
@@ -26,7 +25,14 @@ const Onboarding: NextPage = () => {
   const [updatedUser, setUpdatedUser] = useState({ displayName: '', pid: '', description: '' });
   const [files, selectFiles] = useFileUpload();
   const user = auth.currentUser;
-  const { progress, avatarImage, setAvatarImage, hiddenFileInput, handleFileClick, handleFileChange } = useUpload();
+  const {
+    progress,
+    avatarImage,
+    setAvatarImage,
+    hiddenFileInput,
+    handleFileClick,
+    handleFileChange,
+  } = useUpload();
 
   type Data = {
     description: string;
@@ -53,7 +59,6 @@ const Onboarding: NextPage = () => {
   const handleIsNext = () => {
     setIsNext(!isNext);
   };
-
 
   //TODO カスタムHooks化（プロフィールページでも使用するため）
   // const hiddenFileInput = useRef<HTMLInputElement>(null);
@@ -113,20 +118,20 @@ const Onboarding: NextPage = () => {
       .catch((error) => console.error(error));
   };
 
-  const handleUpdateUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setUpdatedUser((user) => ({ ...user, displayName: e.target.value }));
-  };
+  // const handleUpdateUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setUpdatedUser((user) => ({ ...user, displayName: e.target.value }));
+  // };
 
-  const handleUpdateUserPid = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setUpdatedUser((user) => ({ ...user, pid: e.target.value }));
-  };
+  // const handleUpdateUserPid = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setUpdatedUser((user) => ({ ...user, pid: e.target.value }));
+  // };
 
-  const handleUpdateUserDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    e.preventDefault();
-    setUpdatedUser((user) => ({ ...user, description: e.target.value }));
-  };
+  // const handleUpdateUserDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   e.preventDefault();
+  //   setUpdatedUser((user) => ({ ...user, description: e.target.value }));
+  // };
 
   const completeSignup = async (): Promise<void> => {
     setIsOnboarding(false);
@@ -139,9 +144,9 @@ const Onboarding: NextPage = () => {
   };
 
   // *Add User Data to Firestore
-  const usersCollectionRef = collection(db, 'users');
+  const usersCollectionRef = doc(db, 'users', user!.uid); // *doc idをuidに揃える
   const createUser = async (data: Data) => {
-    await addDoc(usersCollectionRef, {
+    await setDoc(usersCollectionRef, {
       displayName: data.displayName,
       pid: data.pid,
       description: data.description,

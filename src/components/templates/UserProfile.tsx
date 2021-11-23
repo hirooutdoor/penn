@@ -2,20 +2,24 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-import { FaGithub, FaTwitter, FaGlobe } from 'react-icons/fa';
+import { db, auth } from 'src/lib/firebase/firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { currentUserState, memoState } from 'src/store/state';
+
+import { useUpload } from 'src/Hooks/useUpload';
 
 import FollowButton from '../atoms/FollowButton';
+import MenuIcon from '../atoms/MenuIcon';
 // import Heatmap from '../organism/Heatmap';
 import { Filter } from '../organism/Filter';
 import FilterItem from '../organism/FilterItem';
 import MemoListItem from '../organism/MemoListItem';
 import MemoList from '../organism/MemoList';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { currentUserState, memoState } from 'src/store/state';
-import MenuIcon from '../atoms/MenuIcon';
-import { db, auth } from 'src/lib/firebase/firebase';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { useUpload } from 'src/Hooks/useUpload';
+
+import { FaGithub, FaTwitter, FaGlobe } from 'react-icons/fa';
+import { useForm } from 'react-hook-form';
 
 interface Props {}
 
@@ -27,11 +31,27 @@ const UserProfile = (props: Props) => {
     hiddenFileInput,
     handleFileClick,
     handleFileChange,
+    handleUpdateComplete,
+    hiddenTextInput,
+    handleTextInputClick,
+    isEditing,
+    setIsEditing,
+    currentUser,
+    setCurrentUser,
   } = useUpload();
-  const [isEditing, setIsEditing] = useState(false);
   const memos = useRecoilValue(memoState);
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const user = auth.currentUser;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+    criteriaMode: 'all',
+    shouldFocusError: false,
+  });
+
   const authUserCollectionRef = collection(db, 'users');
   const q = query(authUserCollectionRef, where('uid', '==', user?.uid)); //firestoreのユーザーuidがログインユーザーのuidと一致するものを検索する
   // ログインユーザーのデータをfirestoreから取得
@@ -86,7 +106,7 @@ const UserProfile = (props: Props) => {
                   />
                 </svg>
               </div>
-              <button className='absolute top-[140px] left-[390px] text-sm mb-4 text-gray-400 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'>
+              <button className='absolute top-[140px] left-[390px] text-sm mb-4 text-gray-400 hover:text-gray-500 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'>
                 変更する
               </button>
             </div>
@@ -100,7 +120,26 @@ const UserProfile = (props: Props) => {
           />
         </div>
         <div className='flex flex-col gap-4 mt-4'>
-          <p className='text-lg font-semibold'>{currentUser.displayName}</p>
+          {isEditing ? (
+            <form onSubmit={handleSubmit(handleUpdateComplete)}>
+              <input
+                className='outline-none border-b transition-all duration-500 focus:outline-none focus:border-penn-green focus:border-b-2 focus:border-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
+                type='text'
+                defaultValue={currentUser.displayName}
+                {...register('displayName', { required: true, maxLength: 16 })}
+              />
+              <br />
+              {errors.displayName?.types?.required && (
+                <span className='text-sm text-red-500'>文字を入力してください</span>
+              )}
+              {errors.displayName?.types?.maxLength && (
+                <span className='text-sm text-red-500'>16文字以内にしてください</span>
+              )}
+              <input type='submit' className='hidden' ref={hiddenTextInput} />
+            </form>
+          ) : (
+            <p className='text-lg font-semibold'>{currentUser.displayName}</p>
+          )}
           <p className='text-sm text-penn-gray'>100 followings 100 followers</p>
         </div>
         <div className='flex gap-4 mt-4 '>
@@ -121,7 +160,7 @@ const UserProfile = (props: Props) => {
                   Cancel
                 </button>
                 <button
-                  onClick={() => setIsEditing(!isEditing)}
+                  onClick={handleTextInputClick}
                   className='shadow inline-flex items-center justify-center px-2 border border-transparent text-sm font-medium rounded-md text-penn-gray dark:text-penn-darkGray bg-white dark:bg-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-50 cursor-pointer transition-all duration-200'
                 >
                   Save
@@ -139,7 +178,27 @@ const UserProfile = (props: Props) => {
         </div>
       </div>
       <div className='ml-32'>
-        <p>{currentUser.description}</p>
+        {isEditing ? (
+          <form onSubmit={handleSubmit(handleUpdateComplete)}>
+            <textarea
+              className='bg-gray-100 rounded-md border border-gray-100 leading-normal resize-none w-96 h-40 py-2 px-3 my-8 font-medium outline-none transition-all duration-500 focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
+              placeholder='自己紹介 （160文字以内）'
+              maxLength={180}
+              defaultValue={currentUser.description}
+              {...register('description', { required: true, maxLength: 160 })}
+            ></textarea>
+            <br />
+            {errors.Description?.types?.required && (
+              <span className='text-sm text-red-500'>文字を入力してください</span>
+            )}
+            {errors.Description?.types?.maxLength && (
+              <span className='text-sm text-red-500'>160文字以内にしてください</span>
+            )}
+            <input type='submit' className='hidden' ref={hiddenTextInput} />
+          </form>
+        ) : (
+          <p>{currentUser.description}</p>
+        )}
       </div>
       <div className='ml-8 mt-6 flex flex-col gap-2'>
         {/* TODO Heatmapの実装 */}
