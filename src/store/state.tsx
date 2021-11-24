@@ -1,5 +1,5 @@
 import { atom, selector } from 'recoil';
-import { UserState } from 'src/types/User';
+import { CurrentUserState, UserState } from 'src/types/types';
 
 export const articleState = atom({
   key: 'articleState',
@@ -47,12 +47,12 @@ export const userState = atom<UserState>({
   dangerouslyAllowMutability: true,
 });
 
-export const currentUserState = atom({
+export const currentUserState = atom<CurrentUserState>({
   key: 'currentUserState',
   default: {
     displayName: 'Undefined',
     description: '',
-    photoURL: null
+    photoURL: null,
   },
   dangerouslyAllowMutability: true,
 });
@@ -82,12 +82,12 @@ export const showState = atom({
   default: false,
 });
 
-export const isOnboardingState = atom ({
+export const isOnboardingState = atom({
   key: 'isOnboardingState',
   default: false,
-})
+});
 
 export const progressState = atom({
   key: 'progressState',
   default: 0,
-})
+});

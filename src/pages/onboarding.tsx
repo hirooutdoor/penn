@@ -12,20 +12,27 @@ import { logout } from 'src/lib/firebase/auth';
 import { auth, storage, db } from 'src/lib/firebase/firebase';
 import { deleteUser, updateProfile } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
-import { collection, addDoc, getDocs, doc, updateDoc } from '@firebase/firestore';
+import { collection, addDoc, getDocs, doc, updateDoc, setDoc } from '@firebase/firestore';
 
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { Callback, FileUpload, useFileUpload } from 'use-file-upload';
+import { useUpload } from 'src/Hooks/useUpload';
 
 const Onboarding: NextPage = () => {
   const [isNext, setIsNext] = useState(false);
   const [isOnboarding, setIsOnboarding] = useRecoilState(isOnboardingState);
-  const [avatarImage, setAvatarImage] = useRecoilState(avatarImageState);
   const [updatedUser, setUpdatedUser] = useState({ displayName: '', pid: '', description: '' });
   const [files, selectFiles] = useFileUpload();
-  const [progress, setProgress] = useRecoilState(progressState);
   const user = auth.currentUser;
+  const {
+    progress,
+    avatarImage,
+    setAvatarImage,
+    hiddenFileInput,
+    handleFileClick,
+    handleFileChange,
+  } = useUpload();
 
   type Data = {
     description: string;
@@ -36,7 +43,8 @@ const Onboarding: NextPage = () => {
   useEffect(() => {
     user && setIsOnboarding(true);
     setAvatarImage(user?.photoURL);
-  }, [setAvatarImage, setIsOnboarding, user, user?.photoURL]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setAvatarImage, setIsOnboarding]);
 
   const {
     register,
@@ -53,50 +61,51 @@ const Onboarding: NextPage = () => {
     setIsNext(!isNext);
   };
 
-  const hiddenFileInput = useRef<HTMLInputElement>(null);
+  //TODO カスタムHooks化（プロフィールページでも使用するため）
+  // const hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  const handleFileClick = () => {
-    hiddenFileInput.current?.click();
-    // selectFiles({ accept: 'image/*', multiple: false }, ({ name, size, source, file }: any) => {
-    //   console.log('Files Selected', { name, size, source, file });
-    // });
-  };
+  // const handleFileClick = () => {
+  //   hiddenFileInput.current?.click();
+  //   // selectFiles({ accept: 'image/*', multiple: false }, ({ name, size, source, file }: any) => {
+  //   //   console.log('Files Selected', { name, size, source, file });
+  //   // });
+  // };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const file = e.target.files![0];
-    // setAvatarImage(file);
-    uploadFiles(file);
-  };
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   const file = e.target.files![0];
+  //   // setAvatarImage(file);
+  //   uploadFiles(file);
+  // };
 
-  const uploadFiles = (file: any) => {
-    if (!file) return;
-    const storageRef = ref(storage, `/images/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+  // const uploadFiles = (file: any) => {
+  //   if (!file) return;
+  //   const storageRef = ref(storage, `/images/${file.name}`);
+  //   const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        setProgress(progress);
-      },
-      (err) => alert(err.message),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log(url);
-          setAvatarImage(url); //一度クライアントサイドでステート保持したらそれが表示されるようにしたい
-          //Authユーザーのプロフィール更新（photoURLのみ）
-          updateProfile(user!, { photoURL: url })
-            .then(() => {
-              toast.success('プロフィール写真を変更しました');
-            })
-            .catch((error) => {
-              toast.error(error.message);
-            });
-        });
-      },
-    );
-  };
+  //   uploadTask.on(
+  //     'state_changed',
+  //     (snapshot) => {
+  //       const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+  //       setProgress(progress);
+  //     },
+  //     (err) => alert(err.message),
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+  //         console.log(url);
+  //         setAvatarImage(url); //一度クライアントサイドでステート保持したらそれが表示されるようにしたい
+  //         //Authユーザーのプロフィール更新（photoURLのみ）
+  //         updateProfile(user!, { photoURL: url })
+  //           .then(() => {
+  //             toast.success('プロフィール写真を変更しました');
+  //           })
+  //           .catch((error) => {
+  //             toast.error(error.message);
+  //           });
+  //       });
+  //     },
+  //   );
+  // };
 
   const handleSignupCancel = async (): Promise<void> => {
     await deleteUser(user!)
@@ -110,20 +119,20 @@ const Onboarding: NextPage = () => {
       .catch((error) => console.error(error));
   };
 
-  const handleUpdateUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setUpdatedUser((user) => ({ ...user, displayName: e.target.value }));
-  };
+  // const handleUpdateUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setUpdatedUser((user) => ({ ...user, displayName: e.target.value }));
+  // };
 
-  const handleUpdateUserPid = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setUpdatedUser((user) => ({ ...user, pid: e.target.value }));
-  };
+  // const handleUpdateUserPid = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setUpdatedUser((user) => ({ ...user, pid: e.target.value }));
+  // };
 
-  const handleUpdateUserDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    e.preventDefault();
-    setUpdatedUser((user) => ({ ...user, description: e.target.value }));
-  };
+  // const handleUpdateUserDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   e.preventDefault();
+  //   setUpdatedUser((user) => ({ ...user, description: e.target.value }));
+  // };
 
   const completeSignup = async (): Promise<void> => {
     setIsOnboarding(false);
@@ -136,9 +145,9 @@ const Onboarding: NextPage = () => {
   };
 
   // *Add User Data to Firestore
-  const usersCollectionRef = collection(db, 'users');
+  const usersCollectionRef = doc(db, 'users', user!.uid); // *doc idをuidに揃える
   const createUser = async (data: Data) => {
-    await addDoc(usersCollectionRef, {
+    await setDoc(usersCollectionRef, {
       displayName: data.displayName,
       pid: data.pid,
       description: data.description,
@@ -293,10 +302,10 @@ const Onboarding: NextPage = () => {
                 {...register('description', { required: true, maxLength: 160 })}
               ></textarea>
               <br />
-              {errors.Description?.types?.required && (
+              {errors.description?.types?.required && (
                 <span className='text-sm text-red-500'>文字を入力してください</span>
               )}
-              {errors.Description?.types?.maxLength && (
+              {errors.description?.types?.maxLength && (
                 <span className='text-sm text-red-500'>160文字以内にしてください</span>
               )}
               <div className='flex justify-center gap-10'>
