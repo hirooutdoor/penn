@@ -122,7 +122,7 @@ const UserProfile = (props: Props) => {
                     </svg>
                   </label>
                 </div>
-                <button type='submit' className='hidden' ref={hiddenTextInput} />
+                <input type='submit' className='hidden' ref={hiddenTextInput} />
                 <label
                   className='absolute top-[140px] left-[390px] text-sm mb-4 text-gray-400 hover:text-gray-500 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'
                   // onClick={handleFileClick}
