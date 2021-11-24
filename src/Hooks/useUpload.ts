@@ -49,6 +49,7 @@ export const useUpload = () => {
     if (!file) return;
     const storageRef = ref(storage, `/images/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
+    console.log(`File Name: ${file.name}`)
 
     uploadTask.on(
       'state_changed',
@@ -80,9 +81,9 @@ export const useUpload = () => {
     const userDoc = doc(db, 'users', user!.uid); // * ログインユーザーのドキュメント（ドキュメント作成時にドキュメントIDとuidを同じにした）
     handleUploadFiles(data.photoURL![0]);
 
-    // console.log(data.photoURL![0]);
-    // console.log(data.description);
-    // console.log(data.displayName);
+    console.log(data.photoURL![0]);
+    console.log(data.description);
+    console.log(data.displayName);
     
     await updateDoc(userDoc, {
       displayName: data.displayName,

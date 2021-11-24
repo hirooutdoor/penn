@@ -91,15 +91,22 @@ const UserProfile = (props: Props) => {
                   className='hidden'
                   type='file'
                   id='avatar-image'
-                  // name='files'
+                  // name='photoURL'
+                  // ref={register}
                   {...register('photoURL')}
-                  onChange={handleFileChange}
+                  onChange={(e) => {
+                    register('photoURL').onChange(e);
+                    handleFileChange(e);
+                  }}
                   // ref={hiddenFileInput}
                   accept='image/*'
                 />
                 {/* <input className='hidden' type="file" ref={hiddenFileInput}  accept='image/*'/> */}
                 <div onClick={handleFileClick}>
-                  <label className='absolute top-[66px] left-[403px] text-sm mb-4 hover:text-gray-400 text-white dark:text-gray-200 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'htmlFor='avatar-image'>
+                  <label
+                    className='absolute top-[66px] left-[403px] text-sm mb-4 hover:text-gray-400 text-white dark:text-gray-200 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'
+                    htmlFor='avatar-image'
+                  >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       className='h-8 w-8'
@@ -254,31 +261,8 @@ const UserProfile = (props: Props) => {
         </div>
 
         <MemoList>
-          {memos.map((memo, index) => (
+          {memos.map((memo, index: number) => (
             <>
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
-              <MemoListItem key={index} />
               <MemoListItem key={index} />
             </>
           ))}
