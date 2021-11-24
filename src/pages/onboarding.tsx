@@ -43,7 +43,8 @@ const Onboarding: NextPage = () => {
   useEffect(() => {
     user && setIsOnboarding(true);
     setAvatarImage(user?.photoURL);
-  }, [setAvatarImage, setIsOnboarding, user, user?.photoURL]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setAvatarImage, setIsOnboarding]);
 
   const {
     register,

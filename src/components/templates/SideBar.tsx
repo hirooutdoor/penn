@@ -7,7 +7,6 @@ import SideMenu from '../molecles/SideMenu';
 import MenuIcon from '../atoms/MenuIcon';
 import MenuText from '../atoms/MenuText';
 import DarkModeSwitch from '../molecles/DarkModeSwitch';
-import Image from 'next/image';
 import { logout } from 'src/lib/firebase/auth';
 import { deleteUser } from '@firebase/auth';
 import { toast } from 'react-toastify';
@@ -16,9 +15,6 @@ import { auth, provider } from 'src/lib/firebase/firebase';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Popover from '../organism/Popover';
-import { useRecoilValue } from 'recoil';
-import { avatarImageState } from 'src/store/state';
-import { GoogleAuthProvider, reauthenticateWithCredential, signInWithPopup } from 'firebase/auth';
 import { useUpload } from 'src/Hooks/useUpload';
 
 const SideBar = () => {

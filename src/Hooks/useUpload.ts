@@ -8,7 +8,7 @@ import { storage, auth, db } from 'src/lib/firebase/firebase';
 import { avatarImageState, currentUserState, progressState } from 'src/store/state';
 import { useRecoilState } from 'recoil';
 
-import { Data } from 'src/types/types';
+import { CurrentUserState, Data } from 'src/types/types';
 
 import { toast } from 'react-toastify';
 
@@ -20,8 +20,12 @@ export const useUpload = () => {
   const user = auth.currentUser;
 
   const hiddenFileInput = useRef<HTMLInputElement>(null);
+
   const handleFileClick = () => {
     hiddenFileInput.current?.click();
+    console.log(hiddenFileInput.current); // * Expected => <input class="hidden" type="file" name="files" accept="image/*">
+    console.log('Clicked!');
+    
     // selectFiles({ accept: 'image/*', multiple: false }, ({ name, size, source, file }: any) => {
     //   console.log('Files Selected', { name, size, source, file });
     // });
@@ -37,8 +41,7 @@ export const useUpload = () => {
       setAvatarImage(reader.result as string);
       console.log(reader.result as string);
     };
-    !isEditing && handleUploadFiles(file);//Save Buttonクリック実行時に実行したい
-
+    !isEditing && handleUploadFiles(file);//Save Buttonクリック実行時に実行したい→onBoardingも
   };
 
   // inputよりアップロードされた画像をStorageに保存し、Storageから取得した画像をログインユーザーのアバター画像(avatarImage)に情報を保持
@@ -61,7 +64,8 @@ export const useUpload = () => {
           console.log(url);
           updateProfile(user!, { photoURL: url }) //ログインユーザーのphotoURLを取得した値に更新
             .then(() => {
-              toast.success('プロフィール写真を変更しました');
+              // toast.success('プロフィール写真を変更しました');
+              console.log(user?.photoURL)
             })
             .catch((error) => {
               toast.error(error.message);
@@ -72,32 +76,33 @@ export const useUpload = () => {
   };
 
   // Firestoreにあるログインユーザーのデータをアップデート
-  const updateAuthUserInfo = async (data: Data) => {
-    const userDoc = doc(db, 'users', user!.uid); // ログインユーザーのドキュメント（ドキュメント作成時にドキュメントIDとuidを同じにした）
+  const updateAuthUserInfo = async (data: CurrentUserState) => {
+    const userDoc = doc(db, 'users', user!.uid); // * ログインユーザーのドキュメント（ドキュメント作成時にドキュメントIDとuidを同じにした）
+    handleUploadFiles(data.photoURL![0]);
+
+    // console.log(data.photoURL![0]);
+    // console.log(data.description);
+    // console.log(data.displayName);
+    
     await updateDoc(userDoc, {
       displayName: data.displayName,
       description: data.description,
-      photoURL: user?.photoURL,
+      photoURL: user!.photoURL,
     });
     setIsEditing(false);
-    // querySnapshot.docs.map((doc:any) => {
-    //   const data = doc.data();
-    //   console.log(doc.id, ' => ', data);
-    //   const { displayName, description, photoURL } = data;
     setCurrentUser({
       displayName: data.displayName,
       description: data.description,
       photoURL: user!.photoURL,
     });
-    //   setAvatarImage(photoURL);
-    // });
-  };
+      // setAvatarImage(data.photoURL);
+  }; 
 
   //フォームから取得した内容をupdateAuthUserInfo関数に渡して更新完了
-  const handleUpdateComplete = (data: Data) => {
+  const handleUpdateComplete = (data: CurrentUserState) => {
     updateAuthUserInfo(data);
     toast.success('プロフィールを更新しました');
-    console.log(data);
+    console.log(`data: ${data}`);
   };
 
   const hiddenTextInput = useRef<HTMLInputElement>(null);
