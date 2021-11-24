@@ -78,7 +78,7 @@ const UserProfile = (props: Props) => {
       <div className='mt-8 w-[690px] flex gap-8'>
         <div className='flex flex-col gap-2'>
           <img
-            className='rounded-full cursor-pointer w-[100px] h-[100px]'
+            className='rounded-full w-[100px] h-[100px]'
             src={avatarImage ? `${avatarImage}` : '/nouser-icon.png'}
             alt='Avatar Image'
             width={100}
@@ -99,7 +99,7 @@ const UserProfile = (props: Props) => {
                 />
                 {/* <input className='hidden' type="file" ref={hiddenFileInput}  accept='image/*'/> */}
                 <div onClick={handleFileClick}>
-                  <label className='absolute top-[66px] left-[403px] text-sm mb-4 hover:text-gray-100 text-white dark:text-gray-400 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'htmlFor='avatar-image'>
+                  <label className='absolute top-[66px] left-[403px] text-sm mb-4 hover:text-gray-400 text-white dark:text-gray-200 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'htmlFor='avatar-image'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       className='h-8 w-8'
@@ -138,7 +138,7 @@ const UserProfile = (props: Props) => {
           {isEditing ? (
             <form onSubmit={handleSubmit(handleUpdateComplete)}>
               <input
-                className='outline-none border-b transition-all duration-500 focus:outline-none focus:border-penn-green focus:border-b-2 focus:border-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
+                className='bg-gray-100 dark:bg-gray-700 rounded-md border dark:border-none border-gray-100 leading-normal resize-none px-2 py-1 font-medium outline-none transition-all duration-500 focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
                 type='text'
                 defaultValue={currentUser.displayName}
                 {...register('displayName', { required: true, maxLength: 16 })}
@@ -200,17 +200,17 @@ const UserProfile = (props: Props) => {
         {isEditing ? (
           <form onSubmit={handleSubmit(handleUpdateComplete)}>
             <textarea
-              className='bg-gray-100 dark:bg-gray-700 rounded-md border dark:border-none border-gray-100 leading-normal resize-none w-96 h-40 py-2 px-3 my-8 font-medium outline-none transition-all duration-500 focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75'
+              className='bg-gray-100 dark:bg-gray-700 rounded-md border dark:border-none border-gray-100 leading-normal resize-none w-96 h-40 py-2 px-3 my-8 font-medium outline-none transition-all duration-500 focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 placeholder-gray-400 focus:placeholder-gray-300 placeholder-opacity-75 dark:placeholder-penn-gray'
               placeholder='自己紹介 （160文字以内）'
               maxLength={180}
               defaultValue={currentUser.description}
               {...register('description', { required: true, maxLength: 160 })}
             ></textarea>
             <br />
-            {errors.Description?.types?.required && (
+            {errors.description?.types?.required && (
               <span className='text-sm text-red-500'>文字を入力してください</span>
             )}
-            {errors.Description?.types?.maxLength && (
+            {errors.description?.types?.maxLength && (
               <span className='text-sm text-red-500'>160文字以内にしてください</span>
             )}
             <input type='submit' className='hidden' ref={hiddenTextInput} />

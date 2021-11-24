@@ -7,7 +7,7 @@ const FollowButton = (props: Props) => {
     <div>
       <button
         type='button'
-        className='text-xs flex leading-sm px-3 py-1  bg-green-50 dark:bg-green-100 hover:bg-indigo-50 text-penn-green rounded-full'
+        className='text-xs flex leading-sm px-3 py-1  bg-green-50 dark:bg-penn-green dark:text-white dark:hover:bg-penn-darkGreen  hover:bg-indigo-50 text-penn-green rounded-full'
       >
         <svg
           xmlns='http://www.w3.org/2000/svg'
