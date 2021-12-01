@@ -6,7 +6,7 @@ interface Props {
 
 const MenuText = ({children}: Props) => {
   return (
-      <p className='text-md text-penn-gray '>{children}</p>
+      <p className='text-md text-penn-gray active:text-penn-green ' >{children}</p>
   )
 }
 

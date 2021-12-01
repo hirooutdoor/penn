@@ -1,6 +1,7 @@
 import { NextPage } from 'next';
 import React, { ReactElement, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import MenuIcon from 'src/components/atoms/MenuIcon';
 import MemoList from 'src/components/organism/MemoList';
 import MemoListItem from 'src/components/organism/MemoListItem';
 import SideBar from 'src/components/templates/SideBar';
@@ -87,7 +88,24 @@ const Memos: NextPage = () => {
             <SideBar />
             <div className='flex flex-col ml-48 gap-4 my-10 z-0'>
               {/* TODOメモカテゴリ */}
-              <h1 className='font-bold text-lg my-4'>🐬 React</h1>
+              <div className='flex justify-between'>
+                <h1 className='font-bold text-lg my-4'>🐬 React</h1>
+                <div className='flex my-4'>
+                  <MenuIcon>
+                    <path
+                      className='text-gray-400 '
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
+                    />
+                  </MenuIcon>
+                  <input
+                    className='text-penn-gray ml-2 border-b-2 outline-none focus:border-penn-green focus:border-opacity-50 transition-all duration-400 px-2 focus:placeholder-gray-300 dark:bg-transparent dark:focus:border-penn-lightGreen dark:placeholder-gray-500 dark:focus:placeholder-gray-600 dark:text-gray-400'
+                    placeholder='Filter'
+                  />
+                </div>
+              </div>
               <MemoList>
                 {memos.map((memo) => (
                   <>
