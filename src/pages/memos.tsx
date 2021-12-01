@@ -85,7 +85,7 @@ const Memos: NextPage = () => {
         <div className='container font-Poppins text-penn-dark dark:text-penn-light'>
           <main className='flex justify-between gap-8 '>
             <SideBar />
-            <div className='flex flex-col ml-48 gap-4 my-10'>
+            <div className='flex flex-col ml-48 gap-4 my-10 z-0'>
               {/* TODOメモカテゴリ */}
               <h1 className='font-bold text-lg my-4'>🐬 React</h1>
               <MemoList>

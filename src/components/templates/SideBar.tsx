@@ -46,7 +46,7 @@ const SideBar = () => {
 
   return (
     <>
-      <div className='fixed mx-6 flex flex-col mt-10 gap-6 z-0'>
+      <div className='fixed mx-6 flex flex-col mt-10 gap-6 z-10'>
         <Logo />
         <WriteButton />
         {/* eslint-disable-next-line @next/next/link-passhref */}

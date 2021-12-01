@@ -104,7 +104,7 @@ const UserProfile = (props: Props) => {
                 {/* <input className='hidden' type="file" ref={hiddenFileInput}  accept='image/*'/> */}
                 <div onClick={handleFileClick}>
                   <label
-                    className='absolute top-[66px] left-[403px] text-sm mb-4 hover:text-gray-400 text-white dark:text-gray-200 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'
+                    className='absolute top-[66px] left-[403px] text-sm mb-4 hover:text-gray-400 text-white dark:text-gray-200 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 transition-all duration-300'
                     htmlFor='avatar-image'
                   >
                     <svg
@@ -131,7 +131,7 @@ const UserProfile = (props: Props) => {
                 </div>
                 <input type='submit' className='hidden' ref={hiddenTextInput} />
                 <label
-                  className='absolute top-[140px] left-[390px] text-sm mb-4 text-gray-400 hover:text-gray-500 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50'
+                  className='absolute top-[140px] left-[390px] text-sm mb-4 text-gray-400 hover:text-gray-500 rounded cursor-pointer focus:outline-none focus:ring-penn-green focus:ring-2 focus:ring-opacity-50 transition-all duration-300'
                   // onClick={handleFileClick}
                   htmlFor='avatar-image'
                 >
