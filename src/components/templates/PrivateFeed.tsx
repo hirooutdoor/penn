@@ -29,7 +29,8 @@ const PublicFeed = () => {
             </MenuIcon>
           </div>
         </div>
-        <OpenButton />
+        {/* TODO isOpenの指定 */}
+        <OpenButton isOpen/>
         <div className='flex gap-4 '>
           <Tag>React</Tag>
           <Tag>JavaScript</Tag>

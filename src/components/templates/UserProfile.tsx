@@ -6,7 +6,7 @@ import { db, auth } from 'src/lib/firebase/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { currentUserState, memoState } from 'src/store/state';
+import { currentUserState, memosState } from 'src/store/state';
 
 import { useUpload } from 'src/Hooks/useUpload';
 
@@ -41,7 +41,7 @@ const UserProfile = (props: Props) => {
     setCurrentUser,
     handleUploadFiles,
   } = useUpload();
-  const memos = useRecoilValue(memoState);
+  const memos = useRecoilValue(memosState);
   const user = auth.currentUser;
 
   const {
@@ -260,13 +260,13 @@ const UserProfile = (props: Props) => {
           </div>
         </div>
 
-        <MemoList>
+        {/* <MemoList>
           {memos.map((memo, index: number) => (
             <>
               <MemoListItem key={index} />
             </>
           ))}
-        </MemoList>
+        </MemoList> */}
       </div>
     </div>
   );
