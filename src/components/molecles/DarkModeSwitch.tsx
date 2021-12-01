@@ -15,7 +15,7 @@ const DarkModeSwitch = () => {
       <button
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
         type='button'
-        className='text-gray-400 hover:text-penn-green mt-2'
+        className='text-gray-400 hover:text-penn-green mt-2 '
       >
         <span className='sr-only'>Switch Dark Mode</span>
         {mounted && (

@@ -2,22 +2,26 @@ import React from 'react';
 
 import { Tag } from '../atoms/Tag';
 import { Like } from 'src/components/atoms/Like';
+import OpenButton from '../atoms/OpenButton';
 
-interface Props {}
+interface Props {
+  title: string;
+  date: string;
+  category: string;
+  isOpen: boolean;
+}
 
-const MemoListItem = (props: Props) => {
+const MemoListItem = ({ title, date, category, isOpen }: Props) => {
   return (
     <>
-      <div className='shadow-md group rounded-lg bg-white flex justify-center items-center content-div cursor-pointer dark:border-penn-gray dark:bg-penn-darkGray w-56'>
-        <div className='py-4 px-6 bg-white dark:border-penn-gray dark:bg-penn-darkGray rounded-lg fd-cl '>
-          <span className='block font-semibold text-lg tracking-wide'>React Hooksとは</span>
-          <span className='block text-sm text-penn-gray mb-1'>
-            Vivamus ac ligula sit amet erat luctus laoreet..
-          </span>
-          <div className='flex justify-around'>
-            <Like />
-            <p className='text-penn-gray text-tiny m-1'>2021/10/09</p>
-            <Tag>React</Tag>
+      <div className='shadow-md items-start rounded-lg bg-white flex-col flex-wrap w-full cursor-pointer dark:border-penn-gray dark:bg-penn-darkGray transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:opacity-75 dark:hover:opacity-100 dark:opacity-90'>
+        <div className='py-4 px-6 bg-white dark:border-penn-gray dark:bg-penn-darkGray rounded-lg '>
+          <div className='block'>
+            <span className='font-semibold text-md tracking-wide'>{title}</span>
+          </div>
+          <div className='flex justify-around mt-2'>
+            <OpenButton isOpen={isOpen}/>
+            <p className='text-penn-gray text-tiny m-1'>{date}</p>
           </div>
         </div>
       </div>

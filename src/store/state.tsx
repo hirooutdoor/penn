@@ -27,9 +27,9 @@ export const buttonState = atom({
   default: false,
 });
 
-export const memoState = atom({
-  key: 'memoState',
-  default: [{ id: '' }],
+export const memosState = atom({
+  key: 'memosState',
+  default: [{ id: '', title: '', date: '', category: '', isOpen: true }],
 });
 
 export const currentTodoSelector = selector({

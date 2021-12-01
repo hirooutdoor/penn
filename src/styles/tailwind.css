@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+a.active {
+  @apply text-penn-green;
+}
+
+p.active {
+  @apply text-penn-green;
+}
+
 @layer utilities {
   @variants responsive {
     /* Chrome, Safari and Opera */

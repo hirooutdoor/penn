@@ -2,19 +2,19 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { buttonState } from 'src/store/state';
 
-interface Props {}
+interface Props {
+  isOpen: boolean;
+}
 
-const OpenButton = (props: Props) => {
-  const isOpen = useRecoilValue(buttonState);
-
+const OpenButton = ({ isOpen }: Props) => {
   return (
     <>
       {isOpen ? (
-        <div className='text-xs inline-flex leading-sm px-3 py-1 border  border-penn-green text-penn-green dark:text-penn-lightGreen dark:bg-penn-green dark:bg-opacity-10 rounded-full w-14'>
+        <div className='text-xs inline-flex leading-sm px-3  border  border-penn-green border-opacity-50 text-penn-green dark:text-penn-lightGreen dark:bg-penn-green dark:bg-opacity-20 dark:border-opacity-100 rounded-full w-14'>
           <button type='button'>Open</button>
         </div>
       ) : (
-        <div className='text-xs inline-flex leading-sm px-3 py-1 border border-penn-gray text-penn-gray dark:border-red-700 dark:text-red-500 dark:bg-red-500 dark:bg-opacity-20 rounded-full w-20'>
+        <div className='text-xs inline-flex leading-sm px-3 border border-red-400 border-opacity-50 text-red-400 dark:border-red-700 dark:text-red-500 dark:bg-red-500 dark:bg-opacity-20 rounded-full w-20'>
           <button type='button' className='inline-flex items-center '>
             <span>Closed</span>
             <svg
